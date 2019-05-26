@@ -34,7 +34,7 @@ module.exports = {
       .set('api', resolve('src/api'))
       .set('assets', resolve('src/assets'))
       .set('@c', resolve('src/components'))
-      .set('layout', resolve('src/layouts'))
+      .set('layout', resolve('src/layout'))
       .set('styles', resolve('src/styles'))
       .set('utils', resolve('src/utils'))
       .set('views', resolve('src/views'))
