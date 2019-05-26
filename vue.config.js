@@ -37,7 +37,7 @@ module.exports = {
       .set('layout', resolve('src/layout'))
       .set('styles', resolve('src/styles'))
       .set('utils', resolve('src/utils'))
-      .set('views', resolve('src/views'))
+      .set('@v', resolve('src/views'))
 
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()

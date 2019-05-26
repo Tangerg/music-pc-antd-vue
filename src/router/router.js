@@ -7,15 +7,15 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
-  /* scrollBehavior(to, from, savedPosition) {
+  routes,
+  scrollBehavior (to, from, savedPosition) {
     console.log(savedPosition)
     if (savedPosition) {
       console.log(savedPosition)
       return savedPosition
     } else {
-      return {x: 0, y: 0}
+      return { x: 0, y: 0 }
     }
-  }, */
+  }
 })
 export default router

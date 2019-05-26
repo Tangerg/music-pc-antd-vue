@@ -1,6 +1,10 @@
 <template>
-  <a-layout-sider width="256">
-    <Logo/>
+  <a-layout-sider
+    v-model="collapsed"
+    width="256px"
+    class="sider"
+    theme="light">
+    <Logo :collapsed="collapsed"/>
     <Menu/>
   </a-layout-sider>
 </template>
@@ -10,6 +14,11 @@ import Logo from '@c/Logo'
 import Menu from '@c/Menu'
 export default {
   name: 'SideBar',
+  data () {
+    return {
+      collapsed: false
+    }
+  },
   components: {
     Logo,
     Menu
@@ -17,6 +26,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-
+<style lang="less">
+  .sider{
+  }
 </style>

@@ -4,7 +4,8 @@
   </div>
 </template>
 
-<style>
+<style lang="less">
+@import "styles/index.less";
 #app {
   height: 100%;
   overflow-y: hidden;

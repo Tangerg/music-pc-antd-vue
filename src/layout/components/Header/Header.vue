@@ -12,8 +12,7 @@ export default {
 
 <style lang="less">
   .global-header {
-    height: 100%;
-    width: 100%;
+    padding: 0 !important;
     .music-logo {
       height: 100%;
       width: 256px;
