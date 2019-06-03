@@ -4,7 +4,6 @@
     theme="light"
     class="menu-list"
     @click="handleSelect"
-    :defaultOpenKeys="menuList[0]"
   >
     <a-menu-item-group>
       <div slot="title"><span>推荐</span></div>

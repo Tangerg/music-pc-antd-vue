@@ -1,6 +1,6 @@
 <template>
 <div style="overflow-y: scroll;height: 100%">
-  <song-list-info :ListInfo="listInfo"></song-list-info>
+  <song-list-info :ListInfo="listInfo" @playAll="playAll()"></song-list-info>
   <song-list-table :columns="columns" :dataSource="songList"></song-list-table>
 </div>
 </template>
@@ -12,6 +12,7 @@ import SongListTable from '@c/ListTable'
 import { getPlayList } from 'api/songList'
 import { createListInfo } from '@/class/listInfo'
 import { createSong } from '@/class/song'
+import { mapActions } from 'vuex'
 
 const COLUMNS = [
   {
@@ -50,6 +51,9 @@ export default {
     this.init()
   },
   methods: {
+    ...mapActions([
+      'sequencePlay'
+    ]),
     init () {
       this.params = this.$route.params
       getPlayList(this.params.id).then((res) => {
@@ -59,6 +63,11 @@ export default {
             return createSong(track)
           })
         }
+      })
+    },
+    playAll () {
+      this.sequencePlay({
+        list: this.songList
       })
     }
   },

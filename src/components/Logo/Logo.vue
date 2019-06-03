@@ -1,5 +1,5 @@
 <template>
-  <div class="logo">
+  <div class="logo" @click="clickLogo()">
     <div v-show="collapsed === false">xx云音乐</div>
     <div v-show="collapsed === true">X</div>
   </div>
@@ -13,6 +13,11 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  methods: {
+    clickLogo () {
+      this.$router.push('/')
+    }
   }
 }
 </script>
@@ -23,8 +28,9 @@ export default {
     height: 64px;
     line-height: 64px;
     font-size: 24px;
-    color: #2e2e2e;
+    color: #fff;
     text-align: center;
-    background-color: transparent;
+    background-color: dodgerblue;
+    cursor: pointer;
   }
 </style>

@@ -1,8 +1,6 @@
 export function handleSongTime (time) {
-  let minute = Math.floor(time / 1000 / 60)
-  let second = Math.floor(time / 1000 % 60)
-  minute = addZero(minute)
-  second = addZero(second)
+  let minute = addZero(Math.floor(time / 1000 / 60))
+  let second = addZero(Math.floor(time / 1000 % 60))
   return `${minute}:${second} `
 }
 

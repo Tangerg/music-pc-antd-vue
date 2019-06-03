@@ -16,7 +16,7 @@
       </span>
       </div>
       <div class="btn-group">
-        <a-button icon="play-circle" class="btn">播放全部</a-button>
+        <a-button icon="play-circle" class="btn" @click="playAll()">播放全部</a-button>
         <a-button icon="folder-add" class="btn">{{subscribedCount}}</a-button>
         <a-button icon="share-alt" class="btn">{{shareCount}}</a-button>
       </div>
@@ -66,6 +66,11 @@ export default {
     },
     shareCount () {
       return `分享(${this.ListInfo.shareCount})`
+    }
+  },
+  methods: {
+    playAll () {
+      this.$emit('playAll')
     }
   }
 }

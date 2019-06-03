@@ -1,0 +1,1 @@
+export const SET_SEQUENCE_LIST = 'SET_SEQUENCE_LIST'
