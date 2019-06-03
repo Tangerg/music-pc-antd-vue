@@ -3,7 +3,8 @@
     mode="inline"
     theme="light"
     class="menu-list"
-    @select="handleSelect"
+    @click="handleSelect"
+    :defaultOpenKeys="menuList[0]"
   >
     <a-menu-item-group>
       <div slot="title"><span>推荐</span></div>
@@ -55,32 +56,33 @@
 </template>
 
 <script>
+const MENU_LIST = [
+  {
+    title: '发现音乐',
+    icon: 'customer-service',
+    route: '/find-music/recommend'
+  },
+  {
+    title: '私人FM',
+    icon: 'user',
+    route: '/personal-fm'
+  },
+  {
+    title: '视频',
+    icon: 'youtube',
+    route: '/video-mv'
+  },
+  {
+    title: '朋友',
+    icon: 'team',
+    route: '/friends-space'
+  }
+]
 export default {
   name: 'Menu',
   data () {
     return {
-      menuList: [
-        {
-          title: '发现音乐',
-          icon: 'customer-service',
-          route: '/find-music/recommend'
-        },
-        {
-          title: '私人FM',
-          icon: 'user',
-          route: '/personal-fm'
-        },
-        {
-          title: '视频',
-          icon: 'youtube',
-          route: '/video-mv'
-        },
-        {
-          title: '朋友',
-          icon: 'team',
-          route: '/friends-space'
-        }
-      ]
+      menuList: MENU_LIST
     }
   },
   methods: {

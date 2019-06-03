@@ -1,3 +1,4 @@
+import { handleSongTime } from '../utils/time'
 export default class Song {
   constructor ({ name, id, artist, album, time }) {
     this.name = name
@@ -30,7 +31,7 @@ export function createSong (songList) {
     id: songList.id,
     artist: songArtist(songList.ar),
     album: songAlbum(songList.al),
-    time: songList.dt
+    time: handleSongTime(songList.dt)
   }
   )
 }

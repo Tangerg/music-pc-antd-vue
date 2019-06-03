@@ -43,7 +43,7 @@ export default {
       .cover {
         .cover-img {
           position:relative;
-          border: 1px #ccd2d6 solid;
+          //border: 1px #ccd2d6 solid;
           &:hover{
             box-shadow:2px 2px 15px #333333;
           }

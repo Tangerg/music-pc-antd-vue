@@ -58,16 +58,15 @@ export default [
           title: '朋友圈'
         },
         component: () => import('@v/friends-space/friends-space')
-      }
-
-      /* {
+      },
+      {
         path: '/song-list/:id',
         name: 'song-list-detail',
         meta: {
           title: '歌单详情'
         },
         component: () => import('@v/song-list-detail/song-list-detail')
-      } */
+      }
     ]
   }
 ]

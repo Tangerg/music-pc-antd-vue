@@ -1,6 +1,6 @@
 <template>
   <a-layout-header class="global-header">
-    <div class="music-logo">123</div>
+    <!--<div class="music-logo">123</div>-->
   </a-layout-header>
 </template>
 
@@ -13,14 +13,10 @@ export default {
 <style lang="less">
   .global-header {
     padding: 0 !important;
-    .music-logo {
-      height: 100%;
-      width: 256px;
-      color: white;
-      font-size: 24px;
-      text-align: center;
-      background-color: #1b7ad9;
-    }
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    background-color: #1b7ad9 !important;
   }
 
 </style>
