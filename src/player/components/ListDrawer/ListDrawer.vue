@@ -3,9 +3,10 @@
     <a-drawer
       title="歌曲列表"
       placement="right"
-      :closable="true"
+      :closable="false"
       :visible="show"
     >
+      <div>123</div>
       <a-list
         itemLayout="horizontal"
         :dataSource="data"
@@ -73,6 +74,9 @@ export default {
     }
   },
   methods: {
+    onClose () {
+      this.visible = false
+    }
   }
 }
 </script>

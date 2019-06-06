@@ -1,11 +1,8 @@
 <template>
   <div class="music-player">
     <list-drawer :show="show"></list-drawer>
-<!--
-    <div class="player-max">1212</div>
--->
-    <max-player v-show="max === true"></max-player>
-    <min-player v-show="max === false" @showDrawer="show = true" @open="max = true"></min-player>
+    <max-player v-show="fullScreen"></max-player>
+    <min-player :isPlaying="isPlaying" v-show="!fullScreen" @showDrawer="show = !show" @showMax="maxPlayer"></min-player>
   </div>
 </template>
 
@@ -13,6 +10,7 @@
 import MinPlayer from './components/MinPlayer'
 import MaxPlayer from './components/MaxPlayer'
 import ListDrawer from './components/ListDrawer'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   name: 'Player',
   data () {
@@ -20,6 +18,20 @@ export default {
       value: 20,
       show: false,
       max: false
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'isPlaying',
+      'fullScreen'
+    ])
+  },
+  methods: {
+    ...mapActions({
+      setFullScreen: 'SET_FULL_SCREEN'
+    }),
+    maxPlayer () {
+      this.setFullScreen(true)
     }
   },
   components: {

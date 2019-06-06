@@ -30,9 +30,9 @@
       <div class="list-info-desc">
         简介：{{ListInfo.descriptionOld}}
         <a-popover placement="bottom" trigger="click">
-          <template slot="content">
-            <div class="desc-popover">{{ListInfo.description}}</div>
-          </template>
+          <div slot="content">
+            <div class="desc-popover" v-html="ListInfo.description"><!--{{ListInfo.description}}--></div>
+          </div>
           <span class="desc-detail">详情</span>
         </a-popover>
       </div>

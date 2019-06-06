@@ -35,7 +35,7 @@ const COLUMNS = [
   {
     title: '时长',
     dataIndex: 'time',
-    width: '20%'
+    width: '10%'
   }
 ]
 export default {

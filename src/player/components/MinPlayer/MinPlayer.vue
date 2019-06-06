@@ -28,8 +28,7 @@
             <a-icon type="left-circle"/>
           </span>
           <span class="control control-play control-play-center">
-            <!--<a-icon type="play-circle" />-->
-            <a-icon type="pause-circle" />
+            <a-icon :type=playOrPause />
           </span>
           <span class="control control-play">
             <a-icon type="right-circle"/>
@@ -60,15 +59,23 @@ import ProgressBar from '../ProgressBar'
 
 export default {
   name: 'MinPlayer',
+  props: {
+    isPlaying: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
-
+    playOrPause () {
+      return this.isPlaying ? 'pause-circle' : 'play-circle'
+    }
   },
   methods: {
     showDrawer () {
       this.$emit('showDrawer')
     },
     openMaxPlayer () {
-      this.$emit('open')
+      this.$emit('showMax')
     }
   },
   components: {
