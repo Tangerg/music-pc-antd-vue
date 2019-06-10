@@ -1,12 +1,18 @@
 <template>
 <div class="player-max">
   123
+  <a-button @click="showMin">最小化</a-button>
 </div>
 </template>
 
 <script>
 export default {
-  name: 'MaxPlayer'
+  name: 'MaxPlayer',
+  methods: {
+    showMin () {
+      this.$emit('showMin')
+    }
+  }
 }
 </script>
 

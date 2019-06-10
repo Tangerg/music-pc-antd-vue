@@ -24,13 +24,13 @@
             <!--<a-icon type="heart" />-->
             <a-icon type="heart" theme="filled" style="color: #f46b47" />
           </span>
-          <span class="control control-play">
+          <span class="control control-play" @clcik="prevSong">
             <a-icon type="left-circle"/>
           </span>
-          <span class="control control-play control-play-center">
-            <a-icon :type=playOrPause />
+          <span class="control control-play control-play-center" @click="changePlayState">
+            <a-icon :type=playStateIcon />
           </span>
-          <span class="control control-play">
+          <span class="control control-play" @clcik="nextSong">
             <a-icon type="right-circle"/>
           </span>
           <span class="control control-other">
@@ -40,13 +40,13 @@
       </div>
       <div class="control-right">
         <div class="btn-group">
-          <span class="control control-time">01:40 / 03:57</span>
+          <span class="control control-time">{{currentTime}} / {{fullTime}}</span>
           <span class="control control-other">
             <a-icon type="sound"/>
           </span>
           <span class="control control-other" @click="showDrawer()">
             <a-icon type="bars" />
-          <span class="song-count"> 23</span>
+          <span class="song-count"> {{totalNum}}</span>
         </span>
         </div>
       </div>
@@ -56,18 +56,34 @@
 
 <script>
 import ProgressBar from '../ProgressBar'
-
+import config from '@/config/config'
 export default {
   name: 'MinPlayer',
   props: {
-    isPlaying: {
+    playState: {
       type: Boolean,
       default: false
+    },
+    currentTime: {
+      type: String,
+      default: '00:00'
+    },
+    fullTime: {
+      type: String,
+      default: '00:00'
+    },
+    playMode: {
+      type: Number,
+      default: config.PLAY_MODE.sequence
+    },
+    totalNum: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
-    playOrPause () {
-      return this.isPlaying ? 'pause-circle' : 'play-circle'
+    playStateIcon () {
+      return this.playState ? 'pause-circle' : 'play-circle'
     }
   },
   methods: {
@@ -76,6 +92,15 @@ export default {
     },
     openMaxPlayer () {
       this.$emit('showMax')
+    },
+    changePlayState () {
+      this.$emit('changePlayState')
+    },
+    prevSong () {
+      this.$emit('prevSong')
+    },
+    nextSong () {
+      this.$emit('nextSong')
     }
   },
   components: {

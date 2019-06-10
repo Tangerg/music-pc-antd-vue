@@ -1,29 +1,35 @@
 /**
  * 播发器相关相关store
  */
-import { SET_FULL_SCREEN } from '../mutation-types'
+import { SET_FULL_SCREEN, SET_PLAY_STATE, SET_PLAY_MODE, SET_DRAWER_STATE } from '../mutation-types'
 import config from '@/config/config'
 export default {
   state: {
-    isPlaying: true,
-    fullScreen: false,
-    playMode: config.PLAY_MODE.sequence,
-    drawer: false
+    playState: true, // 播放状态：true:播放
+    fullScreen: false, // 播放器状态： true：全屏
+    playMode: config.PLAY_MODE.sequence, // 播放模式
+    drawerState: false // 弹出层状态
   },
   mutations: {
     [SET_FULL_SCREEN] (state, flag) {
       state.fullScreen = flag
+    },
+    [SET_PLAY_STATE] (state, flag) {
+      state.playState = flag
+    },
+    [SET_DRAWER_STATE] (state, flag) {
+      state.drawerState = flag
+    },
+    [SET_PLAY_MODE] (state, flag) {
+      state.playMode = flag
     }
   },
   getters: {
-    isPlaying: state => state.isPlaying,
-    drawer: state => state.drawer,
+    playState: state => state.playState,
+    drawerState: state => state.drawerState,
     fullScreen: state => state.fullScreen,
     playMode: state => state.playMode
   },
   actions: {
-    setfullScreen ({ commit, state }, flag) {
-      commit(SET_SEQUENCE_LIST, flag)
-    }
   }
 }

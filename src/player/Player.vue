@@ -1,8 +1,17 @@
 <template>
   <div class="music-player">
-    <list-drawer :show="show"></list-drawer>
-    <max-player v-show="fullScreen"></max-player>
-    <min-player :isPlaying="isPlaying" v-show="!fullScreen" @showDrawer="show = !show" @showMax="maxPlayer"></min-player>
+    <list-drawer :visible="drawerState" @closeDrawer="setDrawer"></list-drawer>
+    <max-player @showMin="showMinPlayer" v-show="fullScreen"></max-player>
+    <min-player
+      v-show="!fullScreen"
+      :playState="playState"
+      :totalNum="sequenceList.length"
+      @showDrawer="setDrawer"
+      @showMax="showMaxPlayer"
+      @changePlayState="changePlayState"
+    >
+    </min-player>
+    <!--<audio></audio>-->
   </div>
 </template>
 
@@ -10,7 +19,7 @@
 import MinPlayer from './components/MinPlayer'
 import MaxPlayer from './components/MaxPlayer'
 import ListDrawer from './components/ListDrawer'
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'Player',
   data () {
@@ -22,16 +31,29 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'isPlaying',
-      'fullScreen'
+      'playState',
+      'fullScreen',
+      'drawerState',
+      'sequenceList'
     ])
   },
   methods: {
-    ...mapActions({
-      setFullScreen: 'SET_FULL_SCREEN'
+    ...mapMutations({
+      setFullScreen: 'SET_FULL_SCREEN',
+      setDrawerState: 'SET_DRAWER_STATE',
+      setPlayState: 'SET_PLAY_STATE'
     }),
-    maxPlayer () {
+    showMaxPlayer () {
       this.setFullScreen(true)
+    },
+    showMinPlayer () {
+      this.setFullScreen(false)
+    },
+    setDrawer () {
+      this.setDrawerState(!this.drawerState)
+    },
+    changePlayState () {
+      this.setPlayState(!this.playState)
     }
   },
   components: {
