@@ -1,7 +1,7 @@
 <template>
 <div class="player-max">
   123
-  <a-button @click="showMin">最小化</a-button>
+  <a-button @click="changePlayerState(false)">最小化</a-button>
 </div>
 </template>
 
@@ -9,8 +9,8 @@
 export default {
   name: 'MaxPlayer',
   methods: {
-    showMin () {
-      this.$emit('showMin')
+    changePlayerState (flag) {
+      this.$emit('changePlayerState', flag)
     }
   }
 }

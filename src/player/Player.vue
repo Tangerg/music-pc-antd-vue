@@ -1,13 +1,22 @@
 <template>
   <div class="music-player">
-    <list-drawer :visible="drawerState" @closeDrawer="setDrawer"></list-drawer>
-    <max-player @showMin="showMinPlayer" v-show="fullScreen"></max-player>
+    <list-drawer
+      :totalNum="totalNum"
+      :visible="drawerState"
+      @closeDrawer="changeDrawerState"
+      @cleanPlayList="cleanPlayList"
+    >
+    </list-drawer>
+    <max-player
+      @changePlayerState="changePlayerState"
+      v-show="fullScreen">
+    </max-player>
     <min-player
       v-show="!fullScreen"
       :playState="playState"
-      :totalNum="sequenceList.length"
-      @showDrawer="setDrawer"
-      @showMax="showMaxPlayer"
+      :totalNum="totalNum"
+      @showDrawer="changeDrawerState"
+      @changePlayerState="changePlayerState"
       @changePlayState="changePlayState"
     >
     </min-player>
@@ -35,7 +44,10 @@ export default {
       'fullScreen',
       'drawerState',
       'sequenceList'
-    ])
+    ]),
+    totalNum () {
+      return this.sequenceList.length
+    }
   },
   methods: {
     ...mapMutations({
@@ -43,17 +55,17 @@ export default {
       setDrawerState: 'SET_DRAWER_STATE',
       setPlayState: 'SET_PLAY_STATE'
     }),
-    showMaxPlayer () {
-      this.setFullScreen(true)
+    changePlayerState (flag) {
+      this.setFullScreen(flag)
     },
-    showMinPlayer () {
-      this.setFullScreen(false)
-    },
-    setDrawer () {
-      this.setDrawerState(!this.drawerState)
+    changeDrawerState (flag) {
+      this.setDrawerState(flag)
     },
     changePlayState () {
       this.setPlayState(!this.playState)
+    },
+    cleanPlayList () {
+      console.log('123')
     }
   },
   components: {

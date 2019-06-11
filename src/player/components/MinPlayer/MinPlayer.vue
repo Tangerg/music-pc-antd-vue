@@ -6,7 +6,7 @@
     <div class="player-min-control">
       <div class="control-left">
         <div class="song-cover">
-          <div class="open-max-player" @click="openMaxPlayer()">
+          <div class="open-max-player" @click="changePlayerState(true)">
             <div class="icon">
               <a-icon type="fullscreen" />
             </div>
@@ -88,10 +88,10 @@ export default {
   },
   methods: {
     showDrawer () {
-      this.$emit('showDrawer')
+      this.$emit('showDrawer', true)
     },
-    openMaxPlayer () {
-      this.$emit('showMax')
+    changePlayerState (flag) {
+      this.$emit('changePlayerState', flag)
     },
     changePlayState () {
       this.$emit('changePlayState')
