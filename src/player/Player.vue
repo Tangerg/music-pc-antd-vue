@@ -2,9 +2,11 @@
   <div class="music-player">
     <list-drawer
       :totalNum="totalNum"
+      :songListData="this.sequenceList"
       :visible="drawerState"
       @closeDrawer="changeDrawerState"
       @cleanPlayList="cleanPlayList"
+      @playItem="playItem"
     >
     </list-drawer>
     <max-player
@@ -53,7 +55,8 @@ export default {
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN',
       setDrawerState: 'SET_DRAWER_STATE',
-      setPlayState: 'SET_PLAY_STATE'
+      setPlayState: 'SET_PLAY_STATE',
+      setSequenceList: 'SET_SEQUENCE_LIST'
     }),
     changePlayerState (flag) {
       this.setFullScreen(flag)
@@ -65,7 +68,11 @@ export default {
       this.setPlayState(!this.playState)
     },
     cleanPlayList () {
+      this.setSequenceList([])
+    },
+    playItem (item) {
       console.log('123')
+      console.log(item)
     }
   },
   components: {
