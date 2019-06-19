@@ -1,6 +1,6 @@
 import axios from 'axios'
 class Ajax {
-  constructor (baseUrl = baseURL) {
+  constructor (baseUrl) {
     this.baseUrl = baseUrl
     this.queue = {}
   }

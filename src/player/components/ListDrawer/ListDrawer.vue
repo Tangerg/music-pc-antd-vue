@@ -33,12 +33,12 @@
                   </div>
                   <div class="song-time">{{item.time}}</div>
                   <div class="song-control">
-                    <sapn @clcik="playItem(item)">
+                    <span @click="playItem(item)">
                       <a-icon type="play-circle" />
-                    </sapn>
-                    <sapn>
+                    </span>
+                    <span>
                       <a-icon type="delete" />
-                    </sapn>
+                    </span>
                   </div>
                 </div>
               </a-list-item>
@@ -82,7 +82,7 @@ export default {
 }
 </script>
 <style lang="less">
-  @import "../../../styles/mixin";
+  @import "~styles/mixin";
   .ant-drawer-body{
     height: 100%;
     padding: 0 !important;
@@ -156,6 +156,7 @@ export default {
           margin-bottom: 0;
         }
         .song-control{
+          cursor: pointer;
           visibility: hidden;
         }
       }

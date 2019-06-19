@@ -110,7 +110,7 @@ export default {
 </script>
 
 <style lang="less">
-  @import "../../../styles/mixin";
+  @import "~styles/mixin";
   .player-min {
     width: 100%;
     position: relative;
