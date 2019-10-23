@@ -1,22 +1,26 @@
 <template>
-  <a-layout-header class="global-header">
-    <!--<div class="music-logo">123</div>-->
+  <a-layout-header :style=headerStyle>
   </a-layout-header>
 </template>
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  data () {
+    return {
+      headerStyle: {
+        padding: 0,
+        color: 'white',
+        fontSize: '24px',
+        textAlign: 'center',
+        backgroundColor: '#ff6363'
+      }
+    }
+  },
+  methods: {
+  }
 }
 </script>
 
 <style lang="less">
-  .global-header {
-    padding: 0 !important;
-    color: white;
-    font-size: 24px;
-    text-align: center;
-    background-color: #1b7ad9 !important;
-  }
-
 </style>

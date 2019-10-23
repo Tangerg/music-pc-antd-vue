@@ -47,8 +47,7 @@ export default {
         if (res.code === config.ERR_OK) {
           this.songList = res.result.map((songList) => {
             return createSongListCover(songList)
-          }).slice(0, 10)
-          console.log(this.songList)
+          }).slice(0, 20)
         }
       })
     }

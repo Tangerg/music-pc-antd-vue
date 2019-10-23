@@ -11,11 +11,11 @@
               <a-icon type="fullscreen" />
             </div>
           </div>
-          <img src="http://p2.music.126.net/t6pUXP9J35-tlp_F4b1_pA==/109951164107025135.jpg" alt="封面">
+          <img :src=cover alt="封面">
         </div>
         <div class="song-text">
-          <span class="song-text-common song-text-name">Lighters</span>
-          <span class="song-text-common song-text-artist">Eminem</span>
+          <span class="song-text-common song-text-name">{{songName}}</span>
+          <span class="song-text-common song-text-artist">{{singer}}</span>
         </div>
       </div>
       <div class="control-center">
@@ -79,11 +79,26 @@ export default {
     totalNum: {
       type: Number,
       default: 0
+    },
+    currentSong: {
+      type: Object,
+      default () {
+        return {}
+      }
     }
   },
   computed: {
     playStateIcon () {
       return this.playState ? 'pause-circle' : 'play-circle'
+    },
+    cover () {
+      return this.currentSong.picUrl ? this.currentSong.picUrl : 'http://p2.music.126.net/t6pUXP9J35-tlp_F4b1_pA==/109951164107025135.jpg'
+    },
+    singer () {
+      return this.currentSong.artist ? this.currentSong.artist[0].name : 'blue'
+    },
+    songName () {
+      return this.currentSong.name ? this.currentSong.name : '蓝眼音乐'
     }
   },
   methods: {

@@ -20,21 +20,25 @@
       @showDrawer="changeDrawerState"
       @changePlayerState="changePlayerState"
       @changePlayState="changePlayState"
+      :currentSong="currentSong"
     >
     </min-player>
-    <!--<audio></audio>-->
+    <audio ref="audio" autoplay></audio>
   </div>
 </template>
 
 <script>
+import config from '@/config/config'
 import MinPlayer from './components/MinPlayer'
 import MaxPlayer from './components/MaxPlayer'
 import ListDrawer from './components/ListDrawer'
 import { mapGetters, mapMutations } from 'vuex'
+import { getPlaySong } from 'api/song'
 export default {
   name: 'Player',
   data () {
     return {
+      musicUrl: '',
       value: 20,
       show: false,
       max: false
@@ -45,10 +49,21 @@ export default {
       'playState',
       'fullScreen',
       'drawerState',
-      'sequenceList'
+      'sequenceList',
+      'playList',
+      'currentSong'
     ]),
     totalNum () {
       return this.sequenceList.length
+    }
+  },
+  watch: {
+    currentSong (song) {
+      console.log(song)
+      this.getPlaySongUrl(song.id)
+    },
+    musicUrl (url) {
+      this.$refs.audio.src = url
     }
   },
   methods: {
@@ -71,8 +86,14 @@ export default {
       this.setSequenceList([])
     },
     playItem (item) {
-      console.log('123')
-      console.log(item)
+      //console.log(item)
+    },
+    getPlaySongUrl (id) {
+      getPlaySong(id).then((res) => {
+        if (res.code === config.ERR_OK) {
+          this.musicUrl = res.data[0].url
+        }
+      })
     }
   },
   components: {

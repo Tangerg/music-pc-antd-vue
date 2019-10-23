@@ -2,8 +2,7 @@
   <a-layout-sider
     v-model="collapsed"
     width="256px"
-    class="sider"
-    theme="light">
+    :style="siderStyle">
     <Logo :collapsed="collapsed"/>
     <Menu/>
   </a-layout-sider>
@@ -16,7 +15,9 @@ export default {
   name: 'SideBar',
   data () {
     return {
-      collapsed: false
+      collapsed: false,
+      siderStyle: {
+      }
     }
   },
   components: {
@@ -27,6 +28,4 @@ export default {
 </script>
 
 <style lang="less">
-  .sider{
-  }
 </style>

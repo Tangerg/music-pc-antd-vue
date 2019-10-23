@@ -5,7 +5,7 @@ import { SET_FULL_SCREEN, SET_PLAY_STATE, SET_PLAY_MODE, SET_DRAWER_STATE } from
 import config from '@/config/config'
 export default {
   state: {
-    playState: true, // 播放状态：true:播放
+    playState: false, // 播放状态：true:播放
     fullScreen: false, // 播放器状态： true：全屏
     playMode: config.PLAY_MODE.sequence, // 播放模式
     drawerState: false // 弹出层状态

@@ -4,7 +4,7 @@
       <div class="cover" @click="onClickCover(cover.coverId)">
         <div class="cover-img">
           <img
-            alt="歌单封面"
+            alt="封面"
             :src=cover.coverImg
           />
         </div>

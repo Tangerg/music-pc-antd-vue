@@ -36,7 +36,7 @@ export default {
 <style lang="less">
 .find-music{
   height: 100%;
-  padding: 20px;
+  padding: 0 50px;
   overflow-y: auto;
 }
 </style>

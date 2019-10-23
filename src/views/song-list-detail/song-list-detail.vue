@@ -23,19 +23,22 @@ const COLUMNS = [
   },
   {
     title: '歌曲',
-    dataIndex: 'name'
-  }, {
+    dataIndex: 'name',
+    width: '200px'
+  },
+  {
     title: '歌手',
     dataIndex: 'artist[0].name',
-    width: '20%'
-  }, {
+    width: '200px'
+  },
+  {
     title: '专辑',
     dataIndex: 'album.name'
   },
   {
     title: '时长',
     dataIndex: 'time',
-    width: '10%'
+    width: '200px'
   }
 ]
 export default {

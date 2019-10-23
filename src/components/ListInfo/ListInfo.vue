@@ -22,19 +22,25 @@
       </div>
       <div class="list-info-tags">
         标签：
-        <span style="color: #1b7ad9;" v-for="(tag,index) in ListInfo.tags">
-          {{tag}}
-          <span v-if="index !==ListInfo.tags.length-1" style="color: #2e2e2e;">/</span>
-        </span>
+        <div v-for="(tag,index) in ListInfo.tags" style="display: inline-block">
+          <a-config-provider :autoInsertSpaceInButton="false" >
+            <a-button type="link" size="small">{{tag}}</a-button>
+          </a-config-provider>
+          <span v-if="index !== ListInfo.tags.length-1" style="color: #000000;">/</span>
+        </div>
+        <!--<a-tag color="#2db7f5" v-for="(tag,index) in ListInfo.tags">{{tag}}</a-tag>-->
       </div>
       <div class="list-info-desc">
         简介：{{ListInfo.descriptionOld}}
-        <a-popover placement="bottom" trigger="click">
+        <!--<a-popover placement="bottom" trigger="click">
           <div slot="content">
-            <div class="desc-popover" v-html="ListInfo.description"><!--{{ListInfo.description}}--></div>
+            <div class="desc-popover" v-html="ListInfo.description">&lt;!&ndash;{{ListInfo.description}}&ndash;&gt;</div>
           </div>
           <span class="desc-detail">详情</span>
-        </a-popover>
+        </a-popover>-->
+        <a-tooltip placement="bottom" :title=ListInfo.description :getPopupContainer="getPopupContainer">
+          <span class="desc-detail">详情</span>
+        </a-tooltip>
       </div>
     </div>
     <div class="count-info">
@@ -78,6 +84,7 @@ export default {
 
 <style lang="less">
   @import "../../styles/mixin.less";
+
   .song-list-info {
     position: relative;
     width: 100%;
@@ -123,7 +130,7 @@ export default {
         height: 20px;
         overflow-y: hidden;
         .one-line();
-        .desc-popover{
+        .desc-popover {
           max-width: 200px;
         }
         .desc-detail {

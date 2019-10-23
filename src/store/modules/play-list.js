@@ -12,7 +12,8 @@ export default {
     }
   },
   getters: {
-    sequenceList: state => state.sequenceList
+    sequenceList: state => state.sequenceList,
+    currentSong: state => state.sequenceList[0]
   },
   actions: {
     sequencePlay ({ commit, state }, { list }) {
