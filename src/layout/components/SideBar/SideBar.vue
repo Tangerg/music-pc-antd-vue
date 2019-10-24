@@ -2,6 +2,7 @@
   <a-layout-sider
     v-model="collapsed"
     width="256px"
+    collapsible
     :style="siderStyle">
     <Logo :collapsed="collapsed"/>
     <Menu/>

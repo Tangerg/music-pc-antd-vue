@@ -1,7 +1,7 @@
 <template>
-  <a-layout class="layout" >
+  <a-layout :style="layout">
     <side-bar></side-bar>
-    <a-layout>
+    <a-layout :style="layout">
       <Header></Header>
       <a-layout-content>
         <render-view></render-view>
@@ -18,6 +18,14 @@ import RenderView from './components/RenderView'
 import Player from '@/player'
 export default {
   name: 'BasicLayout',
+  data () {
+    return {
+      layout: {
+        height: '100%',
+        overflow: 'hidden'
+      }
+    }
+  },
   components: {
     Header,
     SideBar,
@@ -28,8 +36,4 @@ export default {
 </script>
 
 <style lang="less">
-.layout{
-  height: 100%;
-  overflow: hidden;
-}
 </style>

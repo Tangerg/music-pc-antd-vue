@@ -3,7 +3,7 @@
     mode="inline"
     theme="dark"
     class="menu-list"
-    @click="handleSelect"
+    @click="handleClickMenu"
     :defaultSelectedKeys="['/find-music/recommend']"
   >
     <a-menu-item-group>
@@ -48,8 +48,7 @@ export default {
     }
   },
   methods: {
-    handleSelect (item) {
-      console.log(item)
+    handleClickMenu (item) {
       this.$router.push(item.key)
     }
   }

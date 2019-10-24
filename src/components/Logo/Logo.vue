@@ -30,7 +30,7 @@ export default {
     font-size: 24px;
     color: #fff;
     text-align: center;
-    background-color: #000272;
+    background-color: #001529;
     cursor: pointer;
   }
 </style>

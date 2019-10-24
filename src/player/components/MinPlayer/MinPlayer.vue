@@ -22,7 +22,7 @@
         <div class="btn-group">
           <span class="control control-other">
             <!--<a-icon type="heart" />-->
-            <a-icon type="heart" theme="filled" style="color: #f46b47" />
+            <a-icon type="heart" theme="filled" style="color: #0652ff" />
           </span>
           <span class="control control-play" @clcik="prevSong">
             <a-icon type="left-circle"/>
@@ -134,7 +134,7 @@ export default {
     .player-min-slider {
       width: 100%;
       position: absolute;
-      top: -4px;
+      top: -5px;
     }
     .player-min-control {
       height: 70px;

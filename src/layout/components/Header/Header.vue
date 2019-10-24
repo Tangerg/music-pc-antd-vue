@@ -13,7 +13,7 @@ export default {
         color: 'white',
         fontSize: '24px',
         textAlign: 'center',
-        backgroundColor: '#ff6363'
+        backgroundColor: '#001529'
       }
     }
   },

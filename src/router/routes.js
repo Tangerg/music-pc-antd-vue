@@ -22,7 +22,7 @@ export default [
             meta: {
               title: '个人推荐'
             },
-            component: () => import('@v/find-music/personal-recommend/personal-recommend')
+            component: () => import('@v/find-music/recommend/recommend')
           }
           /* {
             path: '/find-music/song-list',

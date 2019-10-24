@@ -1,8 +1,6 @@
 <template>
   <div>
-<!--
     <banner-carousel :banners="banners"></banner-carousel>
--->
     <column-header title="歌单"></column-header>
     <cover-list :coverList="songList"></cover-list>
   </div>
