@@ -1,7 +1,7 @@
 <template>
   <a-menu
     mode="inline"
-    theme="dark"
+    theme="light"
     class="menu-list"
     @click="handleClickMenu"
     :defaultSelectedKeys="['/find-music/recommend']"

@@ -1,5 +1,5 @@
 export default class Banner {
-  constructor ({ imageUrl, targetId, targetType, titleColor, typeTitle, url, encodeId }) {
+  constructor ({ imageUrl, targetId, targetType, titleColor, typeTitle, url, encodeId, song }) {
     this.imageUrl = imageUrl
     this.targetId = targetId
     this.targetType = targetType
@@ -7,6 +7,7 @@ export default class Banner {
     this.typeTitle = typeTitle
     this.url = url
     this.encodeId = encodeId
+    this.song = song
   }
 }
 
@@ -18,6 +19,7 @@ export function createBanner (banner) {
     titleColor: banner.titleColor,
     typeTitle: banner.typeTitle,
     url: banner.url,
-    encodeId: banner.encodeId
+    encodeId: banner.encodeId,
+    song: banner.song
   })
 }

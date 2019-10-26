@@ -1,31 +1,15 @@
 <template>
-  <a-carousel arrows>
-    <div
-      slot="prevArrow" slot-scope="props"
-      class="custom-slick-arrow"
-      style="left: 10px;zIndex: 1"
-    >
-      <a-icon type="left-circle" />
-    </div>
-    <div
-      slot="nextArrow" slot-scope="props"
-      class="custom-slick-arrow"
-      style="right: 10px"
-    >
-      <a-icon type="right-circle" />
-    </div>
-    <div v-for="(banner,index) in banners" :key="index">
-      <img
-        style="width: 100%;"
-        :src="banner.imageUrl"/>
-      <span class="type-title" :style="titleColor(banner.titleColor)">
-        {{banner.typeTitle}}
-      </span>
-    </div>
-  </a-carousel>
+  <swiper :options="swiperOption">
+    <swiper-slide v-for="(banner, index) in banners" :key="index" >
+      <img :src="banner.imageUrl" style="width: 600px"/>
+    </swiper-slide>
+    <div class="swiper-pagination" slot="pagination"></div>
+  </swiper>
 </template>
 
 <script>
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   name: 'BannerCarousel',
   props: {
@@ -36,14 +20,39 @@ export default {
   },
   data () {
     return {
-      slide: 1,
-      auto: true
+      swiperOption: {
+        loop: true,
+        autoplay: true,
+        effect: 'coverflow',
+        slidesPerView: 3,
+        centeredSlides: true,
+        coverflowEffect: {
+          rotate: 10,
+          stretch: 10,
+          depth: 90,
+          modifier: 1.5,
+          slideShadows: false
+        }
+      }
     }
   },
   methods: {
-    titleColor (color) {
-      return 'background-color:' + color
+    appendSlide () {
+      this.swiperSlides.push(this.swiperSlides.length + 1)
+    },
+    prependSlide () {
+      this.swiperSlides.unshift(this.swiperSlides[0] - 1)
+    },
+    popSlide () {
+      this.swiperSlides.pop()
+    },
+    shiftSlide () {
+      this.swiperSlides.shift()
     }
+  },
+  components: {
+    swiper,
+    swiperSlide
   }
 }
 </script>
@@ -61,27 +70,5 @@ export default {
       width: 100%;
       height: 100%;
     }
-  }
-/*  .ant-carousel /deep/ .slick-slide {
-    text-align: center;
-    height: 160px;
-    line-height: 160px;
-    background: #364d79;
-    overflow: hidden;
-  }*/
-
-  .ant-carousel /deep/ .custom-slick-arrow {
-    width: 25px;
-    height: 25px;
-    font-size: 25px;
-    color: #fff;
-    background-color: rgba(31,45,61,.11);
-    opacity: 0.3;
-  }
-  .ant-carousel /deep/ .custom-slick-arrow:before {
-    display: none;
-  }
-  .ant-carousel /deep/ .custom-slick-arrow:hover {
-    opacity: 0.5;
   }
 </style>

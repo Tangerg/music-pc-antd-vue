@@ -1,8 +1,9 @@
 <template>
   <div class="column-header">
     <div class="column-header-left">{{title}}</div>
-    <div class="column-header-center">{{title}}</div>
-    <div class="column-header-right">{{title}}</div>
+    <div class="column-header-right">
+      <span class="show-more" v-if="show" @click="showMore()">更多></span>
+    </div>
   </div>
 </template>
 
@@ -13,6 +14,19 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    show: {
+      type: Boolean,
+      default: true
+    },
+    route: {
+      type: String,
+      default: ''
+    }
+  },
+  methods: {
+    showMore () {
+      console.log(this.route)
     }
   }
 }
@@ -26,20 +40,19 @@ export default {
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid #e8e8e8;
-    margin-bottom: 5px;
     .column-header-left {
       flex: 1;
       text-align: left;
       font-size: 18px;
-      font-weight: 500;
-    }
-    .column-header-center {
-      flex: 1;
-      text-align: center;
+      font-weight: 600;
     }
     .column-header-right {
       flex: 1;
       text-align: right;
+      color: #acacac;
+      .show-more{
+        cursor: pointer;
+      }
     }
   }
 </style>

@@ -1,7 +1,12 @@
 <template>
   <div>
     <banner-carousel :banners="banners"></banner-carousel>
-    <column-header title="歌单"></column-header>
+    <column-header title="推荐歌单" route="123"></column-header>
+    <column-header title="独家放送" route="321"></column-header>
+    <column-header title="最新音乐" route="132"></column-header>
+    <column-header title="推荐MV"></column-header>
+    <column-header title="主播电台"></column-header>
+    <column-header title="LOOK直播"></column-header>
     <cover-list :coverList="songList"></cover-list>
   </div>
 </template>
@@ -16,7 +21,7 @@ import { getBanner } from 'api/banner'
 import { getPersonalized } from 'api/songList'
 import config from '@/config/config'
 export default {
-  name: 'personal-recommend',
+  name: 'recommend',
   data () {
     return {
       banners: [],
@@ -37,6 +42,7 @@ export default {
           this.banners = res.banners.map((banner) => {
             return createBanner(banner)
           })
+          console.log(this.banners)
         }
       })
     },
@@ -59,5 +65,4 @@ export default {
 </script>
 
 <style lang="less">
-
 </style>
