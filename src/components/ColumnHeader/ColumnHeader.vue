@@ -1,8 +1,8 @@
 <template>
   <div class="column-header">
-    <div class="column-header-left">{{title}}</div>
+    <div class="column-header-left">{{column.title}}</div>
     <div class="column-header-right">
-      <span class="show-more" v-if="show" @click="showMore()">更多></span>
+      <span class="show-more" v-if="column.show" @click="showMore()">更多></span>
     </div>
   </div>
 </template>
@@ -11,22 +11,16 @@
 export default {
   name: 'ColumnHeader',
   props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    show: {
-      type: Boolean,
-      default: true
-    },
-    route: {
-      type: String,
-      default: ''
+    column: {
+      type: Object,
+      default: () => {
+        return {}
+      }
     }
   },
   methods: {
     showMore () {
-      console.log(this.route)
+      console.log(this.column.route)
     }
   }
 }

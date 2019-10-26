@@ -1,12 +1,11 @@
+<!--suppress ALL -->
 <template>
   <div>
     <banner-carousel :banners="banners"></banner-carousel>
-    <column-header title="推荐歌单" route="123"></column-header>
-    <column-header title="独家放送" route="321"></column-header>
-    <column-header title="最新音乐" route="132"></column-header>
-    <column-header title="推荐MV"></column-header>
-    <column-header title="主播电台"></column-header>
-    <column-header title="LOOK直播"></column-header>
+    <column-header :column=columnList.recommendList></column-header>
+    <column-header :column=columnList.exclusiveDistribution></column-header>
+    <column-header :column=columnList.latestMusic></column-header>
+    <column-header :column=columnList.recommendMV></column-header>
     <cover-list :coverList="songList"></cover-list>
   </div>
 </template>
@@ -20,10 +19,33 @@ import { createSongListCover } from '@/class/cover'
 import { getBanner } from 'api/banner'
 import { getPersonalized } from 'api/songList'
 import config from '@/config/config'
+const COLUMN_LIST = {
+  recommendList: {
+    title: '推荐歌单',
+    route: 'recommendList',
+    show: true
+  },
+  exclusiveDistribution: {
+    title: '独家放送',
+    route: 'exclusiveDistribution',
+    show: true
+  },
+  latestMusic: {
+    title: '最新音乐',
+    route: 'latestMusic',
+    show: true
+  },
+  recommendMV: {
+    title: '推荐MV',
+    route: 'recommendMV',
+    show: false
+  }
+}
 export default {
   name: 'recommend',
   data () {
     return {
+      columnList: COLUMN_LIST,
       banners: [],
       songList: []
     }
