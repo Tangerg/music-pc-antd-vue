@@ -8,7 +8,7 @@
       :tabBarStyle="tabBarStyle">
       <a-tab-pane
         :tab="tabItem.tabName"
-        :key="tabItem.url"
+        :key="tabItem.route"
         v-for="(tabItem) in tabList">
       </a-tab-pane>
     </a-tabs>
@@ -26,7 +26,7 @@ export default {
   },
   data () {
     return {
-      defaultActiveKey: this.tabList[0].url,
+      defaultActiveKey: this.tabList[0].route,
       tabBarStyle: {
         textAlign: 'center'
       }

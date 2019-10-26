@@ -4,7 +4,7 @@
     theme="light"
     class="menu-list"
     @click="handleClickMenu"
-    :defaultSelectedKeys="['/find-music/recommend']"
+    :defaultSelectedKeys="[RecommendMusicMenu[0].route]"
   >
     <a-menu-item-group>
       <div slot="title"><span>推荐</span></div>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import MENU_LIST from './menu'
+import { MENU_LIST } from '@/config/filler'
 export default {
   name: 'Menu',
   data () {

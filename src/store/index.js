@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import listInfo from './modules/list-info'
 import playList from './modules/play-list'
 import player from './modules/player'
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
 
   },
   modules: {
+    listInfo,
     playList,
     player
   }

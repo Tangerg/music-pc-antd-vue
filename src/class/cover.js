@@ -1,29 +1,40 @@
+import { playCount } from 'utils/play-count'
 export default class Cover {
-  constructor ({ id, type, image, name }) {
+  constructor ({ id, type, picUrl, name, copywriter, playCount, trackCount }) {
     this.coverId = id
     this.coverType = type
-    this.coverImg = image
     this.coverName = name
+    this.coverCopywriter = copywriter
+    this.coverImg = picUrl
+    this.coverPlayCount = playCount
+    this.coverTrackCount = trackCount
   }
 }
 
-/** 歌单数据
- "id": 2792976270,
- "type": 0,
- "name": "你肯定能熬到不喜欢TA的那一天",
- "copywriter": "编辑推荐：希望你开心，成为更好的自己",
- "picUrl": "https://p2.music.126.net/goMWO-L7OLNWU5u4rSkgRA==/109951164073778677.jpg",
- "canDislike": false,
- "playCount": 5790524.5,
- "trackCount": 61,
- "highQuality": false,
- "alg": "featured"
- * */
-export function createSongListCover (songList) {
+/** 推荐歌单数据
+  {
+     "id": 2409342460,
+     "type": 0,
+     "name": "[VIP专享] 一周新歌推荐",
+     "copywriter": "编辑推荐：每周VIP专享歌曲，编辑精选推荐！",
+     "picUrl": "https://p2.music.126.net/fusd64npZfRyCR6bIIGMLQ==/109951164447637273.jpg",
+     "canDislike": false,
+     "trackNumberUpdateTime": 1572019200000, //
+     "playCount": 204221088,  //播放数
+     "trackCount": 20,  //歌曲总数
+     "highQuality": false,
+     "alg": "featured"
+  },
+*/
+// 由推荐歌单创建封面
+export function createPlayListCoverByRecommend (playList) {
   return new Cover({
-    id: songList.id,
-    type: songList.type,
-    image: songList.picUrl,
-    name: songList.name
+    id: playList.id,
+    type: playList.type,
+    name: playList.name,
+    copywriter: playList.copywriter,
+    picUrl: playList.picUrl,
+    playCount: playCount(playList.playCount),
+    trackCount: playList.trackCount
   })
 }

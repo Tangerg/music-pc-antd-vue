@@ -1,4 +1,4 @@
-import { handleSongTime } from '../utils/time'
+import { handleSongTime } from 'utils/time'
 export default class Song {
   constructor ({ name, id, artist, album, time, picUrl }) {
     this.name = name

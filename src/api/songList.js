@@ -1,5 +1,6 @@
 import axios from 'utils/axios'
-// 获取未登录歌单
+
+// 获取未登录个性推荐歌单
 export const getPersonalized = () => {
   return axios.request({
     url: '/personalized',

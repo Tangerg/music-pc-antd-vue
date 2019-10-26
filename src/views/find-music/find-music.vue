@@ -10,38 +10,13 @@
 </template>
 
 <script>
+import { FIND_MUSIC_TAB_LIST } from '@/config/filler'
 import HeaderTab from '@c/HeaderTab'
-const TAB_LIST = [
-  {
-    tabName: '个性推荐',
-    url: '/find-music/recommend'
-  },
-  {
-    tabName: '歌单',
-    url: '/personal-fm'
-  },
-  {
-    tabName: '主播电台',
-    url: '/video-mv'
-  },
-  {
-    tabName: '排行榜',
-    url: '/friends-space'
-  },
-  {
-    tabName: '歌手',
-    url: '/find-music/song-list3'
-  },
-  {
-    tabName: '最新音乐',
-    url: '/find-music/song-list4'
-  }
-]
 export default {
   name: 'find-music',
   data () {
     return {
-      tabList: TAB_LIST
+      tabList: FIND_MUSIC_TAB_LIST
     }
   },
   components: {

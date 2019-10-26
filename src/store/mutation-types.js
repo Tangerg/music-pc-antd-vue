@@ -1,3 +1,4 @@
+export const SET_LIST_INFO = 'SET_LIST_INFO'
 export const SET_SEQUENCE_LIST = 'SET_SEQUENCE_LIST'
 export const SET_FULL_SCREEN = 'SET_FULL_SCREEN'
 export const SET_PLAY_STATE = 'SET_PLAY_STATE'

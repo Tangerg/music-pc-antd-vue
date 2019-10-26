@@ -6,7 +6,7 @@ export default [
     path: '/',
     name: 'home',
     component: BasicLayout,
-    redirect: '/find-music/recommend',
+    redirect: '/find-music/personalized',
     children: [
       {
         path: '/find-music',
@@ -17,12 +17,12 @@ export default [
         component: FindMusic,
         children: [
           {
-            path: '/find-music/recommend',
+            path: '/find-music/personalized',
             name: 'recommend',
             meta: {
               title: '个人推荐'
             },
-            component: () => import('@v/find-music/recommend/recommend')
+            component: () => import('@v/find-music/personalized/personalized')
           }
           /* {
             path: '/find-music/song-list',
