@@ -65,7 +65,7 @@ export default [
         meta: {
           title: '歌单详情'
         },
-        component: () => import('@v/song-list-detail/song-list-detail')
+        component: () => import('@v/detail/playlist/playlist')
       }
     ]
   }

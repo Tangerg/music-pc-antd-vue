@@ -9,7 +9,6 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes,
   scrollBehavior (to, from, savedPosition) {
-    console.log(savedPosition)
     if (savedPosition) {
       console.log(savedPosition)
       return savedPosition

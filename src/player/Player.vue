@@ -59,7 +59,6 @@ export default {
   },
   watch: {
     currentSong (song) {
-      console.log(song)
       this.getPlaySongUrl(song.id)
     },
     musicUrl (url) {

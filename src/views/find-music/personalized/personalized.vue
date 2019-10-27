@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 import { getBanner } from 'api/banner'
 import { getPersonalized } from 'api/songList'
 
@@ -35,6 +37,9 @@ export default {
     this.init()
   },
   methods: {
+    ...mapMutations({
+      setListInfo: 'SET_LIST_INFO'
+    }),
     init () {
       this.createBannerList()
       this.createPlayList()
@@ -58,7 +63,8 @@ export default {
       })
     },
     handleClickCover (cover) {
-      // console.log(cover)
+      this.setListInfo(cover)
+      this.$router.push(`/song-list/${cover.coverId}`)
     },
     handleClickPlay (cover) {
       console.log(cover)

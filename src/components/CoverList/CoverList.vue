@@ -37,7 +37,6 @@ export default {
 </script>
 
 <style lang="less">
-  @import "../../styles/mixin.less";
   .cover-list {
     margin-top: 10px;
     width: 100%;
