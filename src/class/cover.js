@@ -33,7 +33,7 @@ export function createPlayListCoverByRecommend (playList) {
     type: playList.type,
     name: playList.name,
     copywriter: playList.copywriter,
-    picUrl: playList.picUrl,
+    picUrl: playList.picUrl + '?param=300y300',
     playCount: playCount(playList.playCount),
     trackCount: playList.trackCount
   })
