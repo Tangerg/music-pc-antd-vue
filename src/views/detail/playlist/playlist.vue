@@ -1,6 +1,6 @@
 <template>
   <div>
-    <info-header :Info="info"></info-header>
+    <info-header :Info="info" v-if="this.listInfo"></info-header>
   </div>
 </template>
 
@@ -14,14 +14,22 @@ export default {
     return {
       info: {
         type: 1,
-        content: this.listInfo
+        content: ''
       }
     }
+  },
+  mounted () {
+    this.addContent()
   },
   computed: {
     ...mapGetters([
       'listInfo'
     ])
+  },
+  methods: {
+    addContent () {
+      this.info.content = this.listInfo
+    }
   },
   components: {
     InfoHeader

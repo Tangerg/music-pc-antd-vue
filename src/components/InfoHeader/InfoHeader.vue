@@ -7,7 +7,8 @@
       <div class="info-main-left">
         <div class="info-cover" >
           <!--<div class="info-cover-album" ></div>-->
-          <img src="https://p2.music.126.net/16YjofanqyKk3GTQz4LhQw==/109951163463413693.jpg?param=300y300" alt="封面">
+          <!--<img src="https://p2.music.126.net/16YjofanqyKk3GTQz4LhQw==/109951163463413693.jpg?param=300y300" alt="封面">-->
+          <img :src=Info.content.coverImg alt="封面">
         </div>
       </div>
       <!--左侧封面图-->
