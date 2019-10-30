@@ -1,4 +1,4 @@
-import { playCount } from 'utils/play-count'
+import { handlePlayCount } from 'utils/count'
 export default class Cover {
   constructor ({ id, type, picUrl, name, copywriter, playCount, trackCount }) {
     this.coverId = id
@@ -34,7 +34,7 @@ export function createPlayListCoverByRecommend (playList) {
     name: playList.name,
     copywriter: playList.copywriter,
     picUrl: playList.picUrl + '?param=300y300',
-    playCount: playCount(playList.playCount),
+    playCount: handlePlayCount(playList.playCount),
     trackCount: playList.trackCount
   })
 }

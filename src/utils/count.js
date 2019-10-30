@@ -1,4 +1,4 @@
-export function playCount (num) {
+export function handlePlayCount (num) {
   if (num / 100000000 > 1) {
     if (num / 10000 > 1) {
       return `${Math.floor(num / 100000000)}亿${Math.floor(num % 100000000 / 10000)}万`
