@@ -19,6 +19,7 @@
 import { getPlayList } from 'api/songList'
 
 import { createPlaylist } from '@/class/playlist'
+import { createSong } from '@/class/song'
 
 import config from '@/config/config'
 
@@ -30,6 +31,7 @@ export default {
   data () {
     return {
       playlist: {},
+      songList: [],
       tabList: [
         {
           title: '歌曲列表',
@@ -58,6 +60,10 @@ export default {
         if (res.code === config.ERR_OK) {
           this.playlist = createPlaylist(res.playlist)
           this.tabList[1].title = `评论(${this.playlist.commentCount})`
+          this.songList = res.playlist.tracks.map((track) =>{
+            return createSong(track)
+          })
+          console.log(this.songList)
         }
       })
     },
