@@ -1,21 +1,20 @@
 <template>
   <div class="playlist-detail">
-    <playlist-header :Content="playlist" v-if="playlist.creator"></playlist-header>
+    <playlist-header :Content="playlist" v-if="playlist.creator" onClickPlayAll="playAll"></playlist-header>
     <info-tab :tabList="tabList" @changeTab="handleChangeTab">
-      <a-input-search slot="tab-slot" placeholder="搜索歌单音乐" style="width: 150px"  />
-      <a-radio-group defaultValue="a" buttonStyle="solid">
-        <a-radio-button value="a"><a-icon type="border-bottom" /></a-radio-button>
-        <a-radio-button value="b"><a-icon type="border-horizontal" /></a-radio-button>
-        <a-radio-button value="c"><a-icon type="border-left" /></a-radio-button>
-      </a-radio-group>
+      <a-input-search v-show="activeKey === tabList[0].key" slot="tab-slot" placeholder="搜索歌单音乐" style="width: 150px"  />
     </info-tab>
-    <div v-if="activeKey === tabList[0].key">歌曲界面</div>
-    <div v-if="activeKey === tabList[1].key">评论界面</div>
-    <div v-if="activeKey === tabList[2].key">收藏界面</div>
+    <div v-show="activeKey === tabList[0].key">
+      <SongTable :dataSource="songList" @onClickSong="clickSong" @onClickArtist="clickArtist" @onClickAlbum="clickAlbum"></SongTable>
+    </div>
+    <div v-show="activeKey === tabList[1].key">评论界面</div>
+    <div v-show="activeKey === tabList[2].key">收藏界面</div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 import { getPlayList } from 'api/songList'
 
 import { createPlaylist } from '@/class/playlist'
@@ -25,6 +24,8 @@ import config from '@/config/config'
 
 import { PlaylistHeader } from '@c/InfoHeader'
 import InfoTab from '@c/InfoTab'
+import SongTable from '@c/SongTable'
+
 const INDEX_KEY = 'playlist'
 export default {
   name: 'playlist',
@@ -55,25 +56,43 @@ export default {
   computed: {
   },
   methods: {
+    ...mapActions([
+      'sequencePlay'
+    ]),
     initPlayList () {
       getPlayList(this.$route.params.id).then((res) => {
         if (res.code === config.ERR_OK) {
           this.playlist = createPlaylist(res.playlist)
           this.tabList[1].title = `评论(${this.playlist.commentCount})`
-          this.songList = res.playlist.tracks.map((track) =>{
+          this.songList = res.playlist.tracks.map((track) => {
             return createSong(track)
           })
           console.log(this.songList)
         }
       })
     },
+    clickSong (record, index) {
+      console.log(record, index)
+    },
+    clickArtist (artist) {
+      console.log(artist)
+    },
+    clickAlbum (album) {
+      console.log(album)
+    },
     handleChangeTab (key) {
       this.activeKey = key
+    },
+    playAll () {
+      this.sequencePlay({
+        list: this.songList
+      })
     }
   },
   components: {
     PlaylistHeader,
-    InfoTab
+    InfoTab,
+    SongTable
   }
 }
 </script>
@@ -83,5 +102,6 @@ export default {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    background-color: white;
   }
 </style>

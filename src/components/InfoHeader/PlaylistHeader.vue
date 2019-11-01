@@ -18,15 +18,20 @@
             <div class="create-time">{{Content.createTime}}创建</div>
           </div>
           <div class="btn-group playlist-operate">
-            <a-button icon="play-circle" type="primary" class="operate-btn" >播放全部</a-button>
+            <a-button icon="play-circle" type="primary" class="operate-btn" @click="onClickPlayAll">播放全部</a-button>
             <a-button icon="folder-add" type="primary" class="operate-btn" >收藏({{Content.subscribedCount}})</a-button>
             <a-button icon="share-alt" type="primary" class="operate-btn" >分享({{Content.shareCount}})</a-button>
           </div>
           <div class="info-text-group">
-            <div class="text-item playlist-tag" v-if="Content.tags">标签:<span class="tags"  v-for="(tag,index) in Content.tags" :key="index" @click="onClickTag(tag)"> {{tag}} <span class="slant-line" v-if="index !== Content.tags.length-1">/</span>
+            <div class="text-item playlist-tag">
+              <span>标签: </span>
+              <span
+                v-for="(tag,index) in Content.tags"
+                :key="index"><span class="tags" @click="onClickTag(tag)"> {{tag}} </span>
+                <span class="slant-line" v-if="index !== Content.tags.length-1">/</span>
               </span>
             </div>
-            <div class="text-item" :class="introduceClass">简介: <span v-html="Content.description"></span></div>
+            <div class="text-item" :class="introduceClass">简介: <span ref="description1" v-html="Content.description"></span></div>
           </div>
         </div>
       </div>
@@ -73,12 +78,21 @@ export default {
       return this.fold ? 'down' : 'up'
     }
   },
+  /* watch: {
+    showArrow (val) {
+      console.log(this.$refs.description.style.height)
+      this.showArrow = this.$refs.description.style.height > 40
+    }
+  }, */
   methods: {
     changeFold () {
       this.fold = !this.fold
     },
     onClickTag (tag) {
       this.$emit('onClickTag', tag)
+    },
+    onClickPlayAll () {
+      this.$emit('onClickPlayAll')
     }
   }
 }

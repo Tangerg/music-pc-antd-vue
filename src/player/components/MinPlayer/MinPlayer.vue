@@ -135,6 +135,7 @@ export default {
       width: 100%;
       position: absolute;
       top: -5px;
+      padding: 0 5px;
     }
     .player-min-control {
       height: 70px;
