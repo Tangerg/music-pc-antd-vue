@@ -1,5 +1,5 @@
 <template>
-  <div class="playlist-detail">
+  <div class="playlist-detail" v-if="playlist.id">
     <playlist-header :Content="playlist" v-if="playlist.creator" @onClickPlayAll="playAll"></playlist-header>
     <info-tab :tabList="tabList" @onChangeTab="handleChangeTab">
       <a-input-search v-show="activeKey === tabList[0].key" slot="tab-slot" placeholder="搜索歌单音乐" style="width: 150px"  />
@@ -57,9 +57,14 @@ export default {
   },
   methods: {
     ...mapActions([
-      'sequencePlay'
+      'sequencePlay',
+      'selectPlay'
     ]),
-    initPlayList () {
+    async initPlayList () {
+      /*const { playlist } = await getPlayList(this.$route.params.id)
+      this.playlist = createPlaylist(playlist)
+      this.tabList[1].title = `评论(${this.playlist.commentCount})`
+      await this.initSongList(playlist.tracks)*/
       getPlayList(this.$route.params.id).then((res) => {
         if (res.code === config.ERR_OK) {
           this.playlist = createPlaylist(res.playlist)
@@ -71,8 +76,16 @@ export default {
         }
       })
     },
+    async initSongList (tracks) {
+      this.songList = tracks.map((track) => {
+        return createSong(track)
+      })
+    },
     clickSong (record, index) {
-      console.log(record, index)
+      this.selectPlay({
+        list: this.songList,
+        index: index
+      })
     },
     clickArtist (artist) {
       console.log(artist)

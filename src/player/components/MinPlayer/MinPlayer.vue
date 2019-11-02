@@ -6,48 +6,45 @@
     <div class="player-min-control">
       <div class="control-left">
         <div class="song-cover">
-          <div class="open-max-player" @click="changePlayerState(true)">
-            <div class="icon">
-              <a-icon type="fullscreen" />
-            </div>
-          </div>
-          <img :src=cover alt="封面">
+          <img class="cursor" :src=currentSong.picUrl @click="onChangePlayerDisplay(true)" alt="封面">
         </div>
         <div class="song-text">
-          <span class="song-text-common song-text-name">{{songName}}</span>
-          <span class="song-text-common song-text-artist">{{singer}}</span>
+          <div class="song-text-common song-text-name cursor" @click="onChangePlayerDisplay(true)">{{currentSong.name}}</div>
+          <span class="song-text-common song-text-artist" v-for="(art,index) in currentSong.artist" :key="index">
+            <span class="cursor" @click="onClickArtist(art)">{{art.name}}</span>
+            <span v-if="index < currentSong.artist.length-1"> / </span>
+          </span>
         </div>
       </div>
       <div class="control-center">
         <div class="btn-group">
-          <span class="control control-other">
-            <!--<a-icon type="heart" />-->
-            <a-icon type="heart" theme="filled" style="color: #0652ff" />
+          <span class="control control-other ">
+            <a-icon class="cursor" type="heart" :theme="likeStateIcon" style="color: rgba(16,137,255,0.84)" @click="onClickLike"/>
           </span>
-          <span class="control control-play" @clcik="prevSong">
-            <a-icon type="left-circle"/>
+          <span class="control control-play cursor" >
+            <a-icon type="left-circle" @click="onClickPrev"/>
           </span>
-          <span class="control control-play control-play-center" @click="changePlayState">
-            <a-icon :type=playStateIcon />
+          <span class="control control-play control-play-center cursor" >
+            <a-icon :type=playStateIcon @click="onChangePlayState"/>
           </span>
-          <span class="control control-play" @clcik="nextSong">
-            <a-icon type="right-circle"/>
+          <span class="control control-play cursor" >
+            <a-icon type="right-circle" @click="onClickNext"/>
           </span>
-          <span class="control control-other">
-            <a-icon type="reload"/>
+          <span class="control control-other cursor">
+            <a-icon :type=playModeIcon @click="onChangePlayMode"/>
           </span>
         </div>
       </div>
       <div class="control-right">
         <div class="btn-group">
-          <span class="control control-time">{{currentTime}} / {{fullTime}}</span>
-          <span class="control control-other">
-            <a-icon type="sound"/>
+          <span class="control control-time">{{currentTime}} / {{currentSong.duration}}</span>
+          <span class="control control-other cursor">
+            <a-icon type="sound" @click="onClickSound"/>
           </span>
-          <span class="control control-other" @click="showDrawer()">
-            <a-icon type="bars" />
-          <span class="song-count"> {{totalNum}}</span>
-        </span>
+          <span class="control control-other cursor" >
+            <a-icon type="bars" @click="onClickDrawer"/>
+            <span class="song-count"> {{countNum}}</span>
+          </span>
         </div>
       </div>
     </div>
@@ -64,11 +61,11 @@ export default {
       type: Boolean,
       default: false
     },
-    currentTime: {
-      type: String,
-      default: '00:00'
+    likeState: {
+      type: Boolean,
+      default: false
     },
-    fullTime: {
+    currentTime: {
       type: String,
       default: '00:00'
     },
@@ -76,14 +73,16 @@ export default {
       type: Number,
       default: config.PLAY_MODE.sequence
     },
-    totalNum: {
+    countNum: {
       type: Number,
       default: 0
     },
     currentSong: {
       type: Object,
-      default () {
-        return {}
+      default: function () {
+        return {
+          name: 'lanyanjing'
+        }
       }
     }
   },
@@ -91,31 +90,42 @@ export default {
     playStateIcon () {
       return this.playState ? 'pause-circle' : 'play-circle'
     },
-    cover () {
-      return this.currentSong.picUrl ? this.currentSong.picUrl : 'http://p2.music.126.net/t6pUXP9J35-tlp_F4b1_pA==/109951164107025135.jpg'
+    playModeIcon () {
+      return this.playMode === config.PLAY_MODE.sequence
+        ? 'menu-unfold' : this.playMode === config.PLAY_MODE.singleLoop
+          ? 'retweet' : 'question'
     },
-    singer () {
-      return this.currentSong.artist ? this.currentSong.artist[0].name : 'blue'
-    },
-    songName () {
-      return this.currentSong.name ? this.currentSong.name : '蓝眼音乐'
+    likeStateIcon () {
+      return this.likeState ? 'filled' : 'outlined'
     }
   },
   methods: {
-    showDrawer () {
-      this.$emit('showDrawer', true)
+    onClickDrawer () {
+      this.$emit('onClickDrawer', true)
     },
-    changePlayerState (flag) {
-      this.$emit('changePlayerState', flag)
+    onChangePlayerDisplay (flag) {
+      this.$emit('onChangePlayerDisplay', flag)
     },
-    changePlayState () {
-      this.$emit('changePlayState')
+    onClickArtist (artist) {
+      this.$emit('onClickArtist', artist)
     },
-    prevSong () {
-      this.$emit('prevSong')
+    onClickLike () {
+      this.$emit('onClickLike')
     },
-    nextSong () {
-      this.$emit('nextSong')
+    onChangePlayState () {
+      this.$emit('onChangePlayState')
+    },
+    onClickPrev () {
+      this.$emit('onClickPrev')
+    },
+    onClickNext () {
+      this.$emit('onClickNext')
+    },
+    onChangePlayMode () {
+      this.$emit('onChangePlayMode')
+    },
+    onClickSound () {
+      this.$emit('onClickSound')
     }
   },
   components: {
@@ -129,8 +139,6 @@ export default {
   .player-min {
     width: 100%;
     position: relative;
-    background-color: #fff;
-    //box-sizing: border-box;
     .player-min-slider {
       width: 100%;
       position: absolute;
@@ -140,11 +148,9 @@ export default {
     .player-min-control {
       height: 70px;
       display: flex;
-      flex-direction: row;
       .control-left {
         width: 33%;
         display: flex;
-        flex-direction: row;
         .song-cover {
           width: 70px;
           height: 70px;
@@ -179,11 +185,10 @@ export default {
         .song-text {
           width: calc(100% - 70px);
           margin: auto;
-          display: flex;
-          flex-direction: column;
+          display: inline-block;
+          .one-line();
           &-common {
             width: calc(100% - 10px);
-            .one-line();
           }
           &-name {
             font-size: 17px;
@@ -200,7 +205,6 @@ export default {
         margin: auto;
         .btn-group{
           display: flex;
-          flex-direction: row;
           justify-content:center;
         }
       }
@@ -210,16 +214,14 @@ export default {
         .btn-group{
           padding-right: 10px;
           display: flex;
-          flex-direction: row;
           justify-content: flex-end;
         }
       }
       .control{
         margin: auto 10px;
-        cursor: pointer;
         &-play{
           margin: auto 10px;
-          color: #4ccc65;
+          color: #1089ff;
           font-size: 30px;
           &-center{
             font-size: 40px;
@@ -228,7 +230,7 @@ export default {
         &-other{
           font-size: 20px;
           &:hover {
-            color: #4ccc65;
+            color: #1089ff;
           }
           .song-count{
             font-size: 17px;
@@ -239,6 +241,9 @@ export default {
           color: #b6b6b6;
           font-weight: 400;
         }
+      }
+      .cursor{
+        cursor: pointer;
       }
     }
   }

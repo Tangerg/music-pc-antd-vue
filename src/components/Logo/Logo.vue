@@ -1,7 +1,7 @@
 <template>
   <div class="logo" @click="clickLogo()">
     <div v-show="collapsed === false">蓝眼音乐</div>
-    <div v-show="collapsed === true">X</div>
+    <div v-show="collapsed === true">蓝</div>
   </div>
 </template>
 
@@ -30,7 +30,7 @@ export default {
     font-size: 24px;
     color: #fff;
     text-align: center;
-    background-color: #001529;
+    background-color: #1076eb;
     cursor: pointer;
   }
 </style>

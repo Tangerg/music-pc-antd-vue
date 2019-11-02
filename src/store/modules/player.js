@@ -20,8 +20,8 @@ export default {
     [SET_DRAWER_STATE] (state, flag) {
       state.drawerState = flag
     },
-    [SET_PLAY_MODE] (state, flag) {
-      state.playMode = flag
+    [SET_PLAY_MODE] (state, mode) {
+      state.playMode = mode
     }
   },
   getters: {

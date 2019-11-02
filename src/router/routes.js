@@ -23,16 +23,16 @@ export default [
               title: '个人推荐'
             },
             component: () => import('@v/find-music/personalized/personalized')
-          }
-          /* {
-            path: '/find-music/song-list',
-            name: 'song-list',
+          },
+          {
+            path: '/find-music/singer',
+            name: 'singer',
             keepAlive: true,
             meta: {
               title: '歌单'
             },
-            component: () => import('views/find-music/song-list/song-list')
-          } */
+            component: () => import('@v/find-music/singer/singer')
+          }
         ]
       },
       {

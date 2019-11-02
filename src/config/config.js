@@ -7,7 +7,6 @@ export default {
   PLAY_MODE: {
     sequence: 0, // 顺序播放
     singleLoop: 1, // 单曲循环
-    listLoop: 2, // 列表循环
-    random: 3 // 随机播放
+    random: 2 // 随机播放
   }
 }

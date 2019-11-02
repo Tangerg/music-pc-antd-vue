@@ -7,7 +7,7 @@ export default {
   name: 'ProgressBar',
   data () {
     return {
-      value: 20
+      value: 0
     }
   }
 }

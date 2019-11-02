@@ -74,26 +74,26 @@ export const MENU_LIST = {
 export const FIND_MUSIC_TAB_LIST = [
   {
     tabName: '个性推荐',
-    route: '/find-music/recommend'
+    route: '/find-music/personalized'
   },
   {
     tabName: '歌单',
-    route: '/personal-fm'
+    route: '/find-music/1'
   },
   {
     tabName: '主播电台',
-    route: '/video-mv'
+    route: '/find-music/2'
   },
   {
     tabName: '排行榜',
-    route: '/friends-space'
+    route: '/find-music/3'
   },
   {
     tabName: '歌手',
-    route: '/find-music/song-list3'
+    route: '/find-music/singer'
   },
   {
     tabName: '最新音乐',
-    route: '/find-music/song-list4'
+    route: '/find-music/4'
   }
 ]

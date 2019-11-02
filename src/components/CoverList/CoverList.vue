@@ -72,14 +72,10 @@ export default {
             color: white;
             padding-right: 10px;
             background: linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
-            z-index: 999;
           }
           .cover-img {
             overflow: hidden;
             border-radius: 5px;
-            &:hover {
-              //box-shadow: 2px 2px 15px #bebebe;
-            }
             img {
               width: 100%;
               border-radius: 5px;

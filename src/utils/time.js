@@ -1,6 +1,7 @@
-export function handleSongTime (time) {
-  let minute = addZero(Math.floor(time / 1000 / 60))
-  let second = addZero(Math.floor(time / 1000 % 60))
+export function handleSongTime (duration) {
+  const time = duration / 1000 | 0
+  let minute = addZero(Math.floor(time / 60) | 0)
+  let second = addZero(Math.floor(time % 60))
   return `${minute}:${second}`
 }
 
@@ -36,4 +37,11 @@ export function formatDate (date, fmt = 'yyyy-MM-dd hh:mm:ss') {
     }
   }
   return fmt
+}
+
+export function formatTime (time) {
+  time = time | 0
+  let minute = addZero(time / 60 | 0)
+  let second = addZero(time % 60)
+  return `${minute}:${second} `
 }

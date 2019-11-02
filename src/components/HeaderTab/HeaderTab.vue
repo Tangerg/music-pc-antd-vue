@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     handleChangeTab (activeKey) {
-      // this.$router.push(activeKey)
+      this.$router.push(activeKey)
     }
   }
 }

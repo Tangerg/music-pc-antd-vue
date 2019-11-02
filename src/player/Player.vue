@@ -1,29 +1,33 @@
 <template>
   <div class="music-player">
-    <list-drawer
-      :totalNum="totalNum"
-      :songListData="this.sequenceList"
+    <!--<list-drawer
       :visible="drawerState"
-      @closeDrawer="changeDrawerState"
-      @cleanPlayList="cleanPlayList"
-      @playItem="playItem"
     >
-    </list-drawer>
+    </list-drawer>-->
     <max-player
-      @changePlayerState="changePlayerState"
+      @onChangePlayerDisplay="changePlayerDisplay"
       v-show="fullScreen">
     </max-player>
     <min-player
       v-show="!fullScreen"
       :playState="playState"
-      :totalNum="totalNum"
-      @showDrawer="changeDrawerState"
-      @changePlayerState="changePlayerState"
-      @changePlayState="changePlayState"
+      :likeState="true"
+      :playMode="playMode"
+      :countNum="playList.length"
+      :currentTime="currentTime"
       :currentSong="currentSong"
+      @onClickDrawer="clickDrawer"
+      @onClickArtist="clickArtist"
+      @onClickLike="clickLike"
+      @onClickPrev="clickPrev"
+      @onClickNext="clickNext"
+      @onClickSound="clickSound"
+      @onChangePlayState="changePlayState"
+      @onChangePlayerDisplay="changePlayerDisplay"
+      @onChangePlayMode="changePlayMode"
     >
     </min-player>
-    <audio ref="audio" autoplay></audio>
+    <audio  ref="audio" @canplay="canPlay"  @timeupdate="timeUpdate" @ended="audioPlayEnd" autoplay></audio>
   </div>
 </template>
 
@@ -33,24 +37,26 @@ import MinPlayer from './components/MinPlayer'
 import MaxPlayer from './components/MaxPlayer'
 import ListDrawer from './components/ListDrawer'
 import { mapGetters, mapMutations } from 'vuex'
-import { getPlaySong } from 'api/song'
+import { getPlaySongSource } from 'api/song'
+import { formatTime } from 'utils/time'
+
 export default {
   name: 'Player',
   data () {
     return {
       musicUrl: '',
-      value: 20,
-      show: false,
-      max: false
+      currentTime: '00:00'
     }
   },
   computed: {
     ...mapGetters([
       'playState',
+      'playMode',
       'fullScreen',
       'drawerState',
       'sequenceList',
       'playList',
+      'currentIndex',
       'currentSong'
     ]),
     totalNum () {
@@ -58,11 +64,22 @@ export default {
     }
   },
   watch: {
-    currentSong (song) {
-      this.getPlaySongUrl(song.id)
+    currentSong (newVal, oldVal) {
+      if (!newVal.id) {
+        return
+      }
+      if (newVal.id === oldVal.id) {
+        return
+      }
+      this.getPlaySongUrl(newVal.id)
     },
     musicUrl (url) {
-      this.$refs.audio.src = url
+      const audio = this.$refs.audio
+      audio.src = url
+    },
+    playState (state) {
+      const audio = this.$refs.audio
+      state ? audio.play() : audio.pause()
     }
   },
   methods: {
@@ -70,29 +87,94 @@ export default {
       setFullScreen: 'SET_FULL_SCREEN',
       setDrawerState: 'SET_DRAWER_STATE',
       setPlayState: 'SET_PLAY_STATE',
-      setSequenceList: 'SET_SEQUENCE_LIST'
+      setPlayMode: 'SET_PLAY_MODE',
+      setSequenceList: 'SET_SEQUENCE_LIST',
+      setCurrentIndex: 'SET_CURRENT_INDEX'
     }),
-    changePlayerState (flag) {
-      this.setFullScreen(flag)
+    canPlay () {
     },
-    changeDrawerState (flag) {
+    // 更改时间显示
+    timeUpdate (e) {
+      this.currentTime = formatTime(e.target.currentTime)
+    },
+    // 更改drawer显示
+    clickDrawer (flag) {
       this.setDrawerState(flag)
     },
+    // 点击歌手
+    clickArtist () {
+
+    },
+    // 喜欢不喜欢
+    clickLike () {
+
+    },
+    // 点击上一曲
+    clickPrev () {
+      this.prevSong()
+    },
+    // 点击下一曲
+    clickNext () {
+      this.nextSong()
+    },
+    // 音量调整
+    clickSound () {
+
+    },
+    // 更改播放模式
+    changePlayMode () {
+      const playMode = (this.playMode + 1) % 3
+      this.setPlayMode(playMode)
+    },
+    // 更改播放器显示方式
+    changePlayerDisplay (flag) {
+      this.setFullScreen(flag)
+    },
+    // 更改播放状态
     changePlayState () {
       this.setPlayState(!this.playState)
     },
-    cleanPlayList () {
-      this.setSequenceList([])
-    },
-    playItem (item) {
-      //console.log(item)
-    },
+    // 更改播放源
     getPlaySongUrl (id) {
-      getPlaySong(id).then((res) => {
+      getPlaySongSource(id).then((res) => {
         if (res.code === config.ERR_OK) {
           this.musicUrl = res.data[0].url
+          if (this.musicUrl === null) {
+            this.nextSong()
+          }
         }
       })
+    },
+    // 单曲播放结束
+    audioPlayEnd () {
+      if (this.playMode === config.PLAY_MODE.singleLoop) {
+        this.loopPlay()
+      } else {
+        this.nextSong()
+      }
+    },
+    // 单曲循环
+    loopPlay () {
+      const audio = this.$refs.audio
+      audio.currentTime = 0
+      audio.play()
+    },
+    // 下一曲
+    nextSong () {
+      let index = this.currentIndex + 1
+      if (index === this.playList.length) {
+        index = 0
+      }
+      this.setCurrentIndex(index)
+    },
+    // 上一曲
+    prevSong () {
+      console.log('3')
+      let index = this.currentIndex - 1
+      if (index === -1) {
+        index = this.playList.length - 1
+      }
+      this.setCurrentIndex(index)
     }
   },
   components: {
