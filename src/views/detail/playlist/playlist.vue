@@ -1,7 +1,7 @@
 <template>
   <div class="playlist-detail">
-    <playlist-header :Content="playlist" v-if="playlist.creator" onClickPlayAll="playAll"></playlist-header>
-    <info-tab :tabList="tabList" @changeTab="handleChangeTab">
+    <playlist-header :Content="playlist" v-if="playlist.creator" @onClickPlayAll="playAll"></playlist-header>
+    <info-tab :tabList="tabList" @onChangeTab="handleChangeTab">
       <a-input-search v-show="activeKey === tabList[0].key" slot="tab-slot" placeholder="搜索歌单音乐" style="width: 150px"  />
     </info-tab>
     <div v-show="activeKey === tabList[0].key">

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import playList from './modules/play-list'
+import playList from './modules/playlist'
 import player from './modules/player'
 
 Vue.use(Vuex)

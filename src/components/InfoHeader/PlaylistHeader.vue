@@ -78,12 +78,6 @@ export default {
       return this.fold ? 'down' : 'up'
     }
   },
-  /* watch: {
-    showArrow (val) {
-      console.log(this.$refs.description.style.height)
-      this.showArrow = this.$refs.description.style.height > 40
-    }
-  }, */
   methods: {
     changeFold () {
       this.fold = !this.fold

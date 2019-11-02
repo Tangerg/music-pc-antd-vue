@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     handleChangeTab (key) {
-      this.$emit('changeTab', key)
+      this.$emit('onChangeTab', key)
     }
   }
 }
