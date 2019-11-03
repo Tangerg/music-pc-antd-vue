@@ -7,7 +7,16 @@
     <div v-show="activeKey === tabList[0].key">
       <SongTable :dataSource="songList" @onClickSong="clickSong" @onClickArtist="clickArtist" @onClickAlbum="clickAlbum"></SongTable>
     </div>
-    <div v-show="activeKey === tabList[1].key">评论界面</div>
+    <div v-show="activeKey === tabList[1].key">
+      <div class="playlist-comment">
+        <div>精彩评论</div>
+        <comment-list :commentList="hotComments"></comment-list>
+      </div>
+      <div class="playlist-comment">
+        <div>最新评论</div>
+        <comment-list :commentList="comments"></comment-list>
+      </div>
+    </div>
     <div v-show="activeKey === tabList[2].key">收藏界面</div>
   </div>
 </template>
@@ -16,15 +25,18 @@
 import { mapActions } from 'vuex'
 
 import { getPlayList } from 'api/songList'
+import { getPlayListComment } from 'api/comment'
 
 import { createPlaylist } from '@/class/playlist'
 import { createSong } from '@/class/song'
+import { createComment } from '@/class/comment'
 
 import config from '@/config/config'
 
 import { PlaylistHeader } from '@c/InfoHeader'
 import InfoTab from '@c/InfoTab'
 import SongTable from '@c/SongTable'
+import CommentList from '@c/CommentList'
 
 const INDEX_KEY = 'playlist'
 export default {
@@ -47,7 +59,9 @@ export default {
           key: 'subscribed'
         }
       ],
-      activeKey: INDEX_KEY
+      activeKey: INDEX_KEY,
+      hotComments: [],
+      comments: []
     }
   },
   mounted () {
@@ -61,10 +75,6 @@ export default {
       'selectPlay'
     ]),
     async initPlayList () {
-      /*const { playlist } = await getPlayList(this.$route.params.id)
-      this.playlist = createPlaylist(playlist)
-      this.tabList[1].title = `评论(${this.playlist.commentCount})`
-      await this.initSongList(playlist.tracks)*/
       getPlayList(this.$route.params.id).then((res) => {
         if (res.code === config.ERR_OK) {
           this.playlist = createPlaylist(res.playlist)
@@ -72,13 +82,21 @@ export default {
           this.songList = res.playlist.tracks.map((track) => {
             return createSong(track)
           })
+          this.initPlaylistComment()
           console.log(this.songList)
         }
       })
     },
-    async initSongList (tracks) {
-      this.songList = tracks.map((track) => {
-        return createSong(track)
+    initPlaylistComment () {
+      getPlayListComment(this.$route.params.id).then((res) => {
+        if (res.code === config.ERR_OK) {
+          this.hotComments = res.hotComments.map((comment) => {
+            return createComment(comment)
+          })
+          this.comments = res.comments.map((comment) => {
+            return createComment(comment)
+          })
+        }
       })
     },
     clickSong (record, index) {
@@ -105,7 +123,8 @@ export default {
   components: {
     PlaylistHeader,
     InfoTab,
-    SongTable
+    SongTable,
+    CommentList
   }
 }
 </script>
@@ -116,5 +135,8 @@ export default {
     overflow-x: hidden;
     overflow-y: auto;
     background-color: white;
+    .playlist-comment{
+      padding: 20px 30px;
+    }
   }
 </style>

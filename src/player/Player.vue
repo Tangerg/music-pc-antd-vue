@@ -5,8 +5,23 @@
     >
     </list-drawer>-->
     <max-player
+      v-show="fullScreen"
+      :playState="playState"
+      :likeState="true"
+      :playMode="playMode"
+      :countNum="playList.length"
+      :currentTime="currentTime"
+      :currentSong="currentSong"
+      @onClickDrawer="clickDrawer"
+      @onClickArtist="clickArtist"
+      @onClickLike="clickLike"
+      @onClickPrev="clickPrev"
+      @onClickNext="clickNext"
+      @onClickSound="clickSound"
+      @onChangePlayState="changePlayState"
       @onChangePlayerDisplay="changePlayerDisplay"
-      v-show="fullScreen">
+      @onChangePlayMode="changePlayMode"
+      >
     </max-player>
     <min-player
       v-show="!fullScreen"
