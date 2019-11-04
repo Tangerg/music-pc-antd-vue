@@ -1,30 +1,30 @@
 <template>
   <a-table :rowKey="record => record.id"
-           :columns="columns"
-           :dataSource="dataSource"
-           :pagination="false"
-           :customRow="customRow"
-  >
-    <div slot="songIndex" slot-scope="text, record, index">
-      {{ handleIndex(index) }}
-    </div>
-    <div slot="picUrl" slot-scope="picUrl">
-      <img :src=picUrl alt="" style="width: 60px;border-radius: 5px">
-    </div>
-    <div  slot="name" slot-scope="name, record, index">
+             :columns="columns"
+             :dataSource="dataSource"
+             :pagination="false"
+             :customRow="customRow"
+    >
+      <div slot="songIndex" slot-scope="text, record, index">
+        {{ handleIndex(index) }}
+      </div>
+      <div slot="picUrl" slot-scope="picUrl">
+        <img :src=picUrl alt="" style="width: 60px;border-radius: 5px">
+      </div>
+      <div  slot="name" slot-scope="name, record, index">
       <span class="song-common">
       {{name}}
       </span>
-      <a-icon v-if="record.mv !== 0" type="youtube" style="color: red" @click.stop="onClickMv(record.mv)"/>
-    </div>
-    <div slot="artist" slot-scope="artist" class="song-common">
+        <a-icon v-if="record.mv !== 0" type="youtube" style="color: red" @click.stop="onClickMv(record.mv)"/>
+      </div>
+      <div slot="artist" slot-scope="artist" class="song-common">
       <span v-for="(art,index) in artist" :key="index">
         <span @click.stop="onClickArtist(art)" class="artist-name">{{art.name}}</span>
         <span v-if="index+1<artist.length"> / </span>
       </span>
-    </div>
-    <div slot="album" slot-scope="album"  class="song-common" @click.stop="onClickAlbum(album)" >{{album.name}}</div>
-  </a-table>
+      </div>
+      <div slot="album" slot-scope="album"  class="song-common" @click.stop="onClickAlbum(album)" >{{album.name}}</div>
+    </a-table>
 </template>
 <script>
 import { addZero } from 'utils/time'

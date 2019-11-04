@@ -10,7 +10,9 @@ import config from '@/config/config'
 const CURRENT_SONG = {
   name: '蓝眼音乐',
   artist: [{ name: 'blue eyes music' }],
-  duration: '00:00',
+  album: { name: 'blue eyes music' },
+  durationStr: '00:00',
+  durationNum: 0,
   picUrl: 'http://p2.music.126.net/t6pUXP9J35-tlp_F4b1_pA==/109951164107025135.jpg'
 }
 export default {

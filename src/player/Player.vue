@@ -10,8 +10,10 @@
       :likeState="true"
       :playMode="playMode"
       :countNum="playList.length"
-      :currentTime="currentTime"
+      :currentTime="currentTimeStr"
       :currentSong="currentSong"
+      :comments="comments"
+      :hotComments="hotComments"
       @onClickDrawer="clickDrawer"
       @onClickArtist="clickArtist"
       @onClickLike="clickLike"
@@ -29,8 +31,9 @@
       :likeState="true"
       :playMode="playMode"
       :countNum="playList.length"
-      :currentTime="currentTime"
+      :currentTime="currentTimeStr"
       :currentSong="currentSong"
+      :percent="percent"
       @onClickDrawer="clickDrawer"
       @onClickArtist="clickArtist"
       @onClickLike="clickLike"
@@ -40,6 +43,7 @@
       @onChangePlayState="changePlayState"
       @onChangePlayerDisplay="changePlayerDisplay"
       @onChangePlayMode="changePlayMode"
+      @onChangeSliderValue="changeSliderValue"
     >
     </min-player>
     <audio  ref="audio" @canplay="canPlay"  @timeupdate="timeUpdate" @ended="audioPlayEnd" autoplay></audio>
@@ -53,6 +57,9 @@ import MaxPlayer from './components/MaxPlayer'
 import ListDrawer from './components/ListDrawer'
 import { mapGetters, mapMutations } from 'vuex'
 import { getPlaySongSource } from 'api/song'
+import { getMusicComment } from 'api/comment'
+
+import { createComment } from '@/class/comment'
 import { formatTime } from 'utils/time'
 
 export default {
@@ -60,7 +67,11 @@ export default {
   data () {
     return {
       musicUrl: '',
-      currentTime: '00:00'
+      currentTimeNum: 0,
+      currentTimeStr: '00:00',
+      duration: 0,
+      hotComments: [],
+      comments: []
     }
   },
   computed: {
@@ -76,6 +87,13 @@ export default {
     ]),
     totalNum () {
       return this.sequenceList.length
+    },
+    percent () {
+      if (this.currentSong.durationNum === 0) {
+        return 0
+      } else {
+        return this.currentTimeNum / this.currentSong.durationNum > 1 ? 1 : this.currentTimeNum / this.currentSong.durationNum
+      }
     }
   },
   watch: {
@@ -87,6 +105,7 @@ export default {
         return
       }
       this.getPlaySongUrl(newVal.id)
+      this.initMusicComment(newVal.id)
     },
     musicUrl (url) {
       const audio = this.$refs.audio
@@ -110,7 +129,8 @@ export default {
     },
     // 更改时间显示
     timeUpdate (e) {
-      this.currentTime = formatTime(e.target.currentTime)
+      this.currentTimeNum = e.target.currentTime
+      this.currentTimeStr = formatTime(this.currentTimeNum)
     },
     // 更改drawer显示
     clickDrawer (flag) {
@@ -149,6 +169,10 @@ export default {
     changePlayState () {
       this.setPlayState(!this.playState)
     },
+    changeSliderValue (value) {
+      const audio = this.$refs.audio
+      audio.currentTime = value * this.currentSong.durationNum
+    },
     // 更改播放源
     getPlaySongUrl (id) {
       getPlaySongSource(id).then((res) => {
@@ -184,12 +208,24 @@ export default {
     },
     // 上一曲
     prevSong () {
-      console.log('3')
       let index = this.currentIndex - 1
       if (index === -1) {
         index = this.playList.length - 1
       }
       this.setCurrentIndex(index)
+    },
+
+    initMusicComment (id) {
+      getMusicComment(id).then((res) => {
+        if (res.code === config.ERR_OK) {
+          this.hotComments = res.hotComments.map((comment) => {
+            return createComment(comment)
+          })
+          this.comments = res.comments.map((comment) => {
+            return createComment(comment)
+          })
+        }
+      })
     }
   },
   components: {

@@ -15,7 +15,7 @@
             </div>
             <div class="comment-action">
               <div class="time">{{item.time}}</div>
-              <div><a-icon type="smile" /> {{item.likedCount}}</div>
+              <div><a-icon type="like" /> {{item.likedCount}}</div>
             </div>
           </div>
         </div>

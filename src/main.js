@@ -5,7 +5,7 @@ import store from './store'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import VueSlider from 'vue-slider-component'
-import 'vue-slider-component/theme/material.css'
+import 'vue-slider-component/theme/default.css'
 
 Vue.component('VueSlider', VueSlider)
 Vue.config.productionTip = false

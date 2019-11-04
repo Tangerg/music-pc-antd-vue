@@ -1,7 +1,7 @@
 <template>
   <div class="player-min">
     <div class="player-min-slider">
-      <progress-bar></progress-bar>
+      <progress-bar :percent="percent" @onValueChange="onChangeSliderValue"></progress-bar>
     </div>
     <div class="player-min-control">
       <div class="control-left">
@@ -10,8 +10,8 @@
         </div>
         <div class="song-text">
           <div class="song-text-common song-text-name cursor" @click="onChangePlayerDisplay(true)">{{currentSong.name}}</div>
-          <span class="song-text-common song-text-artist" v-for="(art,index) in currentSong.artist" :key="index">
-            <span class="cursor" @click="onClickArtist(art)">{{art.name}}</span>
+          <span class="song-text-common song-text-artist" v-for="(artist,index) in currentSong.artist" :key="index">
+            <span class="cursor" @click="onClickArtist(artist)">{{artist.name}}</span>
             <span v-if="index < currentSong.artist.length-1"> / </span>
           </span>
         </div>
@@ -37,7 +37,7 @@
       </div>
       <div class="control-right">
         <div class="btn-group">
-          <span class="control control-time">{{currentTime}} / {{currentSong.duration}}</span>
+          <span class="control control-time">{{currentTime}} / {{currentSong.durationStr}}</span>
           <span class="control control-other cursor">
             <a-icon type="sound" @click="onClickSound"/>
           </span>
@@ -80,10 +80,12 @@ export default {
     currentSong: {
       type: Object,
       default: function () {
-        return {
-          name: 'lanyanjing'
-        }
+        return {}
       }
+    },
+    percent: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
@@ -126,6 +128,9 @@ export default {
     },
     onClickSound () {
       this.$emit('onClickSound')
+    },
+    onChangeSliderValue (value) {
+      this.$emit('onChangeSliderValue', value)
     }
   },
   components: {
@@ -143,7 +148,6 @@ export default {
       width: 100%;
       position: absolute;
       top: -5px;
-      padding: 0 5px;
     }
     .player-min-control {
       height: 70px;

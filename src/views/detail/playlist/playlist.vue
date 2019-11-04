@@ -4,15 +4,15 @@
     <info-tab :tabList="tabList" @onChangeTab="handleChangeTab">
       <a-input-search v-show="activeKey === tabList[0].key" slot="tab-slot" placeholder="搜索歌单音乐" style="width: 150px"  />
     </info-tab>
-    <div v-show="activeKey === tabList[0].key">
+    <div v-show="activeKey === tabList[0].key" class="playlist-song-table">
       <SongTable :dataSource="songList" @onClickSong="clickSong" @onClickArtist="clickArtist" @onClickAlbum="clickAlbum"></SongTable>
     </div>
-    <div v-show="activeKey === tabList[1].key">
-      <div class="playlist-comment">
+    <div v-show="activeKey === tabList[1].key" class="playlist-comment">
+      <div class="playlist-comment-item">
         <div>精彩评论</div>
         <comment-list :commentList="hotComments"></comment-list>
       </div>
-      <div class="playlist-comment">
+      <div class="playlist-comment-item">
         <div>最新评论</div>
         <comment-list :commentList="comments"></comment-list>
       </div>
@@ -135,6 +135,9 @@ export default {
     overflow-x: hidden;
     overflow-y: auto;
     background-color: white;
+    .playlist-song-table{
+      width: 100%;
+    }
     .playlist-comment{
       padding: 20px 30px;
     }

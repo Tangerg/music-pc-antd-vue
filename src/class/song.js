@@ -1,11 +1,12 @@
 import { handleSongTime } from 'utils/time'
 export default class Song {
-  constructor ({ name, id, artist, album, duration, picUrl, mv }) {
+  constructor ({ name, id, artist, album, durationStr, durationNum, picUrl, mv }) {
     this.name = name
     this.id = id
     this.artist = artist
     this.album = album
-    this.duration = duration
+    this.durationStr = durationStr
+    this.durationNum = durationNum
     this.picUrl = picUrl
     this.mv = mv
   }
@@ -33,8 +34,9 @@ export function createSong (track) {
     id: track.id,
     artist: songArtist(track.ar),
     album: songAlbum(track.al),
-    picUrl: track.al.picUrl + '?param=100y100',
-    duration: handleSongTime(track.dt),
+    picUrl: track.al.picUrl /* + '?param=100y100' */,
+    durationStr: handleSongTime(track.dt),
+    durationNum: track.dt / 1000,
     mv: track.mv
   }
   )

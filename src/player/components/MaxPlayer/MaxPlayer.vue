@@ -7,10 +7,10 @@
         <div class="song-info-left">
           <img class="play-bar-support" src="../../../assets/play-bar-support.png" alt="">
           <img class="play-bar" :class="isPlaying" src="../../../assets/play-bar.png" alt="">
-          <div class="cd-wrapper">
-            <div class="cd-img">
+          <div class="cd-wrapper" >
+            <div class="cd-img" :class="isPlaying">
               <div class="img-wrapper">
-                <img src="http://p2.music.126.net/t6pUXP9J35-tlp_F4b1_pA==/109951164107025135.jpg" />
+                <img :src=currentSong.picUrl />
               </div>
             </div>
           </div>
@@ -22,24 +22,36 @@
         </div>
         <div class="song-info-right">
           <div class="song-name">
-            <span class="name">青花瓷</span>
-            <span class="mv-tag">MV</span>
+            <span class="name">{{currentSong.name}}</span>
+            <span class="mv-tag" v-if="currentSong.mv">MV</span>
           </div>
           <div class="desc">
             <div class="desc-item">
               <span class="label">歌手：</span>
-              <div class="value">周杰伦</div>
+              <div v-for="(artist,index) in currentSong.artist">
+                <span class="value">{{artist.name}}</span>
+                <span v-if="index < currentSong.artist.length - 1">&nbsp;/&nbsp;</span>
+              </div>
             </div>
             <div class="desc-item">
               <span class="label">专辑：</span>
-              <div class="value">依旧范特西</div>
+              <div class="value">{{currentSong.album.name}}</div>
             </div>
           </div>
           <div>歌词组件</div>
         </div>
       </div>
       <div class="song-comment">
-        <div class="song-comment-left">评论</div>
+        <div class="song-comment-left">
+          <div class="playlist-comment">
+            <div>精彩评论</div>
+            <comment-list :commentList="hotComments"></comment-list>
+          </div>
+          <div class="playlist-comment">
+            <div>最新评论</div>
+            <comment-list :commentList="comments"></comment-list>
+          </div>
+        </div>
         <div class="song-comment-right">推荐</div>
       </div>
     </div>
@@ -55,8 +67,8 @@
         </div>
         <div class="song-text">
           <div class="song-text-common song-text-name cursor" @click="onChangePlayerDisplay(true)">{{currentSong.name}}</div>
-          <span class="song-text-common song-text-artist" v-for="(art,index) in currentSong.artist" :key="index">
-            <span class="cursor" @click="onClickArtist(art)">{{art.name}}</span>
+          <span class="song-text-common song-text-artist" v-for="(artist,index) in currentSong.artist" :key="index">
+            <span class="cursor" @click="onClickArtist(artist)">{{artist.name}}</span>
             <span v-if="index < currentSong.artist.length-1"> / </span>
           </span>
         </div>
@@ -82,7 +94,7 @@
       </div>
       <div class="control-right">
         <div class="btn-group">
-          <span class="control control-time">{{currentTime}} / {{currentSong.duration}}</span>
+          <span class="control control-time">{{currentTime}} / {{currentSong.durationStr}}</span>
           <span class="control control-other cursor">
             <a-icon type="sound" @click="onClickSound"/>
           </span>
@@ -98,6 +110,7 @@
 </template>
 
 <script>
+import CommentList from '@c/CommentList'
 import ProgressBar from '../ProgressBar'
 import config from '@/config/config'
 export default {
@@ -126,15 +139,21 @@ export default {
     currentSong: {
       type: Object,
       default: function () {
-        return {
-          name: 'lanyanjing'
-        }
+        return {}
       }
+    },
+    comments: {
+      type: Array,
+      default: () => []
+    },
+    hotComments: {
+      type: Array,
+      default: () => []
     }
   },
   computed: {
     isPlaying () {
-      return this.playState ? 'playing' : ''
+      return this.playState ? 'playing' : 'paused'
     },
     playStateIcon () {
       return this.playState ? 'pause-circle' : 'play-circle'
@@ -178,12 +197,22 @@ export default {
     }
   },
   components: {
-    ProgressBar
+    ProgressBar,
+    CommentList
   }
 }
 </script>
 
 <style lang="less" scoped>
+  @keyframes rotate {
+    0% {
+      transform: rotate(0);
+    }
+
+    100% {
+      transform: rotate(1turn);
+    }
+  }
   @import "~styles/mixin";
   .player-max{
   z-index: 200;
@@ -207,7 +236,6 @@ export default {
     left: 0;
     bottom: 70px;
     padding-bottom: 5px;
-    background-color: #dfdfdf;
     overflow: hidden;
     overflow-y: auto;
     .player-max-container{
@@ -215,6 +243,7 @@ export default {
       margin: auto;
       .song-info{
         display: flex;
+        margin-bottom: 50px;
         &-left{
           position: relative;
           padding: 80px 70px 0 36px;
@@ -325,7 +354,6 @@ export default {
                 display: inline-block;
                 margin-right: 4px;
               }
-
               .value {
                 color: blue;
               }
