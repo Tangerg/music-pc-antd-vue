@@ -38,3 +38,12 @@ export function createPlayListCoverByRecommend (playList) {
     trackCount: playList.trackCount
   })
 }
+
+export function createPlayListCoverBySimilar (playList) {
+  return new Cover({
+    id: playList.id,
+    name: playList.name,
+    picUrl: playList.coverImgUrl + '?param=300y300',
+    playCount: handlePlayCount(playList.playCount),
+  })
+}

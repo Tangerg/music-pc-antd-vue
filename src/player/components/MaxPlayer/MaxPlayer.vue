@@ -52,7 +52,40 @@
             <comment-list :commentList="comments"></comment-list>
           </div>
         </div>
-        <div class="song-comment-right">推荐</div>
+        <div class="song-comment-right">
+          <div>
+            <div>相似歌曲</div>
+            <div>
+              <a-list itemLayout="horizontal" :dataSource="similarSongList">
+                <a-list-item slot="renderItem" slot-scope="item, index">
+                  <div>
+                    <div><img style="width: 50px" :src="item.picUrl" alt=""></div>
+                    <div>
+                      <div>{{item.name}}</div>
+                      <div>{{item.artist[0].name}}</div>
+                    </div>
+                  </div>
+                </a-list-item>
+              </a-list>
+            </div>
+          </div>
+          <div>
+            <div>包含歌单</div>
+            <div>
+              <a-list itemLayout="horizontal" :dataSource="similarPlayList">
+                <a-list-item slot="renderItem" slot-scope="item, index">
+                  <div>
+                    <div><img style="width: 50px" :src="item.coverImg" alt=""></div>
+                    <div>
+                      <div>{{item.coverName}}</div>
+                      <div>{{item.coverPlayCount}}</div>
+                    </div>
+                  </div>
+                </a-list-item>
+              </a-list>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -147,6 +180,14 @@ export default {
       default: () => []
     },
     hotComments: {
+      type: Array,
+      default: () => []
+    },
+    similarSongList: {
+      type: Array,
+      default: () => []
+    },
+    similarPlayList: {
       type: Array,
       default: () => []
     }
@@ -277,8 +318,8 @@ export default {
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            width: 320px;
-            height: 320px;
+            width: 360px;
+            height: 360px;
             background: gray;
             border-radius: 50%;
             .cd-img {

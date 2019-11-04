@@ -14,6 +14,8 @@
       :currentSong="currentSong"
       :comments="comments"
       :hotComments="hotComments"
+      :similarSongList="similarSongList"
+      :similarPlayList="similarPlayList"
       @onClickDrawer="clickDrawer"
       @onClickArtist="clickArtist"
       @onClickLike="clickLike"
@@ -56,11 +58,15 @@ import MinPlayer from './components/MinPlayer'
 import MaxPlayer from './components/MaxPlayer'
 import ListDrawer from './components/ListDrawer'
 import { mapGetters, mapMutations } from 'vuex'
-import { getPlaySongSource } from 'api/song'
+import { getPlaySongSource, getSimilarSong } from 'api/song'
+import { getSimilarPlayList } from 'api/songList'
 import { getMusicComment } from 'api/comment'
 
 import { createComment } from '@/class/comment'
+import { createSongBySimilar } from '@/class/song'
+import { createPlayListCoverBySimilar } from '@/class/cover'
 import { formatTime } from 'utils/time'
+import { shuffle, findIndexById } from 'utils/shuffle'
 
 export default {
   name: 'Player',
@@ -71,7 +77,10 @@ export default {
       currentTimeStr: '00:00',
       duration: 0,
       hotComments: [],
-      comments: []
+      comments: [],
+      readyFlag: false,
+      similarSongList: [],
+      similarPlayList: []
     }
   },
   computed: {
@@ -89,23 +98,22 @@ export default {
       return this.sequenceList.length
     },
     percent () {
-      if (this.currentSong.durationNum === 0) {
-        return 0
-      } else {
-        return this.currentTimeNum / this.currentSong.durationNum > 1 ? 1 : this.currentTimeNum / this.currentSong.durationNum
-      }
+      return Math.min(this.currentTimeNum / this.currentSong.durationNum, 1) || 0
     }
   },
   watch: {
-    currentSong (newVal, oldVal) {
-      if (!newVal.id) {
+    currentSong (newSong, oldSong) {
+      if (!newSong.id) {
         return
       }
-      if (newVal.id === oldVal.id) {
+      if (newSong.id === oldSong.id) {
         return
       }
-      this.getPlaySongUrl(newVal.id)
-      this.initMusicComment(newVal.id)
+      this.getPlaySongUrl(newSong.id)
+      this.initMusicComment(newSong.id)
+      this.initSimilarSong(newSong.id)
+      this.initSimiLarPlayList(newSong.id)
+      this.initSimiLarPlayList(newSong.id)
     },
     musicUrl (url) {
       const audio = this.$refs.audio
@@ -123,9 +131,11 @@ export default {
       setPlayState: 'SET_PLAY_STATE',
       setPlayMode: 'SET_PLAY_MODE',
       setSequenceList: 'SET_SEQUENCE_LIST',
-      setCurrentIndex: 'SET_CURRENT_INDEX'
+      setCurrentIndex: 'SET_CURRENT_INDEX',
+      setPlayList: 'SET_PLAY_LIST'
     }),
     canPlay () {
+      this.readyFlag = true
     },
     // 更改时间显示
     timeUpdate (e) {
@@ -160,6 +170,15 @@ export default {
     changePlayMode () {
       const playMode = (this.playMode + 1) % 3
       this.setPlayMode(playMode)
+      let list = null
+      if (playMode === config.PLAY_MODE.random) {
+        list = shuffle(this.sequenceList)
+      } else {
+        list = this.sequenceList
+      }
+      let index = findIndexById(list, this.currentSong)
+      this.setCurrentIndex(index)
+      this.setPlayList(list)
     },
     // 更改播放器显示方式
     changePlayerDisplay (flag) {
@@ -179,7 +198,7 @@ export default {
         if (res.code === config.ERR_OK) {
           this.musicUrl = res.data[0].url
           if (this.musicUrl === null) {
-            this.nextSong()
+            this.setPlayState(false)
           }
         }
       })
@@ -224,6 +243,26 @@ export default {
           this.comments = res.comments.map((comment) => {
             return createComment(comment)
           })
+        }
+      })
+    },
+    initSimilarSong (id) {
+      getSimilarSong(id).then((res) => {
+        if (res.code === config.ERR_OK) {
+          this.similarSongList = res.songs.map((song) => {
+            return createSongBySimilar(song)
+          })
+          console.log(this.similarSongList)
+        }
+      })
+    },
+    initSimiLarPlayList (id) {
+      getSimilarPlayList(id).then((res) => {
+        if (res.code === config.ERR_OK) {
+          this.similarPlayList = res.playlists.map((playlist) => {
+            return createPlayListCoverBySimilar(playlist)
+          })
+          console.log(this.similarPlayList)
         }
       })
     }

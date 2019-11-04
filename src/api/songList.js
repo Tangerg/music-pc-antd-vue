@@ -16,3 +16,11 @@ export const getPlayList = (id) => {
     method: 'get'
   })
 }
+
+export const getSimilarPlayList = (id) => {
+  return axios.request({
+    /* http://localhost:3000/simi/playlist?id=165340*/
+    url: `/simi/playlist?id=${id}`,
+    method: 'get'
+  })
+}

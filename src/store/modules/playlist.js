@@ -7,6 +7,7 @@ import {
   SET_PLAY_STATE
 } from '../mutation-types'
 import config from '@/config/config'
+import { shuffle, findIndexById } from 'utils/shuffle'
 const CURRENT_SONG = {
   name: '蓝眼音乐',
   artist: [{ name: 'blue eyes music' }],
@@ -15,6 +16,7 @@ const CURRENT_SONG = {
   durationNum: 0,
   picUrl: 'http://p2.music.126.net/t6pUXP9J35-tlp_F4b1_pA==/109951164107025135.jpg'
 }
+
 export default {
   state: {
     sequenceList: [],
@@ -49,11 +51,17 @@ export default {
       commit(SET_FULL_SCREEN, false)
       commit(SET_PLAY_STATE, true)
     },
-    selectPlay ({ commit, state }, { list, index }) {
+    selectPlay ({ commit, state, rootState }, { list, index }) {
       commit(SET_SEQUENCE_LIST, list)
-      commit(SET_PLAY_LIST, list)
+      if (rootState.player.playMode === config.PLAY_MODE.random) {
+        let randomList = shuffle(list)
+        console.log(randomList)
+        commit(SET_PLAY_LIST, randomList)
+        index = findIndexById(randomList, list[index])
+      } else {
+        commit(SET_PLAY_LIST, list)
+      }
       commit(SET_CURRENT_INDEX, index)
-      commit(SET_PLAY_MODE, config.PLAY_MODE.sequence)
       commit(SET_FULL_SCREEN, false)
       commit(SET_PLAY_STATE, true)
     }

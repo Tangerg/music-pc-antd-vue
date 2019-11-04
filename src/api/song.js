@@ -7,3 +7,12 @@ export const getPlaySongSource = (id) => {
     method: 'get'
   })
 }
+
+// 获取歌曲播放地址
+export const getSimilarSong = (id) => {
+  return axios.request({
+    /* /simi/song?id=347230 */
+    url: `/simi/song?id=${id}`,
+    method: 'get'
+  })
+}

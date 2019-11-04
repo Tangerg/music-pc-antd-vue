@@ -41,3 +41,17 @@ export function createSong (track) {
   }
   )
 }
+
+export function createSongBySimilar (track) {
+  return new Song({
+    name: track.name,
+    id: track.id,
+    artist: songArtist(track.artists),
+    album: songAlbum(track.album),
+    picUrl: track.album.picUrl /* + '?param=100y100' */,
+    durationStr: handleSongTime(track.duration),
+    durationNum: track.duration / 1000,
+    mv: track.mvid
+  }
+  )
+}
