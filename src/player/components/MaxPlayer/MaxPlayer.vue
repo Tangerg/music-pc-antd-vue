@@ -27,15 +27,19 @@
           </div>
           <div class="desc">
             <div class="desc-item">
-              <span class="label">歌手：</span>
-              <div v-for="(artist,index) in currentSong.artist">
-                <span class="value">{{artist.name}}</span>
-                <span v-if="index < currentSong.artist.length - 1">&nbsp;/&nbsp;</span>
+              <div class="desc-text" >
+                <span class="label">歌手：</span>
+                <span class="desc-text" v-for="(artist,index) in currentSong.artist">
+                  <span class="desc-text value">{{artist.name}}</span>
+                  <span v-if="index < currentSong.artist.length - 1">&nbsp;/&nbsp;</span>
+                </span>
               </div>
             </div>
             <div class="desc-item">
-              <span class="label">专辑：</span>
-              <div class="value">{{currentSong.album.name}}</div>
+              <span class="desc-text">
+                <span class="label">专辑：</span>
+                <span class="value">{{currentSong.album.name}}</span>
+              </span>
             </div>
           </div>
           <div>歌词组件</div>
@@ -44,45 +48,25 @@
       <div class="song-comment">
         <div class="song-comment-left">
           <div class="playlist-comment">
-            <div>精彩评论</div>
+            <column-header :column=commentsColumn.hotComments></column-header>
             <comment-list :commentList="hotComments"></comment-list>
           </div>
           <div class="playlist-comment">
-            <div>最新评论</div>
+            <column-header :column=commentsColumn.comments></column-header>
             <comment-list :commentList="comments"></comment-list>
           </div>
         </div>
         <div class="song-comment-right">
           <div>
-            <div>相似歌曲</div>
-            <div>
-              <a-list itemLayout="horizontal" :dataSource="similarSongList">
-                <a-list-item slot="renderItem" slot-scope="item, index">
-                  <div>
-                    <div><img style="width: 50px" :src="item.picUrl" alt=""></div>
-                    <div>
-                      <div>{{item.name}}</div>
-                      <div>{{item.artist[0].name}}</div>
-                    </div>
-                  </div>
-                </a-list-item>
-              </a-list>
+            <column-header :column=similarColumn.similarPlaylist></column-header>
+            <div class="song-similar">
+              <similar-list :dataSource="similarPlayList" :dataType=TYPE1></similar-list>
             </div>
           </div>
           <div>
-            <div>包含歌单</div>
-            <div>
-              <a-list itemLayout="horizontal" :dataSource="similarPlayList">
-                <a-list-item slot="renderItem" slot-scope="item, index">
-                  <div>
-                    <div><img style="width: 50px" :src="item.coverImg" alt=""></div>
-                    <div>
-                      <div>{{item.coverName}}</div>
-                      <div>{{item.coverPlayCount}}</div>
-                    </div>
-                  </div>
-                </a-list-item>
-              </a-list>
+            <column-header :column=similarColumn.similarSong></column-header>
+            <div class="song-similar">
+              <similar-list :dataSource="similarSongList" :dataType=TYPE2></similar-list>
             </div>
           </div>
         </div>
@@ -143,9 +127,12 @@
 </template>
 
 <script>
+import ColumnHeader from '@c/ColumnHeader'
 import CommentList from '@c/CommentList'
+import SimilarList from '@c/SimilarList'
 import ProgressBar from '../ProgressBar'
 import config from '@/config/config'
+import { COMMENT_COLUMN, SIMILAR_COLUMN } from '@/config/filler'
 export default {
   name: 'MaxPlayer',
   props: {
@@ -190,6 +177,14 @@ export default {
     similarPlayList: {
       type: Array,
       default: () => []
+    }
+  },
+  data () {
+    return {
+      commentsColumn: COMMENT_COLUMN,
+      similarColumn: SIMILAR_COLUMN,
+      TYPE1: 1,
+      TYPE2: 2
     }
   },
   computed: {
@@ -238,8 +233,10 @@ export default {
     }
   },
   components: {
+    ColumnHeader,
     ProgressBar,
-    CommentList
+    CommentList,
+    SimilarList
   }
 }
 </script>
@@ -280,7 +277,7 @@ export default {
     overflow: hidden;
     overflow-y: auto;
     .player-max-container{
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
       .song-info{
         display: flex;
@@ -389,8 +386,12 @@ export default {
             margin-bottom: 30px;
 
             .desc-item {
-              display: flex;
-              margin-right: 32px;
+              .one-line
+              .desc-text{
+                display: flex;
+                align-items: center;
+                margin-right: 32px;
+              }
               .label {
                 display: inline-block;
                 margin-right: 4px;
@@ -434,8 +435,11 @@ export default {
       .song-comment{
         display: flex;
         &-left{
+          flex: 0.65;
         }
         &-right{
+          flex: 0.3;
+          margin-left: auto;
         }
       }
     }

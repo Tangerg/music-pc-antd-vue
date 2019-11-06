@@ -10,14 +10,14 @@ export const getPersonalized = () => {
 
 // http://localhost:3000/playlist/detail?id=
 // 获取歌单详情
-export const getPlayList = (id) => {
+export const getPlaylistDetail = (id) => {
   return axios.request({
     url: `/playlist/detail?id=${id}`,
     method: 'get'
   })
 }
 
-export const getSimilarPlayList = (id) => {
+export const getSimilarPlaylist = (id) => {
   return axios.request({
     /* http://localhost:3000/simi/playlist?id=165340 */
     url: `/simi/playlist?id=${id}`,

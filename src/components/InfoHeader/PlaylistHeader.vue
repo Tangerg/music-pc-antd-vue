@@ -3,35 +3,35 @@
     <div class="info-main">
       <div class="info-main-left">
         <div class="info-cover" >
-          <img :src=Content.coverImgUrl alt="封面">
+          <img :src=content.coverImgUrl alt="封面">
         </div>
       </div>
       <div class="info-main-center">
         <div class="info-center info-playlist">
           <div class="info-title playlist-title">
             <span class="info-type">歌单</span>
-            <span>{{Content.name}}</span>
+            <span>{{content.name}}</span>
           </div>
           <div class="playlist-create">
-            <a-avatar :src=Content.creator.avatarUrl icon="user"/>
-            <div class="create-creater">{{Content.creator.nickname}}</div>
-            <div class="create-time">{{Content.createTime}}创建</div>
+            <a-avatar :src=content.creator.avatarUrl icon="user"/>
+            <div class="create-creater">{{content.creator.nickname}}</div>
+            <div class="create-time">{{content.createTime}}创建</div>
           </div>
           <div class="btn-group playlist-operate">
             <a-button icon="play-circle" type="primary" class="operate-btn" @click="onClickPlayAll">播放全部</a-button>
-            <a-button icon="folder-add" type="primary" class="operate-btn" >收藏({{Content.subscribedCount}})</a-button>
-            <a-button icon="share-alt" type="primary" class="operate-btn" >分享({{Content.shareCount}})</a-button>
+            <a-button icon="folder-add" type="primary" class="operate-btn" >收藏({{content.subscribedCount}})</a-button>
+            <a-button icon="share-alt" type="primary" class="operate-btn" >分享({{content.shareCount}})</a-button>
           </div>
           <div class="info-text-group">
             <div class="text-item playlist-tag">
               <span>标签: </span>
               <span
-                v-for="(tag,index) in Content.tags"
+                v-for="(tag,index) in content.tags"
                 :key="index"><span class="tags" @click="onClickTag(tag)"> {{tag}} </span>
-                <span class="slant-line" v-if="index !== Content.tags.length-1">/</span>
+                <span class="slant-line" v-if="index !== content.tags.length-1">/</span>
               </span>
             </div>
-            <div class="text-item" :class="introduceClass">简介: <span ref="description1" v-html="Content.description"></span></div>
+            <div class="text-item" :class="introduceClass">简介: <span ref="description1" v-html="content.description"></span></div>
           </div>
         </div>
       </div>
@@ -40,11 +40,11 @@
           <div class="info-playlist-count">
             <div class="songs-count">
               <div>歌曲数</div>
-              <div>{{Content.trackCount}}</div>
+              <div>{{content.trackCount}}</div>
             </div>
             <div class="play-count">
               <div>播放数</div>
-              <div>{{Content.playCount}}</div>
+              <div>{{content.playCount}}</div>
             </div>
           </div>
           <div class="list-introduce-more" @click="changeFold">
@@ -60,7 +60,7 @@
 export default {
   name: 'InfoHeader',
   props: {
-    Content: {
+    content: {
       type: Object,
       default: () => {}
     }

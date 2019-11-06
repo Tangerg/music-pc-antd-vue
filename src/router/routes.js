@@ -18,7 +18,7 @@ export default [
         children: [
           {
             path: '/find-music/personalized',
-            name: 'recommend',
+            name: 'personalized',
             meta: {
               title: '个人推荐'
             },

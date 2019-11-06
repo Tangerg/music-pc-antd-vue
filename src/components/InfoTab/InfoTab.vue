@@ -5,7 +5,7 @@
         :defaultActiveKey=tabList[0].key
         size="large"
         :tabBarStyle="tabBarStyle"
-        @change="handleChangeTab" >
+        @change="onChangeTab" >
         <a-tab-pane :tab=tab.title :key=tab.key v-for="tab in tabList"></a-tab-pane>
       </a-tabs>
       <slot name="tab-slot"></slot>
@@ -31,7 +31,7 @@ export default {
     }
   },
   methods: {
-    handleChangeTab (key) {
+    onChangeTab (key) {
       this.$emit('onChangeTab', key)
     }
   }

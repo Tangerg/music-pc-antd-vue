@@ -1,6 +1,6 @@
 <template>
   <div class="playlist-detail" v-if="playlist.id">
-    <playlist-header :Content="playlist" v-if="playlist.creator" @onClickPlayAll="playAll"></playlist-header>
+    <playlist-header :content="playlist" v-if="playlist.creator" @onClickPlayAll="playAll"></playlist-header>
     <info-tab :tabList="tabList" @onChangeTab="handleChangeTab">
       <a-input-search v-show="activeKey === tabList[0].key" slot="tab-slot" placeholder="搜索歌单音乐" style="width: 150px"  />
     </info-tab>
@@ -22,21 +22,24 @@
 </template>
 
 <script>
+/*
+*   引用顺序 1官方 2配置 3组件 4类方法 5工具函数 6api
+* */
 import { mapActions } from 'vuex'
-
-import { getPlayList } from 'api/songList'
-import { getPlayListComment } from 'api/comment'
-
-import { createPlaylist } from '@/class/playlist'
-import { createSong } from '@/class/song'
-import { createComment } from '@/class/comment'
 
 import config from '@/config/config'
 
-import { PlaylistHeader } from '@c/InfoHeader'
 import InfoTab from '@c/InfoTab'
 import SongTable from '@c/SongTable'
 import CommentList from '@c/CommentList'
+import { PlaylistHeader } from '@c/InfoHeader'
+
+import { createPlaylistDesc } from '@/class/playlist'
+import { createSong } from '@/class/song'
+import { createComment } from '@/class/comment'
+
+import { getPlaylistDetail } from 'api/playlist'
+import { getPlaylistComment } from 'api/comment'
 
 const INDEX_KEY = 'playlist'
 export default {
@@ -75,9 +78,9 @@ export default {
       'selectPlay'
     ]),
     async initPlayList () {
-      getPlayList(this.$route.params.id).then((res) => {
+      getPlaylistDetail(this.$route.params.id).then((res) => {
         if (res.code === config.ERR_OK) {
-          this.playlist = createPlaylist(res.playlist)
+          this.playlist = createPlaylistDesc(res.playlist)
           this.tabList[1].title = `评论(${this.playlist.commentCount})`
           this.songList = res.playlist.tracks.map((track) => {
             return createSong(track)
@@ -88,7 +91,7 @@ export default {
       })
     },
     initPlaylistComment () {
-      getPlayListComment(this.$route.params.id).then((res) => {
+      getPlaylistComment(this.$route.params.id).then((res) => {
         if (res.code === config.ERR_OK) {
           this.hotComments = res.hotComments.map((comment) => {
             return createComment(comment)

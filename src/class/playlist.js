@@ -32,7 +32,7 @@ function createCreator (creator) {
   })
 }
 
-export function createPlaylist (playlist) {
+export function createPlaylistDesc (playlist) {
   return new Playlist({
     id: playlist.id,
     coverImgUrl: playlist.coverImgUrl + '?param=200y200',

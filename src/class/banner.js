@@ -11,7 +11,8 @@ export default class Banner {
   }
 }
 
-export function createBanner (banner) {
+// 由推荐创建banner
+export function createBannerByRecommend (banner) {
   return new Banner({
     imageUrl: banner.imageUrl,
     targetId: banner.targetId,

@@ -1,6 +1,6 @@
 <template>
   <div class="find-music">
-    <header-tab :tabList="tabList"></header-tab>
+    <module-tab :tabList="tabList"></module-tab>
     <div class="find-music-container">
       <keep-alive>
         <router-view/>
@@ -11,7 +11,7 @@
 
 <script>
 import { FIND_MUSIC_TAB_LIST } from '@/config/filler'
-import HeaderTab from '@c/HeaderTab'
+import ModuleTab from '@c/ModuleTab'
 export default {
   name: 'find-music',
   data () {
@@ -20,7 +20,7 @@ export default {
     }
   },
   components: {
-    HeaderTab
+    ModuleTab
   }
 }
 </script>

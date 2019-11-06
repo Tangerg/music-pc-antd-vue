@@ -97,3 +97,19 @@ export const FIND_MUSIC_TAB_LIST = [
     route: '/find-music/4'
   }
 ]
+export const COMMENT_COLUMN = {
+  hotComments: {
+    title: '精彩评论'
+  },
+  comments: {
+    title: '最新评论'
+  }
+}
+export const SIMILAR_COLUMN = {
+  similarPlaylist: {
+    title: '包含这首歌的歌单'
+  },
+  similarSong: {
+    title: '相似歌曲'
+  }
+}

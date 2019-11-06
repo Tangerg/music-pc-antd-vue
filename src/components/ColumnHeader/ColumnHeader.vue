@@ -2,7 +2,7 @@
   <div class="column-header">
     <div class="column-header-left">{{column.title}}</div>
     <div class="column-header-right">
-      <span class="show-more" v-if="column.show" @click="showMore()">更多></span>
+      <span class="show-more" v-if="column.show" @click="onClickShowMore()">更多></span>
     </div>
   </div>
 </template>
@@ -19,8 +19,7 @@ export default {
     }
   },
   methods: {
-    showMore () {
-      console.log(this.column.route)
+    onClickShowMore () {
     }
   }
 }

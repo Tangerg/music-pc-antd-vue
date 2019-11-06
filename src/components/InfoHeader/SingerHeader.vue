@@ -37,7 +37,7 @@
 export default {
   name: 'InfoHeader',
   props: {
-    Info: {
+    content: {
       type: Object,
       default: () => {
       }

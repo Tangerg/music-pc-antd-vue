@@ -1,9 +1,9 @@
 <template>
   <div class="music-player">
-    <!--<list-drawer
+    <list-drawer
       :visible="drawerState"
     >
-    </list-drawer>-->
+    </list-drawer>
     <max-player
       v-show="fullScreen"
       :playState="playState"
@@ -53,20 +53,27 @@
 </template>
 
 <script>
+/*
+*   引用顺序 1官方 2配置 3组件 4类方法 5工具函数 6api
+* */
+import { mapGetters, mapMutations } from 'vuex'
+
 import config from '@/config/config'
+
 import MinPlayer from './components/MinPlayer'
 import MaxPlayer from './components/MaxPlayer'
 import ListDrawer from './components/ListDrawer'
-import { mapGetters, mapMutations } from 'vuex'
-import { getPlaySongSource, getSimilarSong } from 'api/song'
-import { getSimilarPlayList } from 'api/songList'
-import { getMusicComment } from 'api/comment'
 
 import { createComment } from '@/class/comment'
 import { createSongBySimilar } from '@/class/song'
-import { createPlayListCoverBySimilar } from '@/class/cover'
+import { createPlaylistCoverBySimilar } from '@/class/cover'
+
 import { formatTime } from 'utils/time'
 import { shuffle, findIndexById } from 'utils/shuffle'
+
+import { getPlaySongSource, getSimilarSong } from 'api/song'
+import { getSimilarPlaylist } from 'api/playlist'
+import { getMusicComment } from 'api/comment'
 
 export default {
   name: 'Player',
@@ -257,10 +264,10 @@ export default {
       })
     },
     initSimiLarPlayList (id) {
-      getSimilarPlayList(id).then((res) => {
+      getSimilarPlaylist(id).then((res) => {
         if (res.code === config.ERR_OK) {
           this.similarPlayList = res.playlists.map((playlist) => {
-            return createPlayListCoverBySimilar(playlist)
+            return createPlaylistCoverBySimilar(playlist)
           })
           console.log(this.similarPlayList)
         }

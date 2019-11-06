@@ -5,15 +5,15 @@
     collapsible
     :style="siderStyle">
     <Logo :collapsed="collapsed"/>
-    <Menu/>
+    <menu-list/>
   </a-layout-sider>
 </template>
 
 <script>
 import Logo from '@c/Logo'
-import Menu from '@c/Menu'
+import MenuList from '@c/MenuList'
 export default {
-  name: 'SideBar',
+  name: 'SiderMenu',
   data () {
     return {
       collapsed: false,
@@ -23,7 +23,7 @@ export default {
   },
   components: {
     Logo,
-    Menu
+    MenuList
   }
 }
 </script>

@@ -27,23 +27,23 @@ export default class Cover {
   },
 */
 // 由推荐歌单创建封面
-export function createPlayListCoverByRecommend (playList) {
+export function createPlaylistCoverByRecommend (playlist) {
   return new Cover({
-    id: playList.id,
-    type: playList.type,
-    name: playList.name,
-    copywriter: playList.copywriter,
-    picUrl: playList.picUrl + '?param=300y300',
-    playCount: handlePlayCount(playList.playCount),
-    trackCount: playList.trackCount
+    id: playlist.id,
+    type: playlist.type,
+    name: playlist.name,
+    copywriter: playlist.copywriter,
+    picUrl: playlist.picUrl + '?param=300y300',
+    playCount: handlePlayCount(playlist.playCount),
+    trackCount: playlist.trackCount
   })
 }
 
-export function createPlayListCoverBySimilar (playList) {
+export function createPlaylistCoverBySimilar (playlist) {
   return new Cover({
-    id: playList.id,
-    name: playList.name,
-    picUrl: playList.coverImgUrl + '?param=300y300',
-    playCount: handlePlayCount(playList.playCount),
+    id: playlist.id,
+    name: playlist.name,
+    picUrl: playlist.coverImgUrl + '?param=300y300',
+    playCount: handlePlayCount(playlist.playCount)
   })
 }

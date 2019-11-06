@@ -3,7 +3,7 @@
     <a-tabs
       animated
       :defaultActiveKey=defaultActiveKey
-      @change="handleChangeTab"
+      @change="changeTab"
       size="large"
       :tabBarStyle="tabBarStyle">
       <a-tab-pane
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'HeaderTab',
+  name: 'ModuleTab',
   props: {
     tabList: {
       type: Array,
@@ -33,7 +33,7 @@ export default {
     }
   },
   methods: {
-    handleChangeTab (activeKey) {
+    changeTab (activeKey) {
       this.$router.push(activeKey)
     }
   }

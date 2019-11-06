@@ -1,17 +1,22 @@
 <template>
-  <swiper :options="swiperOption">
-    <swiper-slide v-for="(banner, index) in banners" :key="index" >
-      <img :src="banner.imageUrl" style="width: 600px"/>
-    </swiper-slide>
-    <div class="swiper-pagination" slot="pagination"></div>
-  </swiper>
+  <!-- Make a div wrapped slider,set height and width -->
+  <div style="width:100%;margin:20px auto;height:400px">
+    <!-- Using the slider component -->
+    <slider ref="slider" :options="options">
+      <!-- slideritem wrapped package with the components you need -->
+      <template slot-scope="coverflow">
+        <slideritem v-for="(banner,index) in banners" :pageLength="banners.length" :index="index" :key="index" style="width: 333%">
+          <img :src="banner.imageUrl" alt="" style="height: 300px">
+        </slideritem>
+      </template>
+    </slider>
+  </div>
 </template>
-
 <script>
-import 'swiper/dist/css/swiper.css'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
+// import slider components
+import { slider, slideritem } from 'vue-concise-slider'
 export default {
-  name: 'BannerCarousel',
+  name: 'Banner',
   props: {
     banners: {
       type: Array,
@@ -20,55 +25,23 @@ export default {
   },
   data () {
     return {
-      swiperOption: {
-        loop: true,
-        autoplay: true,
+      // Slider configuration [obj]
+      options: {
         effect: 'coverflow',
-        slidesPerView: 3,
-        centeredSlides: true,
-        coverflowEffect: {
-          rotate: 10,
-          stretch: 10,
-          depth: 90,
-          modifier: 1.5,
-          slideShadows: false
-        }
+        currentPage: 0,
+        thresholdDistance: 100,
+        thresholdTime: 300,
+        deviation: 200,
+        widthScalingRatio: 0.8,
+        heightScalingRatio: 0.8,
+        slidesToScroll: 1,
+        loop: true
       }
     }
   },
-  methods: {
-    appendSlide () {
-      this.swiperSlides.push(this.swiperSlides.length + 1)
-    },
-    prependSlide () {
-      this.swiperSlides.unshift(this.swiperSlides[0] - 1)
-    },
-    popSlide () {
-      this.swiperSlides.pop()
-    },
-    shiftSlide () {
-      this.swiperSlides.shift()
-    }
-  },
   components: {
-    swiper,
-    swiperSlide
+    slider,
+    slideritem
   }
 }
 </script>
-
-<style scoped lang="less">
-  .type-title {
-    z-index: 200;
-    padding: 2px 10px;
-    color: white;
-    border-radius: 50px 0 0 50px;
-    position: absolute;
-    right: -5px;
-    bottom: 10px;
-    img{
-      width: 100%;
-      height: 100%;
-    }
-  }
-</style>

@@ -1,6 +1,6 @@
 <template>
   <a-layout :style="layout">
-    <side-bar></side-bar>
+    <sider-menu></sider-menu>
     <a-layout :style="layout">
       <Header></Header>
       <a-layout-content>
@@ -13,7 +13,7 @@
 
 <script>
 import Header from './components/Header'
-import SideBar from './components/SideBar'
+import SiderMenu from './components/SiderMenu'
 import RenderView from './components/RenderView'
 import Player from '@/player'
 export default {
@@ -28,7 +28,7 @@ export default {
   },
   components: {
     Header,
-    SideBar,
+    SiderMenu,
     RenderView,
     Player
   }

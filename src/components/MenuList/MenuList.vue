@@ -3,7 +3,7 @@
     mode="inline"
     theme="light"
     class="menu-list"
-    @click="handleClickMenu"
+    @click="clickMenu"
     :defaultSelectedKeys="[RecommendMusicMenu[0].route]"
   >
     <a-menu-item-group>
@@ -40,7 +40,7 @@
 <script>
 import { MENU_LIST } from '@/config/filler'
 export default {
-  name: 'Menu',
+  name: 'MenuList',
   data () {
     return {
       RecommendMusicMenu: MENU_LIST.RecommendMusic,
@@ -48,7 +48,7 @@ export default {
     }
   },
   methods: {
-    handleClickMenu (item) {
+    clickMenu (item) {
       this.$router.push(item.key)
     }
   }
