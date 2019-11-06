@@ -42,6 +42,11 @@ export default {
 </script>
 
 <style lang="less">
+  .ant-list > .ant-spin-nested-loading > .ant-spin-container >.ant-list-item{
+    &:hover{
+      background-color: transparent !important;
+    }
+  }
 .comment-list{
   width: 100%;
   .list-item{

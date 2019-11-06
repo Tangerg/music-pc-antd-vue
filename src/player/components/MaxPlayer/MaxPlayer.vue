@@ -320,7 +320,7 @@ export default {
             justify-content: center;
             width: 360px;
             height: 360px;
-            background: gray;
+            background: #dfdfdf;
             border-radius: 50%;
             .cd-img {
               display: flex;
