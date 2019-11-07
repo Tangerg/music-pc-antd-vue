@@ -2,7 +2,7 @@
   <div>
     <banner-carousel :banners="bannerList"></banner-carousel>
     <column-header :column=columnList.recommendList></column-header>
-    <cover-list :coverList="playList" @onClickCover="handleClickCover"  @onClickPlay="handleClickPlay"></cover-list>
+    <playlist-cover :coverList="playList" @onClickCover="handleClickCover"  @onClickPlay="handleClickPlay"></playlist-cover>
     <column-header :column=columnList.exclusiveDistribution></column-header>
     <column-header :column=columnList.latestMusic></column-header>
     <column-header :column=columnList.recommendMV></column-header>
@@ -18,7 +18,7 @@ import { COLUMN_LIST } from '@/config/filler'
 
 import BannerCarousel from '@c/BannerCarousel'
 import ColumnHeader from '@c/ColumnHeader'
-import CoverList from '@c/CoverList'
+import { PlaylistCover } from '@c/CoverList'
 
 import { createBannerByRecommend } from '@/class/banner'
 import { createPlaylistCoverByRecommend } from '@/class/cover'
@@ -71,7 +71,7 @@ export default {
   components: {
     BannerCarousel,
     ColumnHeader,
-    CoverList
+    PlaylistCover
   }
 }
 </script>

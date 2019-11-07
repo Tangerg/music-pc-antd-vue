@@ -66,6 +66,14 @@ export default [
           title: '歌单详情'
         },
         component: () => import('@v/detail/playlist/playlist')
+      },
+      {
+        path: '/artist/:id',
+        name: 'artist-detail',
+        meta: {
+          title: '歌单详情'
+        },
+        component: () => import('@v/detail/artist/artist')
       }
     ]
   }

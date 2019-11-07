@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'CoverList',
+  name: 'PlaylistCover',
   props: {
     coverList: {
       type: Array,

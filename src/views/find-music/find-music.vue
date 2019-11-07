@@ -29,12 +29,13 @@ export default {
 .find-music{
   height: 100%;
   padding: 0 20px;
+  background-color: white;
   overflow-x: hidden;
   overflow-y: auto;
   .find-music-container{
     max-width: 1500px;
     margin: auto;
-    padding: 20px 5% 0 5%;
+    padding: 0 5% 0 5%;
   }
 }
 </style>

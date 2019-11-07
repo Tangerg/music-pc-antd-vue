@@ -1,15 +1,57 @@
 <template>
 <div>
-  <artist-category></artist-category>
+  <artist-filter @onStateChange="onStateChange"></artist-filter>
+  <artist-cover :coverList="artistList" @onClickCover="onClickCover"></artist-cover>
 </div>
 </template>
 
 <script>
-import ArtistCategory from '@c/ArtistCategory'
+/*
+*   引用顺序 1官方 2配置 3组件 4类方法 5工具函数 6api
+* */
+import { mapMutations } from 'vuex'
+import config from '@/config/config'
+
+import { ArtistCover } from '@c/CoverList'
+
+import { createArtist } from '@/class/artist'
+
+import ArtistFilter from '@c/ArtistFilter'
+import { getArtist } from 'api/artist'
 export default {
   name: 'singer',
+  data () {
+    return {
+      artistList: []
+    }
+  },
+  mounted () {
+    this.getArtistByState(1001, '#')
+  },
+  methods: {
+    ...mapMutations({
+      setArtistInfo: 'SET_ARTIST_INFO'
+    }),
+    onClickCover (cover) {
+      this.$router.push(`/artist/${cover.id}`)
+      this.setArtistInfo(cover)
+    },
+    onStateChange (code, initial) {
+      this.getArtistByState(code, initial)
+    },
+    getArtistByState (code, initial) {
+      getArtist(code, initial).then((res) => {
+        if (res.code === config.ERR_OK) {
+          this.artistList = res.artists.map((artist) => {
+            return createArtist(artist)
+          })
+        }
+      })
+    }
+  },
   components: {
-    ArtistCategory
+    ArtistFilter,
+    ArtistCover
   }
 }
 </script>

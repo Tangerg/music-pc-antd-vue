@@ -1,2 +1,3 @@
-import CoverList from './CoverList'
-export default CoverList
+import PlaylistCover from './PlaylistCover'
+import ArtistCover from './ArtistCover'
+export { PlaylistCover, ArtistCover }

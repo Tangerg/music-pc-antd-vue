@@ -2,7 +2,7 @@
   <div class="header-tab">
     <a-tabs
       animated
-      :defaultActiveKey=defaultActiveKey
+      :activeKey=activeKey
       @change="changeTab"
       size="large"
       :tabBarStyle="tabBarStyle">
@@ -26,10 +26,14 @@ export default {
   },
   data () {
     return {
-      defaultActiveKey: this.tabList[0].route,
       tabBarStyle: {
         textAlign: 'center'
       }
+    }
+  },
+  computed: {
+    activeKey () {
+      return this.$route.path
     }
   },
   methods: {

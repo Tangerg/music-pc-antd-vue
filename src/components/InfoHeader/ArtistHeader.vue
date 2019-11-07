@@ -3,20 +3,20 @@
     <div class="info-main">
       <div class="info-main-left">
         <div class="info-cover" >
-          <img :src=Info.content.coverImg alt="封面">
+          <img :src=content.imageUrl alt="封面">
         </div>
       </div>
       <div class="info-main-center">
         <div class="info-center info-singer" >
           <div class="info-title singer-title">
             <span class="info-type">歌手</span>
-            <span>G.E.M.邓紫棋</span>
+            <span>{{content.name}}</span>
           </div>
-          <div class="singer-nickname">G.E.M.</div>
+          <div class="singer-nickname" v-if="content.alias">{{content.alias}}</div>
           <div class="info-text-group">
-            <div class="text-item singer-count-item"><a-icon type="customer-service" /> 单曲数：323</div>
-            <div class="text-item singer-count-item"><a-icon type="table" /> 专辑数：43</div>
-            <div class="text-item singer-count-item"><a-icon type="youtube" /> MV数：65</div>
+            <div class="text-item singer-count-item"><a-icon type="customer-service" /> 单曲数：{{content.musicSize}}</div>
+            <div class="text-item singer-count-item"><a-icon type="table" /> 专辑数：{{content.albumSize}}</div>
+            <div class="text-item singer-count-item"><a-icon type="youtube" /> MV数：{{mvSize}}</div>
           </div>
         </div>
       </div>
@@ -28,19 +28,21 @@
         </div>
       </div>
     </div>
-
-    <div class="info-column">下方操作</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'InfoHeader',
+  name: 'ArtistHeader',
   props: {
     content: {
       type: Object,
       default: () => {
       }
+    },
+    mvSize: {
+      type: Number,
+      default: 0
     }
   },
   data () {

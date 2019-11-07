@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import Logo from '@c/Logo'
-import MenuList from '@c/MenuList'
+import Logo from './components/Logo'
+import MenuList from './components/MenuList'
 export default {
   name: 'SiderMenu',
   data () {
