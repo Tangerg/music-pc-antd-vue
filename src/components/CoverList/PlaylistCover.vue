@@ -3,14 +3,14 @@
     <li class="cover-item" v-for="(cover,index) in coverList" :key="index">
       <div class="cover" @click="onClickCover(cover)">
         <div class="cover-other">
-          <div class="cover-copywriter">{{cover.coverCopywriter}}</div>
-          <div class="cover-play-count"><a-icon type="customer-service" /> {{cover.coverPlayCount}}</div>
-          <div class="cover-img"><img alt="封面" :src=cover.coverImg /></div>
+          <div class="cover-copywriter">{{cover.playlist.copywriter}}</div>
+          <div class="cover-play-count"><a-icon type="customer-service" /> {{cover.playlist.playCount}}</div>
+          <div class="cover-img"><img alt="封面" :src=cover.playlist.coverImgUrl /></div>
           <div class="cover-btn">
             <a-button shape="circle" icon="caret-right" @click="onClickPlay(cover)"/>
           </div>
         </div>
-        <div class="cover-text">{{cover.coverName}}</div>
+        <div class="cover-text">{{cover.playlist.name}}</div>
       </div>
     </li>
   </ul>

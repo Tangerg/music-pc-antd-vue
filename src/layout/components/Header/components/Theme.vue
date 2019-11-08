@@ -1,6 +1,6 @@
 <template>
-<div>
-  <a-icon type="font-colors" />
+<div class="music-theme">
+  <a-icon type="setting" />
 </div>
 </template>
 
@@ -11,5 +11,11 @@ export default {
 </script>
 
 <style lang="less">
-
+.music-theme{
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color .3s;
+}
 </style>

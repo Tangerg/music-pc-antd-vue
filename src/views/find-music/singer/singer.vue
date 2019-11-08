@@ -14,7 +14,7 @@ import config from '@/config/config'
 
 import { ArtistCover } from '@c/CoverList'
 
-import { createArtist } from '@/class/artist'
+import { createArtistCover } from '@/class/cover'
 
 import ArtistFilter from '@c/ArtistFilter'
 import { getArtist } from 'api/artist'
@@ -33,8 +33,8 @@ export default {
       setArtistInfo: 'SET_ARTIST_INFO'
     }),
     onClickCover (cover) {
-      this.$router.push(`/artist/${cover.id}`)
-      this.setArtistInfo(cover)
+      this.$router.push(`/artist/${cover.artist.id}`)
+      this.setArtistInfo(cover.artist)
     },
     onStateChange (code, initial) {
       this.getArtistByState(code, initial)
@@ -43,7 +43,7 @@ export default {
       getArtist(code, initial).then((res) => {
         if (res.code === config.ERR_OK) {
           this.artistList = res.artists.map((artist) => {
-            return createArtist(artist)
+            return createArtistCover(artist)
           })
         }
       })

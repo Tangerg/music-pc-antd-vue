@@ -63,13 +63,13 @@ const COLUMNS = [
     title: '音乐标题',
     dataIndex: 'name',
     scopedSlots: { customRender: 'name' },
-    width: '30%'
+    width: '25%'
   },
   {
     title: '歌手',
     dataIndex: 'artist',
     scopedSlots: { customRender: 'artist' },
-    width: '20%'
+    width: '25%'
   },
   {
     title: '专辑',

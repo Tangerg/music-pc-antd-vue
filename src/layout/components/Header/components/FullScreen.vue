@@ -1,5 +1,7 @@
 <template>
-  <div><a-icon :type="isFullScreen" @click="handleFullScreen"/></div>
+  <div class="full-screen">
+    <a-icon :type="isFullScreen" @click="handleFullScreen"/>
+  </div>
 </template>
 
 <script>
@@ -17,27 +19,11 @@ export default {
   },
   methods: {
     handleFullScreen () {
-      let main = document.body
+      const main = document.body
       if (this.fullScreen) {
-        if (document.exitFullscreen) {
-          document.exitFullscreen()
-        } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen()
-        } else if (document.webkitCancelFullScreen) {
-          document.webkitCancelFullScreen()
-        } else if (document.msExitFullscreen) {
-          document.msExitFullscreen()
-        }
+        document.exitFullscreen() || document.mozCancelFullScreen() || document.msExitFullscreen() || document.webkitCancelFullScreen()
       } else {
-        if (main.requestFullscreen) {
-          main.requestFullscreen()
-        } else if (main.mozRequestFullScreen) {
-          main.mozRequestFullScreen()
-        } else if (main.webkitRequestFullScreen) {
-          main.webkitRequestFullScreen()
-        } else if (main.msRequestFullscreen) {
-          main.msRequestFullscreen()
-        }
+        main.requestFullscreen() || main.mozRequestFullScreen() || main.webkitRequestFullScreen() || main.msRequestFullscreen()
       }
       this.fullScreen = !this.fullScreen
     }
@@ -46,5 +32,11 @@ export default {
 </script>
 
 <style lang="less">
-
+.full-screen{
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color .3s;
+}
 </style>

@@ -14,3 +14,11 @@ export const getArtistMv = (id) => {
     method: 'get'
   })
 }
+
+export const getArtistTop50 = (id) => {
+  return axios.request({
+    /* /artist/top/song?id=6452 */
+    url: `/artist/top/song?id=${id}`,
+    method: 'get'
+  })
+}

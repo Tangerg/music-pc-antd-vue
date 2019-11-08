@@ -1,6 +1,7 @@
 import { handleSongTime } from 'utils/time'
+import { handlePicUrlSize } from 'utils/str'
 export default class Song {
-  constructor ({ name, id, artist, album, durationStr, durationNum, picUrl, mv }) {
+  constructor ({ name, id, artist, album, durationStr, durationNum, picUrl, picUrlOriginal, mv }) {
     this.name = name
     this.id = id
     this.artist = artist
@@ -8,6 +9,7 @@ export default class Song {
     this.durationStr = durationStr
     this.durationNum = durationNum
     this.picUrl = picUrl
+    this.picUrlOriginal = picUrlOriginal
     this.mv = mv
   }
 }
@@ -34,7 +36,8 @@ export function createSong (track) {
     id: track.id,
     artist: songArtist(track.ar),
     album: songAlbum(track.al),
-    picUrl: track.al.picUrl /* + '?param=100y100' */,
+    picUrl: handlePicUrlSize(track.al.picUrl, 100),
+    picUrlOriginal: track.al.picUrl,
     durationStr: handleSongTime(track.dt),
     durationNum: track.dt / 1000,
     mv: track.mv
@@ -48,7 +51,8 @@ export function createSongBySimilar (track) {
     id: track.id,
     artist: songArtist(track.artists),
     album: songAlbum(track.album),
-    picUrl: track.album.picUrl /* + '?param=100y100' */,
+    picUrl: handlePicUrlSize(track.album.picUrl, 100),
+    picUrlOriginal: track.album.picUrl,
     durationStr: handleSongTime(track.duration),
     durationNum: track.duration / 1000,
     mv: track.mvid

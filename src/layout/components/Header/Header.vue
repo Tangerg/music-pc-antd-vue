@@ -4,7 +4,7 @@
       <div class="header-left">
         <Collapsed></Collapsed>
         <History></History>
-        <Search></Search>
+        <!--<Search></Search>-->
       </div>
       <div class="header-right">
         <User></User>
@@ -43,7 +43,7 @@ export default {
     Search,
     User,
     FullScreen,
-    Theme,
+    Theme
   }
 }
 </script>
@@ -61,6 +61,8 @@ export default {
     }
     .header-right{
       display: flex;
+      justify-content: center;
+      align-items: center;
       padding-right: 50px;
     }
   }

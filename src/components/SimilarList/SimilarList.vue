@@ -4,11 +4,11 @@
       <a-list-item slot="renderItem" slot-scope="item, index" @click="onClickPlaylist(item)">
         <div class="list-item">
           <div class="item-cover">
-            <img :src="item.coverImg" alt="">
+            <img :src="item.coverImgUrl" alt="">
           </div>
           <div class="item-text">
-            <div class="name">{{item.coverName}}</div>
-            <div class="other">播放：{{item.coverPlayCount}}</div>
+            <div class="name">{{item.name}}</div>
+            <div class="other">播放：{{item.playCount}}</div>
           </div>
         </div>
       </a-list-item>

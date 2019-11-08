@@ -5,4 +5,5 @@ export const SET_FULL_SCREEN = 'SET_FULL_SCREEN' // 设置播放器全屏
 export const SET_PLAY_STATE = 'SET_PLAY_STATE' // 设置播放状态
 export const SET_DRAWER_STATE = 'SET_DRAWER_STATE' // 设置弹出层状态
 export const SET_PLAY_MODE = 'SET_PLAY_MODE' // 设置播放模式
-export const SET_ARTIST_INFO = 'SET_ARTIST_INFO' // 设置播放模式
+export const SET_ARTIST_INFO = 'SET_ARTIST_INFO' // 设置歌手信息
+export const SET_COLLAPSED_STATE = 'SET_COLLAPSED_STATE' // 设置播放模式

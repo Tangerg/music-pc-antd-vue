@@ -10,7 +10,7 @@
           <div class="cd-wrapper" >
             <div class="cd-img" :class="isPlaying">
               <div class="img-wrapper">
-                <img :src=currentSong.picUrl />
+                <img :src=currentSong.picUrlOriginal />
               </div>
             </div>
           </div>

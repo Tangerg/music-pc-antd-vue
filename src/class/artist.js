@@ -31,7 +31,19 @@ export default class Artist {
       "picId_str": "109951163536274581",
       "img1v1Id_str": "109951163536269820"
     }, */
-export function createArtist (artist) {
+export function createCoverByArtist (artist) {
+  return new Artist({
+    id: artist.id,
+    accountId: artist.accountId,
+    imageUrl: artist.img1v1Url + '?param=300y300',
+    name: artist.name,
+    alias: artist.alias[0],
+    picUrl: artist.picUrl,
+    albumSize: artist.albumSize,
+    musicSize: artist.musicSize
+  })
+}
+/* export function createArtist (artist) {
   return new Artist({
     id: artist.id,
     accountId: artist.accountId,
@@ -40,6 +52,6 @@ export function createArtist (artist) {
     alias: artist.alias[0],
     picUrl: artist.picUrl,
     albumSize: artist.albumSize,
-    musicSize: artist.musicSize,
+    musicSize: artist.musicSize
   })
-}
+} */

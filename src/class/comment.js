@@ -1,4 +1,5 @@
 import { formatDate } from 'utils/time'
+import { handlePicUrlSize } from 'utils/str'
 export default class Comment {
   constructor ({ commentId, user, content, time, beReplied, likedCount }) {
     this.commentId = commentId
@@ -20,7 +21,7 @@ class User {
 function createUser (user) {
   return new User({
     userId: user.userId,
-    avatarUrl: user.avatarUrl,
+    avatarUrl: handlePicUrlSize(user.avatarUrl, 150),
     nickname: user.nickname
   })
 }

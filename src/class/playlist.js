@@ -1,14 +1,15 @@
 import { handlePlayCount } from 'utils/count'
 import { formatDate } from 'utils/time'
-import { handleNewLine } from 'utils/str'
+import { handleNewLine, handlePicUrlSize } from 'utils/str'
 export default class Playlist {
-  constructor ({ id, coverImgUrl, name, creator, createTime, tags, description, trackCount, playCount, shareCount, commentCount, subscribedCount }) {
+  constructor ({ id, coverImgUrl, name, creator, createTime, tags, copywriter, description, trackCount, playCount, shareCount, commentCount, subscribedCount }) {
     this.id = id
     this.coverImgUrl = coverImgUrl
     this.name = name
     this.creator = creator
     this.createTime = createTime
     this.tags = tags
+    this.copywriter = copywriter
     this.description = description
     this.trackCount = trackCount
     this.playCount = playCount
@@ -31,11 +32,19 @@ function createCreator (creator) {
     avatarUrl: creator.avatarUrl
   })
 }
-
+export function createCoverByPlaylist (playlist) {
+  return new Playlist({
+    id: playlist.id,
+    coverImgUrl: handlePicUrlSize(playlist.picUrl, 300),
+    name: playlist.name,
+    playCount: handlePlayCount(playlist.playCount),
+    copywriter: playlist.copywriter
+  })
+}
 export function createPlaylistDesc (playlist) {
   return new Playlist({
     id: playlist.id,
-    coverImgUrl: playlist.coverImgUrl + '?param=200y200',
+    coverImgUrl: handlePicUrlSize(playlist.coverImgUrl, 300),
     name: playlist.name,
     creator: createCreator(playlist.creator),
     createTime: formatDate(playlist.createTime, 'yyyy-MM-dd'),
@@ -46,5 +55,14 @@ export function createPlaylistDesc (playlist) {
     shareCount: playlist.shareCount,
     commentCount: playlist.commentCount,
     subscribedCount: playlist.subscribedCount
+  })
+}
+
+export function createPlaylistBySimilar (playlist) {
+  return new Playlist({
+    id: playlist.id,
+    name: playlist.name,
+    coverImgUrl: handlePicUrlSize(playlist.coverImgUrl, 300),
+    playCount: handlePlayCount(playlist.playCount)
   })
 }

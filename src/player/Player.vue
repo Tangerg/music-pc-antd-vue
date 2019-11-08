@@ -66,7 +66,7 @@ import ListDrawer from './components/ListDrawer'
 
 import { createComment } from '@/class/comment'
 import { createSongBySimilar } from '@/class/song'
-import { createPlaylistCoverBySimilar } from '@/class/cover'
+import { createPlaylistBySimilar } from '@/class/playlist'
 
 import { formatTime } from 'utils/time'
 import { shuffle, findIndexById } from 'utils/shuffle'
@@ -119,8 +119,7 @@ export default {
       this.getPlaySongUrl(newSong.id)
       this.initMusicComment(newSong.id)
       this.initSimilarSong(newSong.id)
-      this.initSimiLarPlayList(newSong.id)
-      this.initSimiLarPlayList(newSong.id)
+      this.initSimilarPlayList(newSong.id)
     },
     musicUrl (url) {
       const audio = this.$refs.audio
@@ -263,11 +262,11 @@ export default {
         }
       })
     },
-    initSimiLarPlayList (id) {
+    initSimilarPlayList (id) {
       getSimilarPlaylist(id).then((res) => {
         if (res.code === config.ERR_OK) {
           this.similarPlayList = res.playlists.map((playlist) => {
-            return createPlaylistCoverBySimilar(playlist)
+            return createPlaylistBySimilar(playlist)
           })
           console.log(this.similarPlayList)
         }

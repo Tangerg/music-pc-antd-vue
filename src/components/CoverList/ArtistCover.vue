@@ -4,10 +4,10 @@
       <div class="cover" @click="onClickCover(cover)">
         <div class="cover-other">
           <div class="cover-img">
-            <img alt="封面" :src=cover.imageUrl />
+            <img alt="封面" :src=cover.artist.imageUrl />
           </div>
         </div>
-        <div class="cover-text">{{cover.name}}</div>
+        <div class="cover-text">{{cover.artist.name}}</div>
       </div>
     </li>
   </ul>
