@@ -4,22 +4,20 @@
     <div style="max-width: 200px" slot="title">
       <div class="user-operation">
         <div class="user-detail">
-          <div><a-avatar src="http://p1.music.126.net/vqPqXWJAPjwNXbwHojowoA==/109951163926149216.jpg?param=80y80" /></div>
-          <div><span >且听风吟_Monster</span></div>
+          <div><a-avatar :src=user.avatarUrl /></div>
+          <div><span >{{user.nickname}}</span></div>
           <div><a-button>已签到</a-button></div>
         </div>
         <div class="user-detail">
-          <div><div>26</div><div>动态</div></div>
-          <div><div>27</div><div>关注</div></div>
-          <div><div>13</div><div>粉丝</div></div>
+          <div><div>{{user.eventCount}}</div><div>动态</div></div>
+          <div><div>{{user.follows}}</div><div>关注</div></div>
+          <div><div>{{user.followeds}}</div><div>粉丝</div></div>
         </div>
       </div>
     </div>
     <div style="max-width: 200px" slot="content">
-      <div>冬天的好东西 很沉的棉被。烤白薯的皮。糖炒栗子。<br/>
-        雪下的土。热水袋。糖葫芦和滚烫的茶。擦靴子的旧丝袜。窗帘后的阴云。<br/>
-        夜间大商场里怀抱羽绒服的年轻情侣。厚手套。<br/>
-        还有直截了当的极冷的晴天，他从那方走来，走进，干干净净地，笑眯眯地，成为心上人。 —— 摘自叶三《九万字》 封面来自网络
+      <div>
+        {{user.signature}}
       </div>
     </div>
     <div class="user-info">
@@ -31,8 +29,26 @@
 </template>
 
 <script>
+import { getUserDetail } from 'api/user'
+import { createUser } from '@/class/user'
 export default {
-  name: 'User'
+  name: 'User',
+  data () {
+    return {
+      user: {}
+    }
+  },
+  mounted () {
+    this.initUser()
+  },
+  methods: {
+    initUser () {
+      getUserDetail(329508409).then((res) => {
+        this.user = createUser(res)
+        console.log(this.user)
+      })
+    }
+  }
 }
 </script>
 

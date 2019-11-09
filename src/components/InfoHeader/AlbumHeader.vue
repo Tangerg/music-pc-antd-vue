@@ -31,9 +31,6 @@
         </div>
       </div>
     </div>
-    <!--信息上半部分-->
-
-    <div class="info-column">下方操作</div>
   </div>
 </template>
 

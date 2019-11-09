@@ -6,46 +6,47 @@
              :pagination="false"
              :customRow="customRow"
     >
-      <div class="table-cell" slot="songIndex" slot-scope="text, record, index">
-        <div>
-          {{ handleIndex(index) }}
-        </div>
-      </div>
-      <div class="table-cell" slot="picUrl" slot-scope="picUrl">
-        <div>
-          <img :src=picUrl alt="" style="width: 60px;border-radius: 5px">
-        </div>
-      </div>
-      <div class="table-cell" slot="name" slot-scope="name, record, index">
-          <div class="cell-common song-name">
-            <span class="content-text name-text">{{name}}</span>
-            <a-icon class="mv-icon" v-if="record.mv !== 0" type="youtube" @click.stop="onClickMv(record.mv)"/>
+        <div class="table-cell" slot="songIndex" slot-scope="text, record, index">
+          <div>
+            {{ handleIndex(index) }}
           </div>
-      </div>
-      <div class="table-cell" slot="artist" slot-scope="artist">
-        <div class="cell-common">
-          <span v-for="(art,index) in artist" :key="index" class="content-text">
-            <span @click.stop="onClickArtist(art)" class="artist-name">{{art.name}}</span>
-            <span v-if="index+1<artist.length"> / </span>
-          </span>
         </div>
-      </div>
-      <div class="table-cell" slot="album" slot-scope="album">
-        <div class="cell-common">
-          <span class="content-text">
-            {{album.name}}
-          </span>
+        <div class="table-cell" slot="picUrl" slot-scope="picUrl">
+          <div>
+            <img :src=picUrl alt="" style="width: 60px;border-radius: 5px">
+          </div>
         </div>
-      </div>
-      <div class="table-cell" slot="durationStr" slot-scope="durationStr">
-        <div>
-          {{durationStr}}
+        <div class="table-cell" slot="name" slot-scope="name, record, index">
+            <div class="cell-common song-name">
+              <span class="content-text name-text">{{name}}</span>
+              <a-icon class="mv-icon" v-if="record.mv !== 0" type="youtube" @click.stop="onClickMv(record.mv)"/>
+            </div>
         </div>
-      </div>
+        <div class="table-cell" slot="artist" slot-scope="artist">
+          <div class="cell-common">
+            <span v-for="(art,index) in artist" :key="index" class="content-text">
+              <span @click.stop="onClickArtist(art)" class="artist-name">{{art.name}}</span>
+              <span v-if="index+1<artist.length"> / </span>
+            </span>
+          </div>
+        </div>
+        <div class="table-cell" slot="album" slot-scope="album">
+          <div class="cell-common">
+            <span class="content-text">
+              {{album.name}}
+            </span>
+          </div>
+        </div>
+        <div class="table-cell" slot="durationStr" slot-scope="durationStr">
+          <div>
+            {{durationStr}}
+          </div>
+        </div>
     </a-table>
   </div>
 </template>
 <script>
+import VirtualList from 'vue-virtual-scroll-list'
 import { addZero } from 'utils/time'
 const COLUMNS = [
   {
@@ -126,16 +127,40 @@ export default {
         }
       }
     }
+  },
+  components: {
   }
 }
 </script>
 
 <style lang="less">
   @import "~styles/mixin.less";
+  .ant-table-thead > tr > th{
+    padding: 10px;
+  }
+  .ant-table-tbody > tr > td {
+    padding: 10px;
+    border-bottom: 0;
+  }
   .song-table{
     width: 100%;
     table{
       table-layout: fixed !important;
+      tbody{
+        thead{
+          tr{
+            border-bottom: 0.5px solid #ff7d0a;
+          }
+        }
+        tr{
+          &:nth-child(2n+1){
+            background-color: #f3f5f7;
+          }
+          &:nth-child(2n){
+            background-color: #f3f3f3;
+          }
+        }
+      }
     }
     .table-cell{
       overflow: hidden;
@@ -170,9 +195,5 @@ export default {
         }
       }
     }
-  }
-  .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
-    padding: 10px;
-    border-bottom: 0;
   }
 </style>

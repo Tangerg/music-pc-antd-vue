@@ -31,7 +31,7 @@ export default class Artist {
       "picId_str": "109951163536274581",
       "img1v1Id_str": "109951163536269820"
     }, */
-export function createCoverByArtist (artist) {
+export function createArtistCover (artist) {
   return new Artist({
     id: artist.id,
     accountId: artist.accountId,

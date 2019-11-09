@@ -3,10 +3,10 @@
     <artist-header :content="artistInfo" :mvSize="this.mvList.length"></artist-header>
     <info-tab :tabList="tabList" @onChangeTab="handleChangeTab"></info-tab>
     <div v-show="activeKey === tabList[0].key" class="playlist-song-table">
-      <SongTable :dataSource="topList" @onClickSong="clickSong"></SongTable>
+      <song-table :dataSource="topList" @onClickSong="clickSong"></song-table>
     </div>
     <div v-show="activeKey === tabList[1].key" class="playlist-song-table">
-      专辑
+      <album-cover :coverList="AlbumList"></album-cover>
     </div>
     <div v-show="activeKey === tabList[2].key" class="playlist-song-table">
       mv
@@ -25,12 +25,14 @@ import { mapGetters, mapActions } from 'vuex'
 import config from '@/config/config'
 
 import { createSong } from '@/class/song'
+import { createCoverByAlbum } from '@/class/cover'
 
 import SongTable from '@c/SongTable'
 import InfoTab from '@c/InfoTab'
 import { ArtistHeader } from '@c/InfoHeader'
+import { AlbumCover } from '@c/CoverList'
 
-import { getArtistMv, getArtistTop50 } from 'api/artist'
+import { getArtistMv, getArtistTop50, getArtistAlbum } from 'api/artist'
 
 const TABLIST = [
   {
@@ -60,6 +62,7 @@ export default {
     return {
       mvList: [],
       topList: [],
+      AlbumList: [],
       tabList: TABLIST,
       activeKey: 'top'
     }
@@ -67,6 +70,7 @@ export default {
   mounted () {
     this.initArtistMv()
     this.initArtistTop50()
+    this.initArtistAlbum()
   },
   computed: {
     ...mapGetters([
@@ -103,12 +107,23 @@ export default {
           console.log(this.topList)
         }
       })
+    },
+    initArtistAlbum () {
+      getArtistAlbum(this.$route.params.id).then((res) => {
+        if (res.code === config.ERR_OK) {
+          this.AlbumList = res.hotAlbums.map((album) => {
+            return createCoverByAlbum(album)
+          })
+          console.log(this.AlbumList)
+        }
+      })
     }
   },
   components: {
     ArtistHeader,
     InfoTab,
-    SongTable
+    SongTable,
+    AlbumCover
   }
 }
 </script>

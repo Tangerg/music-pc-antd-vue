@@ -3,14 +3,13 @@
     <li class="cover-item" v-for="(cover,index) in coverList" :key="index">
       <div class="cover" @click="onClickCover(cover)">
         <div class="cover-other">
-          <div class="cover-copywriter">{{cover.playlist.copywriter}}</div>
-          <div class="cover-play-count"><a-icon type="customer-service" /> {{cover.playlist.playCount}}</div>
-          <div class="cover-img"><img alt="封面" :src=cover.playlist.coverImgUrl /></div>
-          <div class="cover-btn">
-            <a-button shape="circle" icon="caret-right" @click="onClickPlay(cover)"/>
+          <div class="cover-img">
+            <div class="info-cover-album" ></div>
+            <img alt="封面" :src=cover.album.picUrl />
           </div>
         </div>
-        <div class="cover-text">{{cover.playlist.name}}</div>
+        <div class="cover-text">{{cover.album.name}}</div>
+        <div class="cover-text-time">{{cover.album.publishTime}}</div>
       </div>
     </li>
   </ul>
@@ -18,7 +17,7 @@
 
 <script>
 export default {
-  name: 'PlaylistCover',
+  name: 'ArtistCover',
   props: {
     coverList: {
       type: Array,
@@ -28,15 +27,12 @@ export default {
   methods: {
     onClickCover (cover) {
       this.$emit('onClickCover', cover)
-    },
-    onClickPlay (cover) {
-      this.$emit('onClickPlay', cover)
     }
   }
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   .cover-list {
     margin-top: 10px;
     width: 100%;
@@ -44,7 +40,7 @@ export default {
     flex-wrap: wrap;
     justify-content: space-between;
     .cover-item {
-      width: 19%;
+      width: 24%;
       margin: 5px 0;
       position: relative;
       overflow: hidden;
@@ -57,6 +53,7 @@ export default {
             top: 0;
             width: 100%;
             color: white;
+            border-radius: 5px 5px 0 0;
             background-color: rgba(0, 0, 0, 0.5);
             transform: translateY(-100%);
             transition: all 0.3s;
@@ -74,8 +71,18 @@ export default {
           }
           .cover-img {
             overflow: hidden;
+            border-radius: 5px;
+            .info-cover-album{
+              width: 200px;
+              height: 100%;
+              position: absolute;
+              left: 23px;
+              background-image: url("../../assets/album.png");
+            }
             img {
-              width: 100%;
+              width: 200px;
+              height: 200px;
+              border-radius: 5px;
             }
           }
           .cover-btn{
@@ -102,13 +109,19 @@ export default {
           margin: 5px 0;
           line-height: 20px;
           text-align: left;
-          height: 60px;
           font-size: 15px;
           text-overflow:ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 3; //设置多行的行数
           -webkit-box-orient: vertical;
           overflow:hidden;
+        }
+        .cover-text-time{
+          width: 100%;
+          margin: 5px 0;
+          text-align: left;
+          font-size: 14px;
+          color: #bebebe;
         }
       }
     }

@@ -67,11 +67,12 @@ import ListDrawer from './components/ListDrawer'
 import { createComment } from '@/class/comment'
 import { createSongBySimilar } from '@/class/song'
 import { createPlaylistBySimilar } from '@/class/playlist'
+import { formatLyric } from '@/class/lyric'
 
 import { formatTime } from 'utils/time'
 import { shuffle, findIndexById } from 'utils/shuffle'
 
-import { getPlaySongSource, getSimilarSong } from 'api/song'
+import { getPlaySongSource, getSimilarSong, getPlaySongLyric } from 'api/song'
 import { getSimilarPlaylist } from 'api/playlist'
 import { getMusicComment } from 'api/comment'
 
@@ -87,7 +88,8 @@ export default {
       comments: [],
       readyFlag: false,
       similarSongList: [],
-      similarPlayList: []
+      similarPlayList: [],
+      lyric: []
     }
   },
   computed: {
@@ -120,6 +122,7 @@ export default {
       this.initMusicComment(newSong.id)
       this.initSimilarSong(newSong.id)
       this.initSimilarPlayList(newSong.id)
+      this.initPlaySongLyric(newSong.id)
     },
     musicUrl (url) {
       const audio = this.$refs.audio
@@ -269,6 +272,13 @@ export default {
             return createPlaylistBySimilar(playlist)
           })
           console.log(this.similarPlayList)
+        }
+      })
+    },
+    initPlaySongLyric (id) {
+      getPlaySongLyric(id).then((res) => {
+        if (res.code === config.ERR_OK) {
+          this.lyric = formatLyric(res)
         }
       })
     }

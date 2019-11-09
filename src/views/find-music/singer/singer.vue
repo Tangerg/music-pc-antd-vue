@@ -14,7 +14,7 @@ import config from '@/config/config'
 
 import { ArtistCover } from '@c/CoverList'
 
-import { createArtistCover } from '@/class/cover'
+import { createCoverByArtist } from '@/class/cover'
 
 import ArtistFilter from '@c/ArtistFilter'
 import { getArtist } from 'api/artist'
@@ -43,7 +43,7 @@ export default {
       getArtist(code, initial).then((res) => {
         if (res.code === config.ERR_OK) {
           this.artistList = res.artists.map((artist) => {
-            return createArtistCover(artist)
+            return createCoverByArtist(artist)
           })
         }
       })

@@ -22,3 +22,11 @@ export const getArtistTop50 = (id) => {
     method: 'get'
   })
 }
+
+export const getArtistAlbum = (id) => {
+  return axios.request({
+    /* http:/artist/album?id=3684 */
+    url: `/artist/album?id=${id}`,
+    method: 'get'
+  })
+}

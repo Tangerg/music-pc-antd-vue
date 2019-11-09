@@ -1,5 +1,6 @@
 import { BasicLayout } from 'layout'
 import FindMusic from '@v/find-music'
+import Ready from '@v/404'
 
 export default [
   {
@@ -76,5 +77,11 @@ export default [
         component: () => import('@v/detail/artist/artist')
       }
     ]
+  },
+  {
+    path: '*',
+    name: '404',
+    component: Ready
   }
+
 ]

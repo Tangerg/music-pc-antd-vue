@@ -32,7 +32,7 @@ function createCreator (creator) {
     avatarUrl: creator.avatarUrl
   })
 }
-export function createCoverByPlaylist (playlist) {
+export function createPlaylistCover (playlist) {
   return new Playlist({
     id: playlist.id,
     coverImgUrl: handlePicUrlSize(playlist.picUrl, 300),

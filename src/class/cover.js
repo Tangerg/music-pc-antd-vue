@@ -1,7 +1,7 @@
 import { handlePlayCount } from 'utils/count'
-import { createCoverByPlaylist } from './playlist'
-import { createCoverByArtist } from './artist'
-/* import { createCoverByAlbum } from './playlist' */
+import { createPlaylistCover } from './playlist'
+import { createArtistCover } from './artist'
+import { createAlbumCover } from './album'
 export default class Cover {
   constructor ({ playlist, fm, artist, album }) {
     this.playlist = playlist
@@ -12,14 +12,19 @@ export default class Cover {
 }
 
 // 由推荐歌单创建封面
-export function createPlaylistCover (playlist) {
+export function createCoverByPlaylist (playlist) {
   return new Cover({
-    playlist: createCoverByPlaylist(playlist)
+    playlist: createPlaylistCover(playlist)
   })
 }
 
-export function createArtistCover (artist) {
+export function createCoverByArtist (artist) {
   return new Cover({
-    artist: createCoverByArtist(artist)
+    artist: createArtistCover(artist)
+  })
+}
+export function createCoverByAlbum (album) {
+  return new Cover({
+    album: createAlbumCover(album)
   })
 }

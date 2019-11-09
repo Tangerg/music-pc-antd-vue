@@ -16,3 +16,12 @@ export const getSimilarSong = (id) => {
     method: 'get'
   })
 }
+
+// 获取歌曲播放地址
+export const getPlaySongLyric = (id) => {
+  return axios.request({
+    /* /lyric?id=33894312 */
+    url: `/lyric?id=${id}`,
+    method: 'get'
+  })
+}

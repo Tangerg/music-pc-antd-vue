@@ -1,3 +1,4 @@
 import PlaylistCover from './PlaylistCover'
 import ArtistCover from './ArtistCover'
-export { PlaylistCover, ArtistCover }
+import AlbumCover from './AlbumCover'
+export { PlaylistCover, ArtistCover, AlbumCover }

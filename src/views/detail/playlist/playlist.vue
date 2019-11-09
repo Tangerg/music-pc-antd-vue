@@ -5,7 +5,7 @@
       <a-input-search v-show="activeKey === tabList[0].key" slot="tab-slot" placeholder="搜索歌单音乐" style="width: 150px"  />
     </info-tab>
     <div v-show="activeKey === tabList[0].key" class="playlist-song-table">
-      <SongTable :dataSource="songList" @onClickSong="clickSong" @onClickArtist="clickArtist" @onClickAlbum="clickAlbum"></SongTable>
+      <SongTable v-once :dataSource="songList" @onClickSong="clickSong" @onClickArtist="clickArtist" @onClickAlbum="clickAlbum"></SongTable>
     </div>
     <div v-show="activeKey === tabList[1].key" class="playlist-comment">
       <div class="playlist-comment-item">

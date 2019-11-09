@@ -21,7 +21,7 @@ import ColumnHeader from '@c/ColumnHeader'
 import { PlaylistCover } from '@c/CoverList'
 
 import { createBannerByRecommend } from '@/class/banner'
-import { createPlaylistCover } from '@/class/cover'
+import { createCoverByPlaylist } from '@/class/cover'
 
 import { getBanner } from 'api/banner'
 import { getPersonalized } from 'api/playlist'
@@ -56,7 +56,7 @@ export default {
       getPersonalized().then((res) => {
         if (res.code === config.ERR_OK) {
           this.playList = res.result.map((playList) => {
-            return createPlaylistCover(playList)
+            return createCoverByPlaylist(playList)
           }).slice(0, 30)
           console.log(this.playList)
         }
