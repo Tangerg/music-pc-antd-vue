@@ -46,7 +46,6 @@
   </div>
 </template>
 <script>
-import VirtualList from 'vue-virtual-scroll-list'
 import { addZero } from 'utils/time'
 const COLUMNS = [
   {

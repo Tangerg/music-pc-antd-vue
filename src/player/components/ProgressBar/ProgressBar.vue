@@ -39,6 +39,8 @@ export default {
     changeValue (value) {
       this.$emit('onValueChange', value)
     }
+  },
+  components: {
   }
 }
 </script>
