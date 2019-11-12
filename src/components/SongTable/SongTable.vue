@@ -145,21 +145,6 @@ export default {
     width: 100%;
     table{
       table-layout: fixed !important;
-      tbody{
-        thead{
-          tr{
-            border-bottom: 0.5px solid #ff7d0a;
-          }
-        }
-        tr{
-          &:nth-child(2n+1){
-            background-color: #f3f5f7;
-          }
-          &:nth-child(2n){
-            background-color: #f3f3f3;
-          }
-        }
-      }
     }
     .table-cell{
       overflow: hidden;

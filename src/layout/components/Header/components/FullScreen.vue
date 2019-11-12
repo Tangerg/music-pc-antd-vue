@@ -21,11 +21,35 @@ export default {
     handleFullScreen () {
       const main = document.body
       if (this.fullScreen) {
-        document.exitFullscreen() || document.mozCancelFullScreen() || document.msExitFullscreen() || document.webkitCancelFullScreen()
+        this.exitFullScreen()
       } else {
-        main.requestFullscreen() || main.mozRequestFullScreen() || main.webkitRequestFullScreen() || main.msRequestFullscreen()
+        this.requestFullScreen(main)
       }
       this.fullScreen = !this.fullScreen
+    },
+    requestFullScreen (element) {
+      const docElm = element
+      if (docElm.requestFullscreen) {
+        docElm.requestFullscreen()
+      } else if (docElm.msRequestFullscreen) {
+        docElm.msRequestFullscreen()
+      } else if (docElm.mozRequestFullScreen) {
+        docElm.mozRequestFullScreen()
+      } else if (docElm.webkitRequestFullScreen) {
+        docElm.webkitRequestFullScreen()
+      }
+    },
+    exitFullScreen () {
+      const de = window.parent.document
+      if (de.exitFullscreen) {
+        de.exitFullscreen()
+      } else if (de.mozCancelFullScreen) {
+        de.mozCancelFullScreen()
+      } else if (de.webkitCancelFullScreen) {
+        de.webkitCancelFullScreen()
+      } else if (de.msExitFullscreen) {
+        de.msExitFullscreen()
+      }
     }
   }
 }

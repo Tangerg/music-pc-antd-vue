@@ -1,7 +1,7 @@
 <template>
 <div class="user">
   <a-popover placement="bottom" trigger="click">
-    <div style="max-width: 200px" slot="title">
+    <div style="max-width: 250px" slot="title">
       <div class="user-operation">
         <div class="user-detail">
           <div><a-avatar :src=user.avatarUrl /></div>
@@ -15,14 +15,14 @@
         </div>
       </div>
     </div>
-    <div style="max-width: 200px" slot="content">
+    <div style="max-width: 250px" slot="content">
       <div>
         {{user.signature}}
       </div>
     </div>
     <div class="user-info">
-      <a-avatar src="http://p1.music.126.net/vqPqXWJAPjwNXbwHojowoA==/109951163926149216.jpg?param=80y80" />
-      <div class="user-name"><span >且听风吟_Monster</span></div>
+      <a-avatar :src=user.avatarUrl />
+      <div class="user-name"><span >{{user.nickname}}</span></div>
     </div>
   </a-popover>
 </div>
@@ -59,10 +59,12 @@ export default {
   padding: 0 24px;
   cursor: pointer;
   transition: color .3s;
-  .ant-popover > .ant-popover-content > .tooltip > .user-operation{
+  .user-operation{
+    display: flex;
+    background-color: #2eabff !important;
     .user-detail{
-      display: flex;
-      flex-direction: column;
+      display: flex !important;
+      flex-direction: column !important;
     }
   }
   .user-info{

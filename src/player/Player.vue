@@ -279,6 +279,7 @@ export default {
       getPlaySongLyric(id).then((res) => {
         if (res.code === config.ERR_OK) {
           this.lyric = formatLyric(res)
+          console.log(this.lyric)
         }
       })
     }

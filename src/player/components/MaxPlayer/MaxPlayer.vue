@@ -42,7 +42,7 @@
               </span>
             </div>
           </div>
-          <div>歌词组件</div>
+          <div>歌词</div>
         </div>
       </div>
       <div class="song-comment">
@@ -127,12 +127,14 @@
 </template>
 
 <script>
+import Scroller from '@c/Scroller'
 import ColumnHeader from '@c/ColumnHeader'
 import CommentList from '@c/CommentList'
 import SimilarList from '@c/SimilarList'
 import ProgressBar from '../ProgressBar'
 import config from '@/config/config'
 import { COMMENT_COLUMN, SIMILAR_COLUMN } from '@/config/filler'
+
 export default {
   name: 'MaxPlayer',
   props: {
@@ -233,6 +235,7 @@ export default {
     }
   },
   components: {
+    Scroller,
     ColumnHeader,
     ProgressBar,
     CommentList,

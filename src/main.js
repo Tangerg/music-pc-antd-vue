@@ -2,14 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from '@/router/router'
 import store from './store'
-import Antd from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.less'
-import VueSlider from 'vue-slider-component'
+import Use from '../use'
 import 'vue-slider-component/theme/default.css'
 
-Vue.component('VueSlider', VueSlider)
 Vue.config.productionTip = false
-Vue.use(Antd)
 new Vue({
   router,
   store,

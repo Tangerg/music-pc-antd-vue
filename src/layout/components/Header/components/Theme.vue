@@ -17,7 +17,8 @@
 
 <script>
 import { Sketch } from 'vue-color'
-import { updateTheme } from 'utils/color'
+import { updateTheme } from 'utils/theme'
+import { Orange, Dark } from 'styles/theme'
 const COLOR_LIST = [
   '#F5222D',
   '#FA541C',
@@ -37,26 +38,25 @@ export default {
   },
   methods: {
     updateValue (value) {
-      this.debounce(() => console.log('fn 防抖执行了'), 1000)
+      this.debounce(this.changeColor(value), 1000)
+    },
+    changeColor (value) {
       if (this.color.hex !== value.hex) {
         this.color = value
+        updateTheme(Dark)
       }
+      console.log("123")
     },
-    console (val) {
-      console.log('123')
-    },
-    debounce (fn, wait = 50) {
-      // 通过闭包缓存一个定时器 id
-      let timer = null
-      // 将 debounce 处理结果当作函数返回
-      // 触发事件回调时执行这个返回函数
+    debounce (func, delay) {
+      let timer
+
       return function (...args) {
-        // 如果已经设定过定时器就清空上一次的定时器
-        if (timer) clearTimeout(timer)
-        // 开始设定一个新的定时器，定时器结束后执行传入的函数 fn
+        if (timer) {
+          clearTimeout(timer)
+        }
         timer = setTimeout(() => {
-          fn.apply(this, args)
-        }, wait)
+          func.apply(this, args)
+        }, delay)
       }
     }
   },

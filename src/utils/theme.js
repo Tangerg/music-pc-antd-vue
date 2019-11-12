@@ -3,14 +3,13 @@ import { message } from 'ant-design-vue/es'
 
 let lessNodesAppended
 
-const updateTheme = primaryColor => {
+const updateTheme = themeObj => {
   // Don't compile less in production!
   /* if (process.env.NODE_ENV === 'production') {
     return;
   } */
   // Determine if the component is remounted
-  console.log(primaryColor)
-  if (!primaryColor) {
+  if (!themeObj) {
     return
   }
   const hideMessage = message.loading('正在编译主题！', 0)
@@ -20,10 +19,9 @@ const updateTheme = primaryColor => {
     }
     setTimeout(() => {
       window.less
-        .modifyVars({
-          '@primary-color': primaryColor
-        })
+        .modifyVars({ themeObj })
         .then(() => {
+          console.log(themeObj)
           hideMessage()
         })
         .catch(() => {

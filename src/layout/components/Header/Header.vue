@@ -1,6 +1,6 @@
 <template>
-  <a-layout-header :style=headerStyle>
-    <div class="header-container">
+  <a-layout-header class="music-header">
+    <div class="music-header-container">
       <div class="header-left">
         <Collapsed></Collapsed>
         <History></History>
@@ -26,13 +26,7 @@ export default {
   name: 'Header',
   data () {
     return {
-      headerStyle: {
-        padding: 0,
-        color: 'white',
-        fontSize: '24px',
-        textAlign: 'center',
-        backgroundColor: '#005792'
-      }
+
     }
   },
   methods: {
@@ -48,22 +42,5 @@ export default {
 }
 </script>
 
-<style lang="less">
-  .header-container{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    .header-left{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .header-right{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-right: 50px;
-    }
-  }
+<style lang="less" src="./header.less">
 </style>

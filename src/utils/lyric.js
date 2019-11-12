@@ -3,7 +3,6 @@ export function parseLyric (lrc) {
     return
   }
   const lyrics = lrc.split('\n')
-  console.log(lyrics)
   const lrcObj = []
   for (let i = 0; i < lyrics.length; i++) {
     const lyric = decodeURIComponent(lyrics[i])

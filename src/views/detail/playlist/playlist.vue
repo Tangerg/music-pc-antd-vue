@@ -83,7 +83,7 @@ export default {
           this.playlist = createPlaylistDesc(res.playlist)
           this.tabList[1].title = `评论(${this.playlist.commentCount})`
           this.songList = res.playlist.tracks.map((track) => {
-            return createSong(track)
+            return Object.freeze(createSong(track))
           })
           this.initPlaylistComment()
           console.log(this.songList)
@@ -109,7 +109,7 @@ export default {
       })
     },
     clickArtist (artist) {
-      console.log(artist)
+      this.$router.push(`/artist/${artist.id}`)
     },
     clickAlbum (album) {
       console.log(album)
