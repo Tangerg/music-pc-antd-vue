@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
 import BScroll from '@better-scroll/core'
 import ScrollBar from '@better-scroll/scroll-bar'
 import MouseWheel from '@better-scroll/mouse-wheel'
@@ -37,9 +37,6 @@ export default {
   methods: {
     getScroller () {
       return this.scroller
-    },
-    refresh () {
-      this.scroller.refresh()
     }
   },
   watch: {

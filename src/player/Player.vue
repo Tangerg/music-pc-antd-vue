@@ -16,6 +16,7 @@
       :hotComments="hotComments"
       :similarSongList="similarSongList"
       :similarPlayList="similarPlayList"
+      :lyric="lyric"
       @onClickDrawer="clickDrawer"
       @onClickArtist="clickArtist"
       @onClickLike="clickLike"
@@ -89,7 +90,7 @@ export default {
       readyFlag: false,
       similarSongList: [],
       similarPlayList: [],
-      lyric: []
+      lyric: {}
     }
   },
   computed: {
@@ -276,10 +277,13 @@ export default {
       })
     },
     initPlaySongLyric (id) {
+      if (this.lyric.lyricArr) {
+        this.lyric.stop()
+      }
       getPlaySongLyric(id).then((res) => {
         if (res.code === config.ERR_OK) {
           this.lyric = formatLyric(res)
-          console.log(this.lyric)
+          this.lyric.play()
         }
       })
     }

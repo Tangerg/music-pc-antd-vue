@@ -42,7 +42,21 @@
               </span>
             </div>
           </div>
-          <div>歌词</div>
+          <div class="song-lyric">
+            <Scroller
+              :options="{disableTouch: true}"
+              class="lyric-scroller"
+              :data="lyric && lyric.lyricArr"
+              ref="scroller"
+            >
+              <div>
+                <div ref="lyricLine" class="lyric-text" :class="activeLyric(index)" v-for="(line,index) in lyric.lyricArr" :key="index">
+                  <p class="lyric-text" >{{line.text}}</p>
+                  <p class="lyric-text" v-if="line.txt">{{line.txt}}</p>
+                </div>
+              </div>
+            </Scroller>
+          </div>
         </div>
       </div>
       <div class="song-comment">
@@ -138,6 +152,10 @@ import { COMMENT_COLUMN, SIMILAR_COLUMN } from '@/config/filler'
 export default {
   name: 'MaxPlayer',
   props: {
+    lyric: {
+      type: Object,
+      default: () => {}
+    },
     playState: {
       type: Boolean,
       default: false
@@ -206,6 +224,11 @@ export default {
     }
   },
   methods: {
+    activeLyric (index) {
+      if (index === this.lyric.currentIndex) {
+        return 'active'
+      }
+    },
     onClickDrawer () {
       this.$emit('onClickDrawer', true)
     },
@@ -430,6 +453,20 @@ export default {
                 .lyric-text {
                   margin-bottom: 8px;
                 }
+              }
+            }
+          }
+
+          .song-lyric{
+            width: 380px;
+            height: 350px;
+            .lyric-scroller{
+              .lyric-text{
+                font-size: 16px;
+              }
+              .active{
+                color: brown;
+                background-color: #2eabff;
               }
             }
           }
