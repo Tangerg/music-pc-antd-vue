@@ -42,21 +42,20 @@
               </span>
             </div>
           </div>
-          <div class="song-lyric">
-            <Scroller
-              :options="{disableTouch: true}"
+          <Scroller
               class="lyric-scroller"
+              ref="lyricList"
               :data="lyric && lyric.lyricArr"
-              ref="scroller"
             >
-              <div>
+            <div>
+              <div class="lyric-wrapper">
                 <div ref="lyricLine" class="lyric-text" :class="activeLyric(index)" v-for="(line,index) in lyric.lyricArr" :key="index">
                   <p class="lyric-text" >{{line.text}}</p>
                   <p class="lyric-text" v-if="line.txt">{{line.txt}}</p>
                 </div>
               </div>
-            </Scroller>
-          </div>
+            </div>
+          </Scroller>
         </div>
       </div>
       <div class="song-comment">
@@ -148,9 +147,22 @@ import SimilarList from '@c/SimilarList'
 import ProgressBar from '../ProgressBar'
 import config from '@/config/config'
 import { COMMENT_COLUMN, SIMILAR_COLUMN } from '@/config/filler'
-
+const WHEEL_TYPE = 'wheel'
+const SCROLL_TYPE = 'scroll'
+// 恢复自动滚动的定时器时间
+const AUTO_SCROLL_RECOVER_TIME = 1000
 export default {
   name: 'MaxPlayer',
+  created () {
+    this.lyricScrolling = {
+      [WHEEL_TYPE]: false,
+      [SCROLL_TYPE]: false
+    }
+    this.lyricTimer = {
+      [WHEEL_TYPE]: null,
+      [SCROLL_TYPE]: null
+    }
+  },
   props: {
     lyric: {
       type: Object,
@@ -161,6 +173,10 @@ export default {
       default: false
     },
     likeState: {
+      type: Boolean,
+      default: false
+    },
+    full: {
       type: Boolean,
       default: false
     },
@@ -207,7 +223,20 @@ export default {
       TYPE2: 2
     }
   },
+  watch: {
+    activeLyricIndex (newIndex, oldIndex) {
+      if (newIndex !== oldIndex) {
+        this.scrollToActiveLyric()
+      }
+    },
+    full (val) {
+      console.log(val)
+    }
+  },
   computed: {
+    activeLyricIndex () {
+      return this.lyric.currentIndex
+    },
     isPlaying () {
       return this.playState ? 'playing' : 'paused'
     },
@@ -224,6 +253,39 @@ export default {
     }
   },
   methods: {
+    clearTimer (type) {
+      this.lyricTimer[type] && clearTimeout(this.lyricTimer[type])
+    },
+    onInitScroller (scoller) {
+      const onScrollStart = type => {
+        this.clearTimer(type)
+        this.lyricScrolling[type] = true
+      }
+      const onScrollEnd = type => {
+        // 滚动结束后两秒 歌词开始自动滚动
+        this.clearTimer(type)
+        this.lyricTimer[type] = setTimeout(() => {
+          this.lyricScrolling[type] = false
+        }, AUTO_SCROLL_RECOVER_TIME)
+      }
+      scoller.on('scrollStart', onScrollStart.bind(null, SCROLL_TYPE))
+      scoller.on('mousewheelStart', onScrollStart.bind(null, WHEEL_TYPE))
+
+      scoller.on('scrollEnd', onScrollEnd.bind(null, SCROLL_TYPE))
+      scoller.on('mousewheelEnd', onScrollEnd.bind(null, WHEEL_TYPE))
+    },
+    scrollToActiveLyric () {
+      if (this.activeLyricIndex > 4) {
+        const { lyricList, lyricLine } = this.$refs
+        if (lyricLine && lyricLine[this.activeLyricIndex]) {
+          lyricList
+            .getScroller()
+            .scrollToElement(lyricLine[this.activeLyricIndex], 200, 0, true)
+        } else {
+          lyricList.scrollTo(0, 0, 1000)
+        }
+      }
+    },
     activeLyric (index) {
       if (index === this.lyric.currentIndex) {
         return 'active'
@@ -426,41 +488,20 @@ export default {
                 color: blue;
               }
             }
-
-            .lyric-wrap {
-              width: 380px;
-              height: 350px;
-              mask-image: linear-gradient(
-                180deg,
-                hsla(0, 0%, 100%, 0) 0,
-                hsla(0, 0%, 100%, 0.6) 15%,
-                #fff 25%,
-                #fff 75%,
-                hsla(0, 0%, 100%, 0.6) 85%,
-                hsla(0, 0%, 100%, 0)
-              );
-
-              .lyric-item {
-                margin-bottom: 16px;
-                font-size: 12px;
-
-                &.active {
-                  font-size: 14px;
-                  color: white;
-                  font-weight: 700;
-                }
-
-                .lyric-text {
-                  margin-bottom: 8px;
-                }
-              }
-            }
           }
-
-          .song-lyric{
+          .lyric-scroller{
             width: 380px;
             height: 350px;
-            .lyric-scroller{
+            /*mask-image: linear-gradient(
+              180deg,
+              hsla(0, 0%, 100%, 0) 0,
+              hsla(0, 0%, 100%, 0.6) 15%,
+              #fff 25%,
+              #fff 75%,
+              hsla(0, 0%, 100%, 0.6) 85%,
+              hsla(0, 0%, 100%, 0)
+            );*/
+            .lyric-wrapper{
               .lyric-text{
                 font-size: 16px;
               }
@@ -538,7 +579,7 @@ export default {
           width: calc(100% - 70px);
           margin: auto;
           display: inline-block;
-          .one-line();
+          .no-wrap();
           &-common {
             width: calc(100% - 10px);
           }

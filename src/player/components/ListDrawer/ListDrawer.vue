@@ -139,12 +139,12 @@ export default {
             font-weight: 500;
             font-size: 15px;
             width: 90%;
-            .one-line()
+            .no-wrap()
           }
           .song-info-artist{
             width: 90%;
             font-size: 13px;
-            .one-line()
+            .no-wrap()
           }
         }
         .song-time{

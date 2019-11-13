@@ -21,8 +21,7 @@ export default {
   data () {
     return {
       layout: {
-        height: '100%',
-        overflow: 'hidden'
+        height: '100%'
       }
     }
   },

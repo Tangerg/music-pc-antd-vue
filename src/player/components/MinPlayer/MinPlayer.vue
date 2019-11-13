@@ -190,7 +190,7 @@ export default {
           width: calc(100% - 70px);
           margin: auto;
           display: inline-block;
-          .one-line();
+          .no-wrap();
           &-common {
             width: calc(100% - 10px);
           }

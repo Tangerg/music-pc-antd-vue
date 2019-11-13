@@ -1,5 +1,5 @@
 <template>
-<div class="collapsed-trigger"  @click="onClickCollapsed">
+<div class="header-collapsed-trigger" @click="onClickCollapsed">
   <a-icon :type=collapsedIcon />
 </div>
 </template>
@@ -28,11 +28,6 @@ export default {
 </script>
 
 <style lang="less">
-.collapsed-trigger{
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color .3s;
+.header-collapsed-trigger{
 }
 </style>

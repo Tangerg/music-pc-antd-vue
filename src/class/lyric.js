@@ -2,17 +2,13 @@ import { parseLyric } from 'utils/lyric'
 const STATE_PAUSE = 0
 const STATE_PLAYING = 1
 
-function defaultHandler () {}
-
 export default class Lyric {
-  constructor ({ lyricArr, tLyricArr, lyricUser, transUser, handler = defaultHandler }) {
+  constructor ({ lyricArr, tLyricArr, lyricUser, transUser }) {
     this.lyricArr = lyricArr
     this.lyricUser = lyricUser
     this.transUser = transUser
-    this.handler = handler
     this.state = STATE_PAUSE
     this.currentIndex = 0
-    this.currentLine = {}
   }
   _findCurNum (time) {
     for (let i = 0; i < this.lyricArr.length; i++) {
@@ -22,18 +18,6 @@ export default class Lyric {
     }
     return this.lyricArr.length - 1
   }
-
-  _callHandler (i) {
-    if (i < 0) {
-      return
-    }
-    this.handler({
-      lineNum: i,
-      text: this.lyricArr[i].text,
-      txt: this.lyricArr[i].txt
-    })
-  }
-
   _keepPlay (curNum) {
     if (curNum === this.lyricArr.length) {
       clearTimeout(this.timer)
@@ -44,7 +28,7 @@ export default class Lyric {
       this.currentIndex = curNum
       this.currentLine = this.lyricArr[curNum]
       if (curNum < this.lyricArr.length && this.state === STATE_PLAYING) {
-        this._callHandler(curNum++)
+        curNum++
         this._keepPlay(curNum)
       }
     }, delay)
@@ -65,7 +49,7 @@ export default class Lyric {
   }
 
   togglePlay () {
-    let now = +new Date()
+    var now = +new Date()
     if (this.state === STATE_PLAYING) {
       this.stop()
       this.pauseStamp = now
@@ -108,11 +92,10 @@ function mergeLyric (lyric, tLyric) {
   }
 }
 
-export function formatLyric (lyricObj, handler) {
+export function formatLyric (lyricObj) {
   return new Lyric({
     lyricArr: mergeLyric(parseLyric(lyricObj.lrc.lyric), parseLyric(lyricObj.tlyric.lyric)),
     lyricUser: lyricObj.lyricUser,
-    transUser: lyricObj.transUser,
-    handler: handler
+    transUser: lyricObj.transUser
   })
 }

@@ -71,10 +71,10 @@ export default {
     .item-text{
       margin-left: 10px;
       .name{
-        .one-line
+        .no-wrap
       }
       .other{
-        .one-line
+        .no-wrap
       }
     }
   }

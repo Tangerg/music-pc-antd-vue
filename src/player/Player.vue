@@ -6,6 +6,7 @@
     </list-drawer>
     <max-player
       v-show="fullScreen"
+      :full="fullScreen"
       :playState="playState"
       :likeState="true"
       :playMode="playMode"
@@ -26,6 +27,7 @@
       @onChangePlayState="changePlayState"
       @onChangePlayerDisplay="changePlayerDisplay"
       @onChangePlayMode="changePlayMode"
+      ref="maxPlayer"
       >
     </max-player>
     <min-player
@@ -197,6 +199,7 @@ export default {
     // 更改播放状态
     changePlayState () {
       this.setPlayState(!this.playState)
+      this.lyric.togglePlay()
     },
     changeSliderValue (value) {
       const audio = this.$refs.audio
@@ -262,7 +265,6 @@ export default {
           this.similarSongList = res.songs.map((song) => {
             return createSongBySimilar(song)
           })
-          console.log(this.similarSongList)
         }
       })
     },
@@ -272,12 +274,11 @@ export default {
           this.similarPlayList = res.playlists.map((playlist) => {
             return createPlaylistBySimilar(playlist)
           })
-          console.log(this.similarPlayList)
         }
       })
     },
     initPlaySongLyric (id) {
-      if (this.lyric.lyricArr) {
+      if (this.lyric.lyricArr && this.lyric.lyricArr.length) {
         this.lyric.stop()
       }
       getPlaySongLyric(id).then((res) => {

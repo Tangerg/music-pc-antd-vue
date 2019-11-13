@@ -1,28 +1,18 @@
 <template>
-<div class="user">
+<div class="header-user">
   <a-popover placement="bottom" trigger="click">
-    <div style="max-width: 250px" slot="title">
-      <div class="user-operation">
-        <div class="user-detail">
-          <div><a-avatar :src=user.avatarUrl /></div>
-          <div><span >{{user.nickname}}</span></div>
-          <div><a-button>已签到</a-button></div>
-        </div>
-        <div class="user-detail">
-          <div><div>{{user.eventCount}}</div><div>动态</div></div>
-          <div><div>{{user.follows}}</div><div>关注</div></div>
-          <div><div>{{user.followeds}}</div><div>粉丝</div></div>
-        </div>
-      </div>
+    <div slot="title">
+      <user-top :user="user"></user-top>
     </div>
-    <div style="max-width: 250px" slot="content">
-      <div>
-        {{user.signature}}
-      </div>
+    <div slot="content">
+      <user-bottom></user-bottom>
     </div>
-    <div class="user-info">
+    <div class="user-base">
       <a-avatar :src=user.avatarUrl />
-      <div class="user-name"><span >{{user.nickname}}</span></div>
+      <span class="user-name">
+        {{user.nickname}}
+      </span>
+      <a-icon type="down" />
     </div>
   </a-popover>
 </div>
@@ -31,6 +21,7 @@
 <script>
 import { getUserDetail } from 'api/user'
 import { createUser } from '@/class/user'
+import { UserTop, UserBottom } from '@c/PopoverCard'
 export default {
   name: 'User',
   data () {
@@ -48,36 +39,28 @@ export default {
         console.log(this.user)
       })
     }
+  },
+  components: {
+    UserTop,
+    UserBottom
   }
 }
 </script>
 
 <style lang="less">
-.user{
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color .3s;
-  .user-operation{
+@import "~styles/mixin";
+.ant-popover-title, .ant-popover-inner-content{
+  padding: 0 !important;
+}
+.header-user{
+  .user-base{
     display: flex;
-    background-color: #2eabff !important;
-    .user-detail{
-      display: flex !important;
-      flex-direction: column !important;
-    }
-  }
-  .user-info{
-    display: flex;
-    justify-content: center;
     align-items: center;
+    font-size: 14px;
     .user-name{
-      width: 100px;
-      font-size: 15px;
-      margin-left: 5px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      max-width: 100px;
+      margin: 0 2px 0 10px;
+      .no-wrap()
     }
   }
 }
