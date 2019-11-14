@@ -1,6 +1,6 @@
 <template>
   <div class="comment-list">
-    <a-list itemLayout="horizontal" :dataSource="commentList" :loading="!commentList.length" :split="split">
+    <a-list itemLayout="horizontal" :dataSource="commentList" :loading="!commentList.length" :split="false">
       <a-list-item slot="renderItem" slot-scope="item">
         <div class="list-item">
           <div class="list-item-avatar">
@@ -31,11 +31,6 @@ export default {
     commentList: {
       type: Array,
       default: () => []
-    }
-  },
-  data () {
-    return {
-      split: false
     }
   }
 }

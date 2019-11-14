@@ -5,7 +5,7 @@
       <user-top :user="user"></user-top>
     </div>
     <div slot="content">
-      <user-bottom></user-bottom>
+      <user-bottom ></user-bottom>
     </div>
     <div class="user-base">
       <a-avatar :src=user.avatarUrl />
@@ -33,11 +33,9 @@ export default {
     this.initUser()
   },
   methods: {
-    initUser () {
-      getUserDetail(329508409).then((res) => {
-        this.user = createUser(res)
-        console.log(this.user)
-      })
+    async initUser () {
+      const user = await getUserDetail(329508409)
+      this.user = createUser(user)
     }
   },
   components: {

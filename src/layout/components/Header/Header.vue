@@ -4,7 +4,7 @@
       <div class="header-left">
         <Collapsed class="header-item"></Collapsed>
         <History class="header-item"></History>
-        <!--<Search></Search>-->
+        <Search></Search>
       </div>
       <div class="header-right">
         <User class="header-item"></User>
