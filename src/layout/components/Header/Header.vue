@@ -54,6 +54,7 @@ export default {
       .header-item{
         padding: 0 10px 0 30px;
         cursor: pointer;
+        transition: color .3s;
         &:hover{
           color: var(--header-font-color-1--);
         }

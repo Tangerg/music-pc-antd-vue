@@ -1,23 +1,25 @@
 <template>
-  <div class="full-screen">
+  <div class="music-full-screen">
     <a-icon :type="isFullScreen" @click="handleFullScreen"/>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'FullScreen',
-  data () {
-    return {
-      fullScreen: false
-    }
-  },
   computed: {
+    ...mapGetters([
+      'fullScreen'
+    ]),
     isFullScreen () {
       return this.fullScreen ? 'fullscreen-exit' : 'fullscreen'
     }
   },
   methods: {
+    ...mapMutations({
+      setFullScreen: 'SET_FULL_SCREEN'
+    }),
     handleFullScreen () {
       const main = document.body
       if (this.fullScreen) {
@@ -25,7 +27,7 @@ export default {
       } else {
         this.requestFullScreen(main)
       }
-      this.fullScreen = !this.fullScreen
+      this.setFullScreen(!this.fullScreen)
     },
     requestFullScreen (element) {
       const docElm = element
@@ -56,11 +58,6 @@ export default {
 </script>
 
 <style lang="less">
-.full-screen{
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color .3s;
+.music-full-screen{
 }
 </style>

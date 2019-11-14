@@ -1,10 +1,10 @@
 <template>
   <a-menu
     mode="inline"
-    theme="light"
-    class="menu-list"
+    :theme=appTheme
+    class="music-menu-list"
     @click="clickMenu"
-    :defaultSelectedKeys="[RecommendMusicMenu[0].route]"
+    :selectedKeys="[activeKey]"
   >
     <a-menu-item-group>
       <div slot="title"><span>推荐</span></div>
@@ -38,9 +38,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { MENU_LIST } from '@/config/filler'
 export default {
   name: 'MenuList',
+  computed: {
+    ...mapGetters([
+      'appTheme'
+    ]),
+    activeKey () {
+      return this.$route.path
+    }
+  },
   data () {
     return {
       RecommendMusicMenu: MENU_LIST.RecommendMusic,
@@ -56,7 +65,7 @@ export default {
 </script>
 
 <style lang="less">
-.menu-list{
+.music-menu-list{
   height: calc(100% - 64px);
   overflow-y: auto;
   overflow-x: hidden;

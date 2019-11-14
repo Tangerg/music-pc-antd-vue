@@ -48,7 +48,6 @@ export default {
       commit(SET_PLAY_LIST, list)
       commit(SET_CURRENT_INDEX, 0)
       commit(SET_PLAY_MODE, config.PLAY_MODE.sequence)
-      commit(SET_FULL_SCREEN, false)
       commit(SET_PLAY_STATE, true)
     },
     selectPlay ({ commit, state, rootState }, { list, index }) {
@@ -62,7 +61,6 @@ export default {
         commit(SET_PLAY_LIST, list)
       }
       commit(SET_CURRENT_INDEX, index)
-      commit(SET_FULL_SCREEN, false)
       commit(SET_PLAY_STATE, true)
     }
   }

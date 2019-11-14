@@ -5,7 +5,7 @@
         <a-avatar size="large" :src=user.avatarUrl />
       </div>
       <div class="user-common user-name">
-        <span >{{user.nickname}}{{user.nickname}}</span>
+        <span >{{user.nickname}}</span>
       </div>
       <div class="user-common user-sign">
         <a-button size="small" disabled>已签到</a-button>

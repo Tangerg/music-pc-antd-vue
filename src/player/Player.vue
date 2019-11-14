@@ -6,7 +6,6 @@
     </list-drawer>
     <max-player
       v-show="fullScreen"
-      :full="fullScreen"
       :playState="playState"
       :likeState="true"
       :playMode="playMode"
@@ -27,7 +26,6 @@
       @onChangePlayState="changePlayState"
       @onChangePlayerDisplay="changePlayerDisplay"
       @onChangePlayMode="changePlayMode"
-      ref="maxPlayer"
       >
     </max-player>
     <min-player
@@ -92,14 +90,14 @@ export default {
       readyFlag: false,
       similarSongList: [],
       similarPlayList: [],
-      lyric: {}
+      lyric: {},
+      fullScreen: false
     }
   },
   computed: {
     ...mapGetters([
       'playState',
       'playMode',
-      'fullScreen',
       'drawerState',
       'sequenceList',
       'playList',
@@ -138,7 +136,6 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setFullScreen: 'SET_FULL_SCREEN',
       setDrawerState: 'SET_DRAWER_STATE',
       setPlayState: 'SET_PLAY_STATE',
       setPlayMode: 'SET_PLAY_MODE',
@@ -194,7 +191,7 @@ export default {
     },
     // 更改播放器显示方式
     changePlayerDisplay (flag) {
-      this.setFullScreen(flag)
+      this.fullScreen = flag
     },
     // 更改播放状态
     changePlayState () {

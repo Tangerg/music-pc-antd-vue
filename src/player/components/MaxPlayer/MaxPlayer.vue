@@ -140,6 +140,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Scroller from '@c/Scroller'
 import ColumnHeader from '@c/ColumnHeader'
 import CommentList from '@c/CommentList'
@@ -173,10 +174,6 @@ export default {
       default: false
     },
     likeState: {
-      type: Boolean,
-      default: false
-    },
-    full: {
       type: Boolean,
       default: false
     },
@@ -229,11 +226,14 @@ export default {
         this.scrollToActiveLyric()
       }
     },
-    full (val) {
+    fullScreen (val) {
       console.log(val)
     }
   },
   computed: {
+    ...mapGetters([
+      'fullScreen'
+    ]),
     activeLyricIndex () {
       return this.lyric.currentIndex
     },
@@ -255,24 +255,6 @@ export default {
   methods: {
     clearTimer (type) {
       this.lyricTimer[type] && clearTimeout(this.lyricTimer[type])
-    },
-    onInitScroller (scoller) {
-      const onScrollStart = type => {
-        this.clearTimer(type)
-        this.lyricScrolling[type] = true
-      }
-      const onScrollEnd = type => {
-        // 滚动结束后两秒 歌词开始自动滚动
-        this.clearTimer(type)
-        this.lyricTimer[type] = setTimeout(() => {
-          this.lyricScrolling[type] = false
-        }, AUTO_SCROLL_RECOVER_TIME)
-      }
-      scoller.on('scrollStart', onScrollStart.bind(null, SCROLL_TYPE))
-      scoller.on('mousewheelStart', onScrollStart.bind(null, WHEEL_TYPE))
-
-      scoller.on('scrollEnd', onScrollEnd.bind(null, SCROLL_TYPE))
-      scoller.on('mousewheelEnd', onScrollEnd.bind(null, WHEEL_TYPE))
     },
     scrollToActiveLyric () {
       if (this.activeLyricIndex > 4) {

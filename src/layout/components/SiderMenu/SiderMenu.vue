@@ -3,7 +3,6 @@
     v-model="collapsedState"
     width="256px"
     collapsible
-    :style="siderStyle"
     :trigger="null"
   >
     <Logo :collapsed="collapsedState"/>
@@ -17,12 +16,6 @@ import Logo from './components/Logo'
 import MenuList from './components/MenuList'
 export default {
   name: 'SiderMenu',
-  data () {
-    return {
-      siderStyle: {
-      }
-    }
-  },
   computed: {
     ...mapGetters([
       'collapsedState'

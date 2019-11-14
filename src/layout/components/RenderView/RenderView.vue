@@ -1,5 +1,5 @@
 <template>
-  <div class="render-view">
+  <div class="music-render-view">
     <router-view/>
   </div>
 </template>
@@ -11,8 +11,7 @@ export default {
 </script>
 
 <style lang="less">
-  .render-view {
+  .music-render-view {
     height: 100%;
-    overflow: hidden;
   }
 </style>
