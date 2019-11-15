@@ -35,7 +35,7 @@ import CommentList from '@c/CommentList'
 import { PlaylistHeader } from '@c/InfoHeader'
 
 import { createPlaylistDesc } from '@/class/playlist'
-import { createSong } from '@/class/song'
+import { createSongByPlaylist } from '@/class/song'
 import { createComment } from '@/class/comment'
 
 import { getPlaylistDetail } from 'api/playlist'
@@ -83,7 +83,7 @@ export default {
           this.playlist = createPlaylistDesc(res.playlist)
           this.tabList[1].title = `评论(${this.playlist.commentCount})`
           this.songList = res.playlist.tracks.map((track) => {
-            return Object.freeze(createSong(track))
+            return Object.freeze(createSongByPlaylist(track))
           })
           this.initPlaylistComment()
           console.log(this.songList)

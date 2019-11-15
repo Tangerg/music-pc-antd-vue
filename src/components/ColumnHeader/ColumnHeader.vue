@@ -1,9 +1,9 @@
 <template>
   <div class="column-header">
-    <div class="column-header-left">{{column.title}}</div>
-    <div class="column-header-right">
+    <span class="column-header-left">{{column.title}}</span>
+    <span class="column-header-right">
       <span class="show-more" v-if="column.show" @click="onClickShowMore()">更多></span>
-    </div>
+    </span>
   </div>
 </template>
 
@@ -27,22 +27,19 @@ export default {
 
 <style lang="less">
   .column-header {
-    width: 100%;
     height: 50px;
     line-height: 50px;
     display: flex;
-    flex-direction: row;
+    color: var(--body-font-color-1--);
     border-bottom: 1px solid #e8e8e8;
     .column-header-left {
-      flex: 1;
+      width: 90%;
       text-align: left;
       font-size: 18px;
-      font-weight: 600;
     }
     .column-header-right {
-      flex: 1;
+      width: 10%;
       text-align: right;
-      color: #acacac;
       .show-more{
         cursor: pointer;
       }

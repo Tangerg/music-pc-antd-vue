@@ -61,22 +61,22 @@ export default {
 .similar-list{
   width: 100%;
   .list-item{
-    display: flex;
-    .item-cover{
-      width: 50px;
-      img{
-        width: 100%;
-      }
-    }
-    .item-text{
-      margin-left: 10px;
-      .name{
-        .no-wrap
-      }
-      .other{
-        .no-wrap
-      }
-    }
-  }
+     display: flex;
+     .item-cover{
+       width: 50px;
+       img{
+         width: 100%;
+       }
+     }
+     .item-text{
+       margin-left: 10px;
+       .name{
+         .no-wrap
+       }
+       .other{
+         .no-wrap
+       }
+     }
+   }
 }
 </style>

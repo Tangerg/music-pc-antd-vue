@@ -66,7 +66,7 @@ import MaxPlayer from './components/MaxPlayer'
 import ListDrawer from './components/ListDrawer'
 
 import { createComment } from '@/class/comment'
-import { createSongBySimilar } from '@/class/song'
+import { createSong } from '@/class/song'
 import { createPlaylistBySimilar } from '@/class/playlist'
 import { formatLyric } from '@/class/lyric'
 
@@ -260,7 +260,7 @@ export default {
       getSimilarSong(id).then((res) => {
         if (res.code === config.ERR_OK) {
           this.similarSongList = res.songs.map((song) => {
-            return createSongBySimilar(song)
+            return createSong(song)
           })
         }
       })

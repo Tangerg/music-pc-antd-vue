@@ -1,5 +1,11 @@
 import axios from 'utils/axios'
 
+export const getRecommendSong = () => {
+  return axios.request({
+    url: '/personalized/newsong',
+    method: 'get'
+  })
+}
 // 获取歌曲播放地址
 export const getPlaySongSource = (id) => {
   return axios.request({

@@ -30,7 +30,7 @@ function songAlbum (album) {
   }
 }
 
-export function createSong (track) {
+export function createSongByPlaylist (track) {
   return new Song({
     name: track.name,
     id: track.id,
@@ -45,7 +45,7 @@ export function createSong (track) {
   )
 }
 
-export function createSongBySimilar (track) {
+export function createSong (track) {
   return new Song({
     name: track.name,
     id: track.id,

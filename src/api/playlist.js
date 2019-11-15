@@ -1,7 +1,7 @@
 import axios from 'utils/axios'
 
 // 获取未登录个性推荐歌单
-export const getPersonalized = () => {
+export const getRecommendPlaylist = () => {
   return axios.request({
     url: '/personalized',
     method: 'get'

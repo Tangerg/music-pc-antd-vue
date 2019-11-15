@@ -48,7 +48,7 @@ export default {
   width: 451px;
   display: flex;
   .search-common{
-    width: 225px;
+    width: 50%;
     &:first-child{
       border-right: 1px solid #e8e8e8;
     }

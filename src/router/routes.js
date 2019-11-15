@@ -77,11 +77,5 @@ export default [
         component: () => import('@v/detail/artist/artist')
       }
     ]
-  },
-  {
-    path: '*',
-    name: '404',
-    component: Ready
   }
-
 ]

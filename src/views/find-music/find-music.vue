@@ -1,5 +1,5 @@
 <template>
-  <div class="find-music">
+  <div class="music-find-music">
     <module-tab :tabList="tabList"></module-tab>
     <div class="find-music-container">
       <keep-alive>
@@ -26,12 +26,12 @@ export default {
 </script>
 
 <style lang="less">
-.find-music{
+.music-find-music{
   height: 100%;
   padding: 0 20px;
-  background-color: white;
-  overflow-x: hidden;
+  background: var(--body-bg-color--);
   overflow-y: auto;
+  overflow-x: hidden;
   .find-music-container{
     max-width: 1500px;
     margin: auto;

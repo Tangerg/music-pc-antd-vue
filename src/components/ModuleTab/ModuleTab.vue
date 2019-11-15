@@ -1,5 +1,5 @@
 <template>
-  <div class="header-tab">
+  <div class="module-tab">
     <a-tabs
       animated
       :activeKey=activeKey
