@@ -16,11 +16,17 @@ import {
   Table,
   Tabs,
   Drawer,
-  Base
+  Base,
+  Modal
 } from 'ant-design-vue'
 Vue.component('VueSlider', VueSlider)
 Vue.prototype.$message = message
 Vue.prototype.$notification = notification
+Vue.prototype.$info = Modal.info
+Vue.prototype.$success = Modal.success
+Vue.prototype.$error = Modal.error
+Vue.prototype.$warning = Modal.warning
+Vue.prototype.$confirm = Modal.confirm
 
 Vue.use(Base)
 Vue.use(Button)
@@ -35,3 +41,4 @@ Vue.use(Popover)
 Vue.use(Slider)
 Vue.use(Table)
 Vue.use(Tabs)
+Vue.use(Modal)

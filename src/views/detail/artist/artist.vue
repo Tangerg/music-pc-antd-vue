@@ -104,7 +104,6 @@ export default {
           this.topList = res.songs.map((song) => {
             return createSong(song)
           })
-          console.log(this.topList)
         }
       })
     },
@@ -114,7 +113,6 @@ export default {
           this.AlbumList = res.hotAlbums.map((album) => {
             return createCoverByAlbum(album)
           })
-          console.log(this.AlbumList)
         }
       })
     }

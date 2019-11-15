@@ -73,13 +73,13 @@
           <div>
             <column-header :column=similarColumn.similarPlaylist></column-header>
             <div class="song-similar">
-              <similar-list :dataSource="similarPlayList" :dataType=TYPE1></similar-list>
+              <similar-playlist-card-list :playlistArr="similarPlayList"></similar-playlist-card-list>
             </div>
           </div>
           <div>
             <column-header :column=similarColumn.similarSong></column-header>
             <div class="song-similar">
-              <similar-list :dataSource="similarSongList" :dataType=TYPE2></similar-list>
+              <similar-song-card-list :songArr="similarSongList"></similar-song-card-list>
             </div>
           </div>
         </div>
@@ -144,14 +144,13 @@ import { mapGetters } from 'vuex'
 import Scroller from '@c/Scroller'
 import ColumnHeader from '@c/ColumnHeader'
 import CommentList from '@c/CommentList'
-import SimilarList from '@c/SimilarList'
+import { SimilarPlaylistCardList, SimilarSongCardList } from '@c/HorizontalCardList'
 import ProgressBar from '../ProgressBar'
 import config from '@/config/config'
 import { COMMENT_COLUMN, SIMILAR_COLUMN } from '@/config/filler'
 const WHEEL_TYPE = 'wheel'
 const SCROLL_TYPE = 'scroll'
 // 恢复自动滚动的定时器时间
-const AUTO_SCROLL_RECOVER_TIME = 1000
 export default {
   name: 'MaxPlayer',
   created () {
@@ -215,9 +214,7 @@ export default {
   data () {
     return {
       commentsColumn: COMMENT_COLUMN,
-      similarColumn: SIMILAR_COLUMN,
-      TYPE1: 1,
-      TYPE2: 2
+      similarColumn: SIMILAR_COLUMN
     }
   },
   watch: {
@@ -306,7 +303,8 @@ export default {
     ColumnHeader,
     ProgressBar,
     CommentList,
-    SimilarList
+    SimilarPlaylistCardList,
+    SimilarSongCardList
   }
 }
 </script>

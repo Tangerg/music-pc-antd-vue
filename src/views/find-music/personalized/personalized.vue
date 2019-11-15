@@ -3,10 +3,10 @@
     <banner-carousel :banners="bannerList"></banner-carousel>
     <column-header :column=columnList.recommendList></column-header>
     <playlist-cover :coverList="playList" @onClickCover="clickPlaylist"  @onClickPlay="clickPlay"></playlist-cover>
-    <column-header :column=columnList.exclusiveDistribution></column-header>
     <column-header :column=columnList.latestMusic></column-header>
-    <song-card-list :songListArr="songListArr"></song-card-list>
+    <song-card-list :songListArr="songListArr" @onClickSong="onClickSongItem" @onClickArtist="onClickArtist"></song-card-list>
     <column-header :column=columnList.recommendMV></column-header>
+    <column-header :column=columnList.exclusiveDistribution></column-header>
   </div>
 </template>
 
@@ -86,6 +86,12 @@ export default {
       this.$router.push(`/song-list/${cover.playlist.id}`)
     },
     clickPlay (cover) {
+    },
+    onClickArtist (artist) {
+      console.log(artist)
+    },
+    onClickSongItem (item) {
+      console.log(item)
     }
   },
   components: {

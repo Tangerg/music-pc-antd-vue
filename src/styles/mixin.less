@@ -4,7 +4,19 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
+.color-cursor{
+  cursor: pointer;
+  &:hover{
+    color: var(--header-bg-color--);
+  }
+}
+.line-clamp(@size){
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: @size; //设置多行的行数
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 // 扩展点击区域;
 .extend-click{
   position: relative;

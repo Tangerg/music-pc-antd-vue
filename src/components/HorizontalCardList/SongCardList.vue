@@ -1,5 +1,5 @@
 <template>
-  <div class="song-list">
+  <div class="song-card-list">
     <a-list
       class="song-list-arr"
         v-for="(songList,listIndex) in songListArr"
@@ -7,9 +7,9 @@
         :dataSource="songList"
     >
       <a-list-item slot="renderItem" slot-scope="item, index">
-        <div class="song-list-item">
+        <div class="song-list-item" @click="clickSong(item)">
           <div class="song-list-item-index">{{computedIndex(listIndex,index)}}</div>
-          <card-item :item="item"></card-item>
+          <card-item :item="item" @onClickArtist="clickArtist"></card-item>
         </div>
       </a-list-item>
     </a-list>
@@ -30,6 +30,12 @@ export default {
   methods: {
     computedIndex (listIndex, index) {
       return addZero(listIndex * this.songListArr[0].length + index + 1)
+    },
+    clickSong (item) {
+      this.$emit('onClickSong', item)
+    },
+    clickArtist (art) {
+      this.$emit('onClickArtist', art)
     }
   },
   components: {
@@ -39,7 +45,8 @@ export default {
 </script>
 
 <style lang="less">
-.song-list{
+@import "~styles/mixin";
+.song-card-list{
   margin-top: 15px;
   display: flex;
   .song-list-arr{
@@ -47,14 +54,15 @@ export default {
     border: 1px solid #e8e8e8;
     .ant-list-item-content-single{
       width: 100%;
-    }
-    .song-list-item{
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      .song-list-item-index{
-        min-width: 0;
-        padding: 0 15px;
+      .song-list-item{
+        width: 100%;
+        .no-wrap();
+        display: flex;
+        align-items: center;
+        .song-list-item-index{
+          width: 50px;
+          text-align: center;
+        }
       }
     }
     &:first-child{

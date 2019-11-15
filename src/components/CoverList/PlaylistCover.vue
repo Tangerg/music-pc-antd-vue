@@ -1,16 +1,16 @@
 <template>
   <ul class="cover-list">
     <li class="cover-item" v-for="(cover,index) in coverList" :key="index">
-      <div class="cover" @click="onClickCover(cover)">
-        <div class="cover-other">
-          <div class="cover-copywriter">{{cover.playlist.copywriter}}</div>
-          <div class="cover-play-count"><a-icon type="customer-service" /> {{cover.playlist.playCount}}</div>
+      <div class="cover" @click="clickCover(cover)">
+        <div class="cover-main">
+          <div class="playlist-copywriter">{{cover.playlist.copywriter}}</div>
+          <div class="playlist-play-count"><a-icon type="customer-service" /> {{cover.playlist.playCount}}</div>
           <div class="cover-img"><img alt="封面" :src=cover.playlist.coverImgUrl /></div>
-          <div class="cover-btn">
-            <a-button shape="circle" icon="caret-right" @click="onClickPlay(cover)"/>
-          </div>
+          <!--<div class="playlist-play-btn">
+            <a-button shape="circle" icon="caret-right" @click="clickPlay(cover)"/>
+          </div>-->
         </div>
-        <div class="cover-text">{{cover.playlist.name}}</div>
+        <div class="cover-text">{{cover.playlist.name}}{{cover.playlist.name}}</div>
       </div>
     </li>
   </ul>
@@ -26,10 +26,10 @@ export default {
     }
   },
   methods: {
-    onClickCover (cover) {
+    clickCover (cover) {
       this.$emit('onClickCover', cover)
     },
-    onClickPlay (cover) {
+    clickPlay (cover) {
       this.$emit('onClickPlay', cover)
     }
   }
@@ -38,4 +38,44 @@ export default {
 
 <style lang="less">
   @import "./common";
+  .cover-main{
+    .playlist-copywriter {
+      position: absolute;
+      width: 100%;
+      padding: 5px;
+      top: 0;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.5);
+      transform: translateY(-100%);
+      transition: all 0.3s;
+    }
+    .playlist-play-count {
+      position: absolute;
+      width: 60%;
+      top: 0;
+      right: 0;
+      text-align: right;
+      color: #fff;
+      padding-right: 10px;
+      background: linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+    }
+    .playlist-play-btn{
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      opacity: 0;
+    }
+    &:hover {
+      cursor: pointer;
+      .playlist-play-btn{
+        opacity: 1;
+      }
+      .playlist-copywriter {
+        transform: translateY(0);
+      }
+      .playlist-play-count {
+        visibility: hidden;
+      }
+    }
+  }
 </style>

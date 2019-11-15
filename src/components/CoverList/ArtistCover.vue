@@ -2,7 +2,7 @@
   <ul class="cover-list">
     <li class="cover-item" v-for="(cover,index) in coverList" :key="index">
       <div class="cover" @click="onClickCover(cover)">
-        <div class="cover-other">
+        <div class="cover-main">
           <div class="cover-img">
             <img alt="封面" :src=cover.artist.imageUrl />
           </div>

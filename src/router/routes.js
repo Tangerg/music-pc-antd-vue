@@ -7,7 +7,7 @@ export default [
     path: '/',
     name: 'home',
     component: BasicLayout,
-    redirect: '/find-music/personalized',
+    redirect: '/find-music',
     children: [
       {
         path: '/find-music',
@@ -16,6 +16,7 @@ export default [
           title: '发现音乐'
         },
         component: FindMusic,
+        redirect: '/find-music/personalized',
         children: [
           {
             path: '/find-music/personalized',
@@ -77,5 +78,13 @@ export default [
         component: () => import('@v/detail/artist/artist')
       }
     ]
+  },
+  {
+    path: '*',
+    name: '404',
+    meta: {
+      title: '404'
+    },
+    component: Ready
   }
 ]
