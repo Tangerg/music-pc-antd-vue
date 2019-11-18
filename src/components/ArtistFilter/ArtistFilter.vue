@@ -242,13 +242,15 @@ export default {
 </script>
 
 <style lang="less">
+  @import "~styles/var";
   .artist-filter{
     width: 100%;
     font-size: 20px;
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: @base--border;
     padding-bottom: 20px;
+    color: var(--body-font-color-1--);
     .filter-common{
       display: flex;
       margin-bottom: 10px;
@@ -265,8 +267,8 @@ export default {
           cursor: pointer;
         }
         .active{
-          background-color: #005792;
-          color: white;
+          background: var(--header-bg-color--);
+          color: var(--header-font-color-1--);
         }
       }
     }

@@ -30,3 +30,11 @@ export const getArtistAlbum = (id) => {
     method: 'get'
   })
 }
+
+export const getArtistDetail = (id) => {
+  return axios.request({
+    /* http://localhost:3000/artists?id=3684 */
+    url: `/artists?id=${id}`,
+    method: 'get'
+  })
+}

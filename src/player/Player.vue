@@ -2,6 +2,12 @@
   <div class="music-player">
     <list-drawer
       :visible="drawerState"
+      :songListData="sequenceList"
+      :totalNum="totalNum"
+      :currentSong="currentSong"
+      @closeDrawer="clickDrawer"
+      @onClickSong="clickSong"
+      @onClickArtist="clickArtist"
     >
     </list-drawer>
     <max-player
@@ -17,6 +23,7 @@
       :similarSongList="similarSongList"
       :similarPlayList="similarPlayList"
       :lyric="lyric"
+      :percent="percent"
       @onClickDrawer="clickDrawer"
       @onClickArtist="clickArtist"
       @onClickLike="clickLike"
@@ -26,6 +33,7 @@
       @onChangePlayState="changePlayState"
       @onChangePlayerDisplay="changePlayerDisplay"
       @onChangePlayMode="changePlayMode"
+      @onChangeSliderValue="changeSliderValue"
       >
     </max-player>
     <min-player
@@ -57,7 +65,7 @@
 /*
 *   引用顺序 1官方 2配置 3组件 4类方法 5工具函数 6api
 * */
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 import config from '@/config/config'
 
@@ -91,21 +99,21 @@ export default {
       similarSongList: [],
       similarPlayList: [],
       lyric: {},
-      fullScreen: false
+      fullScreen: false,
+      drawerState: false
     }
   },
   computed: {
     ...mapGetters([
       'playState',
       'playMode',
-      'drawerState',
       'sequenceList',
       'playList',
       'currentIndex',
       'currentSong'
     ]),
     totalNum () {
-      return this.sequenceList.length
+      return this.sequenceList.length || 0
     },
     percent () {
       return Math.min(this.currentTimeNum / this.currentSong.durationNum, 1) || 0
@@ -135,6 +143,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'selectPlay'
+    ]),
     ...mapMutations({
       setDrawerState: 'SET_DRAWER_STATE',
       setPlayState: 'SET_PLAY_STATE',
@@ -153,11 +164,19 @@ export default {
     },
     // 更改drawer显示
     clickDrawer (flag) {
-      this.setDrawerState(flag)
+      this.drawerState = flag
+    },
+    // 点击歌曲
+    clickSong (song, index) {
+      this.selectPlay({
+        list: this.sequenceList,
+        index: index
+      })
     },
     // 点击歌手
-    clickArtist () {
-
+    clickArtist (artist) {
+      this.drawerState = false
+      this.$router.push(`/artist/${artist.id}`)
     },
     // 喜欢不喜欢
     clickLike () {
@@ -295,4 +314,6 @@ export default {
 </script>
 
 <style lang="less">
+  .music-player{
+  }
 </style>

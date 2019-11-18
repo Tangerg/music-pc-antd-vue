@@ -7,7 +7,7 @@
             <img alt="封面" :src=cover.artist.imageUrl />
           </div>
         </div>
-        <div class="cover-text">{{cover.artist.name}}</div>
+        <div class="cover-text artist-text">{{cover.artist.name}}</div>
       </div>
     </li>
   </ul>
@@ -32,4 +32,8 @@ export default {
 
 <style lang="less">
   @import "./common";
+  .artist-text{
+    height: 40px !important;
+    .line-clamp(2) !important;
+  }
 </style>

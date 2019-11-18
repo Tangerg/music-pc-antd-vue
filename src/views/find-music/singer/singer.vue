@@ -9,7 +9,6 @@
 /*
 *   引用顺序 1官方 2配置 3组件 4类方法 5工具函数 6api
 * */
-import { mapMutations } from 'vuex'
 import config from '@/config/config'
 
 import { ArtistCover } from '@c/CoverList'
@@ -29,24 +28,19 @@ export default {
     this.getArtistByState(1001, '#')
   },
   methods: {
-    ...mapMutations({
-      setArtistInfo: 'SET_ARTIST_INFO'
-    }),
     onClickCover (cover) {
       this.$router.push(`/artist/${cover.artist.id}`)
-      this.setArtistInfo(cover.artist)
     },
-    onStateChange (code, initial) {
-      this.getArtistByState(code, initial)
+    async onStateChange (code, initial) {
+      await this.getArtistByState(code, initial)
     },
-    getArtistByState (code, initial) {
-      getArtist(code, initial).then((res) => {
-        if (res.code === config.ERR_OK) {
-          this.artistList = res.artists.map((artist) => {
-            return createCoverByArtist(artist)
-          })
-        }
-      })
+    async getArtistByState (stateCode, stateInitial) {
+      const { code, artists } = await getArtist(stateCode, stateInitial)
+      if (code === config.ERR_OK) {
+        this.artistList = artists.map((artist) => {
+          return createCoverByArtist(artist)
+        })
+      }
     }
   },
   components: {

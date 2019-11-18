@@ -35,7 +35,7 @@ function createCreator (creator) {
 export function createPlaylistCover (playlist) {
   return new Playlist({
     id: playlist.id,
-    coverImgUrl: handlePicUrlSize(playlist.picUrl, 300),
+    coverImgUrl: handlePicUrlSize(playlist.picUrl || playlist.coverImgUrl, 300),
     name: playlist.name,
     playCount: handlePlayCount(playlist.playCount),
     copywriter: playlist.copywriter

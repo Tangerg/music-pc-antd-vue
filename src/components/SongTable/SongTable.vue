@@ -5,15 +5,16 @@
              :dataSource="dataSource"
              :pagination="false"
              :customRow="customRow"
+             :loading="dataSource.length === 0"
     >
         <div class="table-cell" slot="songIndex" slot-scope="text, record, index">
-          <div>
+          <div class="cell-common">
             {{ handleIndex(index) }}
           </div>
         </div>
-        <div class="table-cell" slot="picUrl" slot-scope="picUrl">
-          <div>
-            <img :src=picUrl alt="" style="width: 60px;border-radius: 5px">
+        <div class="table-cell" slot="picUrl" slot-scope="picUrl" v-if="picUrl">
+          <div class="cell-common song-pic" >
+            <img v-lazy=picUrl alt="封面">
           </div>
         </div>
         <div class="table-cell" slot="name" slot-scope="name, record, index">
@@ -38,7 +39,7 @@
           </div>
         </div>
         <div class="table-cell" slot="durationStr" slot-scope="durationStr">
-          <div>
+          <div class="cell-common">
             {{durationStr}}
           </div>
         </div>
@@ -136,28 +137,33 @@ export default {
   @import "~styles/mixin.less";
   .ant-table-thead > tr > th{
     padding: 10px;
+    background: var(--body-bg-color--) !important;
+    color: var(--body-font-color-1--) !important;
   }
   .ant-table-tbody > tr > td {
     padding: 10px;
-    border-bottom: 0;
+    border-bottom: 0 !important;
+    vertical-align: middle !important;
   }
   .song-table{
     width: 100%;
     table{
       table-layout: fixed !important;
+      background: var(--body-bg-color--) !important;
     }
     .table-cell{
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      .no-wrap();
       .cell-common{
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        .no-wrap();
+        color: var(--body-font-color-2--);
         .content-text{
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          .no-wrap();
+        }
+      }
+      .song-pic{
+        img{
+          width: 60px;
+          height: 60px;
         }
       }
       .song-name{
@@ -165,6 +171,7 @@ export default {
         align-items: center;
         flex: 0 0 24px;
         .name-text{
+          color: var(--body-font-color-1--);
         }
         .mv-icon{
           margin-left: 5px;
@@ -175,7 +182,7 @@ export default {
       .artist-name{
         cursor: pointer;
         &:hover{
-          color: #ff6921;
+          color: var(--body-font-color-1--);
         }
       }
     }

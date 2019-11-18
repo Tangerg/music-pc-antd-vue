@@ -78,15 +78,15 @@ export const FIND_MUSIC_TAB_LIST = [
   },
   {
     tabName: '歌单',
-    route: '/find-music/1'
+    route: '/find-music/playlist'
   },
   {
     tabName: '主播电台',
-    route: '/find-music/2'
+    route: '/find-music/radio'
   },
   {
     tabName: '排行榜',
-    route: '/find-music/3'
+    route: '/find-music/rank'
   },
   {
     tabName: '歌手',
@@ -94,7 +94,7 @@ export const FIND_MUSIC_TAB_LIST = [
   },
   {
     tabName: '最新音乐',
-    route: '/find-music/4'
+    route: '/find-music/song'
   }
 ]
 export const COMMENT_COLUMN = {

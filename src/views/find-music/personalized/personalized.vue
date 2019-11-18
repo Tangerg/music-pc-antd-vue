@@ -4,7 +4,7 @@
     <column-header :column=columnList.recommendList></column-header>
     <playlist-cover :coverList="playList" @onClickCover="clickPlaylist"  @onClickPlay="clickPlay"></playlist-cover>
     <column-header :column=columnList.latestMusic></column-header>
-    <song-card-list :songListArr="songListArr" @onClickSong="onClickSongItem" @onClickArtist="onClickArtist"></song-card-list>
+    <new-song :songListArr="songListArr" @onClickSong="onClickSongItem" @onClickArtist="onClickArtist"></new-song>
     <column-header :column=columnList.recommendMV></column-header>
     <column-header :column=columnList.exclusiveDistribution></column-header>
   </div>
@@ -19,7 +19,7 @@ import { COLUMN_LIST } from '@/config/filler'
 
 import BannerCarousel from '@c/BannerCarousel'
 import ColumnHeader from '@c/ColumnHeader'
-import { SongCardList } from '@c/HorizontalCardList'
+import { NewSong } from '@c/HorizontalList'
 import { PlaylistCover } from '@c/CoverList'
 
 import { createBannerByRecommend } from '@/class/banner'
@@ -62,7 +62,7 @@ export default {
       if (code === config.ERR_OK) {
         this.playList = result.map((playList) => {
           return createCoverByPlaylist(playList)
-        }).slice(0, 30)
+        }).slice(0, 20)
       }
     },
     async createNewSong () {
@@ -72,7 +72,6 @@ export default {
           return createSong(item.song)
         })
         this.songListArr = this.splitSongArr(songArr)
-        console.log(this.songListArr)
       }
     },
     splitSongArr (songArr) {
@@ -88,7 +87,7 @@ export default {
     clickPlay (cover) {
     },
     onClickArtist (artist) {
-      console.log(artist)
+      this.$router.push(`/artist/${artist.id}`)
     },
     onClickSongItem (item) {
       console.log(item)
@@ -98,7 +97,7 @@ export default {
     BannerCarousel,
     ColumnHeader,
     PlaylistCover,
-    SongCardList
+    NewSong
   }
 }
 </script>

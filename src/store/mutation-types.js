@@ -8,3 +8,4 @@ export const SET_PLAY_MODE = 'SET_PLAY_MODE' // 设置播放模式
 export const SET_ARTIST_INFO = 'SET_ARTIST_INFO' // 设置歌手信息
 export const SET_COLLAPSED_STATE = 'SET_COLLAPSED_STATE' // 设置播放模式
 export const SET_APP_THEME = 'SET_APP_THEME' // 设置播放模式
+export const SET_APP_SEARCH = 'SET_APP_SEARCH' // 设置播放模式

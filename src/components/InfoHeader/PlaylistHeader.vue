@@ -94,6 +94,7 @@ export default {
 
 <style lang="less">
   @import "./common";
+  @import "~styles/mixin";
   .info-playlist{
     .playlist-create{
       display: flex;
@@ -105,7 +106,7 @@ export default {
         font-size: 16px;
       }
       .create-time{
-        color: #585858;
+        color: var(--body-font-color-2--);
         font-size: 14px;
         font-weight: lighter;
       }
@@ -114,7 +115,7 @@ export default {
       color: #1089ff;
       cursor: pointer;
       .slant-line{
-        color: black;
+        color: var(--body-font-color-1--);
         cursor: auto;
       }
     }
@@ -124,11 +125,7 @@ export default {
       text-align: left;
       &-fold{
         line-height: 20px;
-        text-overflow:ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        .line-clamp(2);
       }
     }
   }

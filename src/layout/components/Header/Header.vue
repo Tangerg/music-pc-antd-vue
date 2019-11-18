@@ -28,8 +28,6 @@ export default {
     return {
     }
   },
-  methods: {
-  },
   components: {
     Collapsed,
     History,

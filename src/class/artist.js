@@ -1,5 +1,5 @@
 export default class Artist {
-  constructor ({ id, accountId, name, alias, imageUrl, picUrl, albumSize, musicSize }) {
+  constructor ({ id, accountId, name, alias, imageUrl, picUrl, albumSize, musicSize, mvSize }) {
     this.id = id
     this.accountId = accountId
     this.name = name
@@ -8,6 +8,7 @@ export default class Artist {
     this.picUrl = picUrl
     this.albumSize = albumSize
     this.musicSize = musicSize
+    this.mvSize = mvSize
   }
 }
 
@@ -39,19 +40,18 @@ export function createArtistCover (artist) {
     name: artist.name,
     alias: artist.alias[0],
     picUrl: artist.picUrl,
-    albumSize: artist.albumSize,
-    musicSize: artist.musicSize
+    albumSize: artist.albumSize
   })
 }
-/* export function createArtist (artist) {
+export function createArtist (artist) {
   return new Artist({
     id: artist.id,
-    accountId: artist.accountId,
-    imageUrl: artist.img1v1Url + '?param=200y200',
+    imageUrl: artist.img1v1Url + '?param=300y300',
     name: artist.name,
     alias: artist.alias[0],
     picUrl: artist.picUrl,
     albumSize: artist.albumSize,
-    musicSize: artist.musicSize
+    musicSize: artist.musicSize,
+    mvSize: artist.mvSize
   })
-} */
+}

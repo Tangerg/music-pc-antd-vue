@@ -41,11 +41,7 @@ export default {
       this.debounce(this.changeColor(value), 1000)
     },
     changeColor (value) {
-      if (this.color.hex !== value.hex) {
-        this.color = value
-        updateTheme(Dark)
-      }
-      console.log("123")
+      document.documentElement.style.setProperty('--header-bg-color--', value.hex)
     },
     debounce (func, delay) {
       let timer

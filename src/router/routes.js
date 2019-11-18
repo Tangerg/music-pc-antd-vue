@@ -27,14 +27,51 @@ export default [
             component: () => import('@v/find-music/personalized/personalized')
           },
           {
-            path: '/find-music/singer',
-            name: 'singer',
+            path: '/find-music/playlist',
+            name: 'playlist',
             keepAlive: true,
             meta: {
               title: '歌单'
             },
+            component: () => import('@v/find-music/playlist/playlist')
+          },
+          {
+            path: '/find-music/radio',
+            name: 'radio',
+            keepAlive: true,
+            meta: {
+              title: '主播电台'
+            },
+            component: () => import('@v/find-music/radio/radio')
+          },
+          {
+            path: '/find-music/rank',
+            name: 'rank',
+            keepAlive: true,
+            meta: {
+              title: '排行榜'
+            },
+            component: () => import('@v/find-music/rank/rank')
+          },
+          {
+            path: '/find-music/singer',
+            name: 'singer',
+            keepAlive: true,
+            meta: {
+              title: '歌手'
+            },
             component: () => import('@v/find-music/singer/singer')
+          },
+          {
+            path: '/find-music/song',
+            name: 'songs',
+            keepAlive: true,
+            meta: {
+              title: '最新音乐'
+            },
+            component: () => import('@v/find-music/song/song')
           }
+
         ]
       },
       {
@@ -73,9 +110,17 @@ export default [
         path: '/artist/:id',
         name: 'artist-detail',
         meta: {
-          title: '歌单详情'
+          title: '歌手详情'
         },
         component: () => import('@v/detail/artist/artist')
+      },
+      {
+        path: '/search',
+        name: 'search',
+        meta: {
+          title: '搜索'
+        },
+        component: () => import('@v/search/search')
       }
     ]
   },

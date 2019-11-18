@@ -1,18 +1,20 @@
 //修改默认滚动条样式
 ::-webkit-scrollbar {
- width: 4px;
+ width: 8px;
+  height: 8px;
 }
 
 /*定义滚动条轨道 内阴影+圆角*/
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px transparent;
-  border-radius: 1px; /*滚动条的背景区域的圆角*/
-  background: hsla(0,0%,53%,.2);
+ // -webkit-box-shadow: inset 0 0 6px transparent;
+  border-radius: 6px; /*滚动条的背景区域的圆角*/
+  background-color: #ddd;
 }
 
 /*定义滑块 内阴影+圆角*/
 ::-webkit-scrollbar-thumb {
-  background: hsla(0,0%,53%,.4);
+  background-color: rgba(0, 0, 0, .3);
+  border-radius: 6px;
 }
 
 /*

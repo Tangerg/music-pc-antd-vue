@@ -1,6 +1,6 @@
 <template>
   <div class="comment-list">
-    <a-list itemLayout="horizontal" :dataSource="commentList" :loading="!commentList.length" :split="false">
+    <a-list itemLayout="horizontal" :dataSource="commentList" :loading="!commentList.length">
       <a-list-item slot="renderItem" slot-scope="item">
         <div class="list-item">
           <div class="list-item-avatar">
@@ -39,25 +39,22 @@ export default {
 <style lang="less">
 .comment-list >.ant-list > .ant-spin-nested-loading > .ant-spin-container >.ant-list-item{
   &:hover{
-    background-color: transparent !important;
+    background-color: none;
   }
 }
 .comment-list{
+  color: var(--body-font-color-1--);
   width: 100%;
   .list-item{
     width: 100%;
     display: flex;
     flex-direction: row;
     .list-item-avatar{
-
     }
     .list-item-content{
       margin-left: 15px;
-      padding-bottom: 20px;
       width: 100%;
-      border-bottom: 0.5px solid #f2f2f1;
       .comment-content{
-        margin-bottom: 5px;
         font-size: 13px;
         .user-name{
           color: #1089ff;
@@ -72,13 +69,14 @@ export default {
       }
       .comment-reply{
         padding: 5px;
-        background: #d9d9d9;
+        background: rgba(0,0,0,0.2);
         border-radius: 3px;
       }
       .comment-action{
+        margin-top: 5px;
         display: flex;
         justify-content: space-between;
-        color: #bebebe;
+        color: var(--body-font-color-2--);
         font-size: 12px;
       }
     }

@@ -1,19 +1,21 @@
 <template>
-  <ul class="cover-list">
-    <li class="cover-item" v-for="(cover,index) in coverList" :key="index">
-      <div class="cover" @click="clickCover(cover)">
-        <div class="cover-main">
-          <div class="playlist-copywriter">{{cover.playlist.copywriter}}</div>
-          <div class="playlist-play-count"><a-icon type="customer-service" /> {{cover.playlist.playCount}}</div>
-          <div class="cover-img"><img alt="封面" :src=cover.playlist.coverImgUrl /></div>
-          <!--<div class="playlist-play-btn">
-            <a-button shape="circle" icon="caret-right" @click="clickPlay(cover)"/>
-          </div>-->
+  <div>
+    <ul class="cover-list">
+      <li class="cover-item" v-for="(cover,index) in coverList" :key="index">
+        <div class="cover" @click="clickCover(cover)">
+          <div class="cover-main">
+            <div class="playlist-copywriter" v-if="cover.playlist.copywriter">{{cover.playlist.copywriter}}</div>
+            <div class="playlist-play-count"><a-icon type="customer-service" /> {{cover.playlist.playCount}}</div>
+            <div class="cover-img"><img alt="封面" :src=cover.playlist.coverImgUrl /></div>
+            <!--<div class="playlist-play-btn">
+              <a-button shape="circle" icon="caret-right" @click="clickPlay(cover)"/>
+            </div>-->
+          </div>
+          <div class="cover-text">{{cover.playlist.name}}</div>
         </div>
-        <div class="cover-text">{{cover.playlist.name}}{{cover.playlist.name}}</div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -56,7 +58,7 @@ export default {
       right: 0;
       text-align: right;
       color: #fff;
-      padding-right: 10px;
+      padding: 2px 10px 2px 0;
       background: linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
     }
     .playlist-play-btn{

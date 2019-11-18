@@ -13,5 +13,6 @@ export default {
 <style lang="less">
   .music-render-view {
     height: 100%;
+    background: var(--body-bg-color--);
   }
 </style>

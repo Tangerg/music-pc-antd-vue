@@ -5,15 +5,15 @@
       <a-input-search v-show="activeKey === tabList[0].key" slot="tab-slot" placeholder="搜索歌单音乐" style="width: 150px"  />
     </info-tab>
     <div v-show="activeKey === tabList[0].key" class="playlist-song-table">
-      <SongTable v-once :dataSource="songList" @onClickSong="clickSong" @onClickArtist="clickArtist" @onClickAlbum="clickAlbum"></SongTable>
+      <SongTable :dataSource="songList" @onClickSong="clickSong" @onClickArtist="clickArtist" @onClickAlbum="clickAlbum"></SongTable>
     </div>
     <div v-show="activeKey === tabList[1].key" class="playlist-comment">
       <div class="playlist-comment-item">
-        <div>精彩评论</div>
+        <column-header :column="{title:'精彩评论'}"></column-header>
         <comment-list :commentList="hotComments"></comment-list>
       </div>
       <div class="playlist-comment-item">
-        <div>最新评论</div>
+        <column-header :column="{title:'最新评论'}"></column-header>
         <comment-list :commentList="comments"></comment-list>
       </div>
     </div>
@@ -33,6 +33,7 @@ import InfoTab from '@c/InfoTab'
 import SongTable from '@c/SongTable'
 import CommentList from '@c/CommentList'
 import { PlaylistHeader } from '@c/InfoHeader'
+import ColumnHeader from '@c/ColumnHeader'
 
 import { createPlaylistDesc } from '@/class/playlist'
 import { createSongByPlaylist } from '@/class/song'
@@ -64,11 +65,12 @@ export default {
       ],
       activeKey: INDEX_KEY,
       hotComments: [],
-      comments: []
+      comments: [],
+      tracks: []
     }
   },
   mounted () {
-    this.initPlayList()
+    this.initPlaylistDetail()
   },
   computed: {
   },
@@ -77,30 +79,34 @@ export default {
       'sequencePlay',
       'selectPlay'
     ]),
-    async initPlayList () {
-      getPlaylistDetail(this.$route.params.id).then((res) => {
-        if (res.code === config.ERR_OK) {
-          this.playlist = createPlaylistDesc(res.playlist)
-          this.tabList[1].title = `评论(${this.playlist.commentCount})`
-          this.songList = res.playlist.tracks.map((track) => {
-            return Object.freeze(createSongByPlaylist(track))
-          })
-          this.initPlaylistComment()
-          console.log(this.songList)
-        }
+    async initPlaylistDetail () {
+      await this.initPlaylistInfo()
+      await this.initPlaylistComment()
+      await this.initPlaylistSong(this.tracks)
+    },
+    async initPlaylistInfo () {
+      const { code, playlist } = await getPlaylistDetail(this.$route.params.id)
+      if (code === config.ERR_OK) {
+        this.playlist = createPlaylistDesc(playlist)
+        this.tabList[1].title = `评论(${this.playlist.commentCount})`
+        this.tracks = playlist.tracks
+      }
+    },
+    async initPlaylistSong (tracks) {
+      this.songList = tracks.map((track) => {
+        return Object.freeze(createSongByPlaylist(track))
       })
     },
-    initPlaylistComment () {
-      getPlaylistComment(this.$route.params.id).then((res) => {
-        if (res.code === config.ERR_OK) {
-          this.hotComments = res.hotComments.map((comment) => {
-            return createComment(comment)
-          })
-          this.comments = res.comments.map((comment) => {
-            return createComment(comment)
-          })
-        }
-      })
+    async initPlaylistComment () {
+      const { code, hotComments, comments } = await getPlaylistComment(this.$route.params.id)
+      if (code === config.ERR_OK) {
+        this.hotComments = hotComments.map((comment) => {
+          return createComment(comment)
+        })
+        this.comments = comments.map((comment) => {
+          return createComment(comment)
+        })
+      }
     },
     clickSong (record, index) {
       this.selectPlay({
@@ -127,7 +133,8 @@ export default {
     PlaylistHeader,
     InfoTab,
     SongTable,
-    CommentList
+    CommentList,
+    ColumnHeader
   }
 }
 </script>
@@ -137,12 +144,15 @@ export default {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    background-color: white;
+    background: var(--body-bg-color--);
     .playlist-song-table{
       width: 100%;
     }
     .playlist-comment{
       padding: 20px 30px;
+      .playlist-comment-item{
+        margin-top: 5px;
+      }
     }
   }
 </style>

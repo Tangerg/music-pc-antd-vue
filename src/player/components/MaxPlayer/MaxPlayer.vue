@@ -88,7 +88,7 @@
   </div>
   <div class="player-max-control">
     <div class="player-min-slider">
-      <progress-bar></progress-bar>
+      <progress-bar :percent="percent" @onValueChange="onChangeSliderValue"></progress-bar>
     </div>
     <div class="player-min-control">
       <div class="control-left">
@@ -128,8 +128,8 @@
           <span class="control control-other cursor">
             <a-icon type="sound" @click="onClickSound"/>
           </span>
-          <span class="control control-other cursor" >
-            <a-icon type="bars" @click="onClickDrawer"/>
+          <span class="control control-other cursor" @click="onClickDrawer" >
+            <a-icon type="bars" />
             <span class="song-count"> {{countNum}}</span>
           </span>
         </div>
@@ -144,7 +144,7 @@ import { mapGetters } from 'vuex'
 import Scroller from '@c/Scroller'
 import ColumnHeader from '@c/ColumnHeader'
 import CommentList from '@c/CommentList'
-import { SimilarPlaylistCardList, SimilarSongCardList } from '@c/HorizontalCardList'
+import { SimilarPlaylistCardList, SimilarSongCardList } from '@c/HorizontalList'
 import ProgressBar from '../ProgressBar'
 import config from '@/config/config'
 import { COMMENT_COLUMN, SIMILAR_COLUMN } from '@/config/filler'
@@ -209,6 +209,10 @@ export default {
     similarPlayList: {
       type: Array,
       default: () => []
+    },
+    percent: {
+      type: Number,
+      default: 0
     }
   },
   data () {
@@ -296,6 +300,9 @@ export default {
     },
     onClickSound () {
       this.$emit('onClickSound')
+    },
+    onChangeSliderValue (value) {
+      this.$emit('onChangeSliderValue', value)
     }
   },
   components: {
@@ -472,22 +479,22 @@ export default {
           .lyric-scroller{
             width: 380px;
             height: 350px;
-            /*mask-image: linear-gradient(
+            mask-image: linear-gradient(
               180deg,
               hsla(0, 0%, 100%, 0) 0,
-              hsla(0, 0%, 100%, 0.6) 15%,
+              hsla(0, 0%, 100%, 0.6) 10%,
               #fff 25%,
               #fff 75%,
               hsla(0, 0%, 100%, 0.6) 85%,
               hsla(0, 0%, 100%, 0)
-            );*/
+            );
             .lyric-wrapper{
               .lyric-text{
                 font-size: 16px;
+                margin: 25px 0;
               }
               .active{
-                color: brown;
-                background-color: #2eabff;
+                font-weight: 700
               }
             }
           }

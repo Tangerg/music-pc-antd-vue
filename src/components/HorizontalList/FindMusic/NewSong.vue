@@ -2,9 +2,9 @@
   <div class="song-card-list">
     <a-list
       class="song-list-arr"
-        v-for="(songList,listIndex) in songListArr"
-        :key="listIndex"
-        :dataSource="songList"
+      v-for="(songList,listIndex) in songListArr"
+      :key="listIndex"
+      :dataSource="songList"
     >
       <a-list-item slot="renderItem" slot-scope="item, index">
         <div class="song-list-item" @click="clickSong(item)">
@@ -18,9 +18,9 @@
 
 <script>
 import { addZero } from 'utils/time'
-import CardItem from './CardItem'
+import CardItem from '../CardItem'
 export default {
-  name: 'SongCard',
+  name: 'NewSong',
   props: {
     songListArr: {
       type: Array,
@@ -45,29 +45,29 @@ export default {
 </script>
 
 <style lang="less">
-@import "~styles/mixin";
-.song-card-list{
-  margin-top: 15px;
-  display: flex;
-  .song-list-arr{
-    width: 50%;
-    border: 1px solid #e8e8e8;
-    .ant-list-item-content-single{
-      width: 100%;
-      .song-list-item{
+  @import "~styles/mixin";
+  .song-card-list{
+    margin-top: 15px;
+    display: flex;
+    .song-list-arr{
+      width: 50%;
+      border: 1px solid #e8e8e8;
+      .ant-list-item-content-single{
         width: 100%;
-        .no-wrap();
-        display: flex;
-        align-items: center;
-        .song-list-item-index{
-          width: 50px;
-          text-align: center;
+        .song-list-item{
+          width: 100%;
+          .no-wrap();
+          display: flex;
+          align-items: center;
+          .song-list-item-index{
+            width: 50px;
+            text-align: center;
+          }
         }
       }
-    }
-    &:first-child{
-      border-right: 0;
+      &:first-child{
+        border-right: 0;
+      }
     }
   }
-}
 </style>

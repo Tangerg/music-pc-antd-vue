@@ -41,8 +41,8 @@
           <span class="control control-other cursor">
             <a-icon type="sound" @click="onClickSound"/>
           </span>
-          <span class="control control-other cursor" >
-            <a-icon type="bars" @click="onClickDrawer"/>
+          <span class="control control-other cursor" @click="onClickDrawer">
+            <a-icon type="bars" />
             <span class="song-count"> {{countNum}}</span>
           </span>
         </div>

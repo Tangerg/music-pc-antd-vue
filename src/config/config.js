@@ -3,6 +3,7 @@ export default {
   ERR_OK: 200,
   // 基本请求url
   BASE_URL: 'http://119.23.220.235:3000/',
+  // BASE_URL: 'http://localhost:3000/',
   // 播放模式
   PLAY_MODE: {
     sequence: 0, // 顺序播放

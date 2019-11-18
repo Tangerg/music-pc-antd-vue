@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import CardItem from './CardItem'
+import CardItem from '../CardItem'
 export default {
   name: 'SimilarPlaylistCardList',
   props: {

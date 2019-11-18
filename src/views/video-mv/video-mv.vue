@@ -1,5 +1,5 @@
 <template>
-<div>mv</div>
+<div>视频</div>
 </template>
 
 <script>

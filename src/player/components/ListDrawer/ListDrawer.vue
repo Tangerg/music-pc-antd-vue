@@ -1,11 +1,10 @@
 <template>
   <div>
     <a-drawer
-      placement="right"
       :closable="false"
       @close="closeDrawer"
       :visible="visible"
-      width="300"
+      width="350"
     >
       <div class="drawer">
         <div class="drawer-header">
@@ -15,40 +14,24 @@
               <span class="count-num">共 {{totalNum}} 首</span>
               <span class="count-clear" @click="cleanPlayList">
               <a-icon type="delete" />清空
-            </span>
+              </span>
             </div>
           </div>
         </div>
         <div class="drawer-body">
-            <a-list
-              itemLayout="horizontal"
-              :dataSource="songListData"
-              :locale="{emptyText: '暂无歌曲'}"
-            >
-              <a-list-item  slot="renderItem" slot-scope="item, index">
-                <div class="song-list-wrap" @clcik="playItem(item)">
-                  <div class="song-info">
-                    <div class="song-info-title">{{item.name}}</div>
-                    <div class="song-info-artist">{{item.artist[0].name}}</div>
-                  </div>
-                  <div class="song-time">{{item.time}}</div>
-                  <div class="song-control">
-                    <span @click="playItem(item)">
-                      <a-icon type="play-circle" />
-                    </span>
-                    <span>
-                      <a-icon type="delete" />
-                    </span>
-                  </div>
-                </div>
-              </a-list-item>
-            </a-list>
+          <drawer-list
+            :dataSource="songListData"
+            :currentSong="currentSong"
+            @onClickSong="clickSong"
+            @onClickArtist="clickArtist"
+          ></drawer-list>
         </div>
       </div>
     </a-drawer>
   </div>
 </template>
 <script>
+import { DrawerList } from '@c/HorizontalList'
 export default {
   props: {
     visible: {
@@ -62,6 +45,12 @@ export default {
     songListData: {
       type: Array,
       default: () => []
+    },
+    currentSong: {
+      type: Object,
+      default: function () {
+        return {}
+      }
     }
   },
   data () {
@@ -75,14 +64,21 @@ export default {
     cleanPlayList () {
       this.$emit('cleanPlayList')
     },
-    playItem (item) {
-      this.$emit('playItem', item)
+    clickSong (item, index) {
+      this.$emit('onClickSong', item , index)
+    },
+    clickArtist (art) {
+      this.$emit('onClickArtist', art)
     }
+  },
+  components: {
+    DrawerList
   }
 }
 </script>
 <style lang="less">
   @import "~styles/mixin";
+  @import "~styles/var";
   .ant-drawer-body{
     height: 100%;
     padding: 0 !important;
@@ -97,9 +93,9 @@ export default {
     overflow-y: hidden;
     &-header{
       height: 80px;
-      background-color: #f5f5f5;
       padding: 0 20px;
       display: flex;
+      border-bottom: @base--border;
       &-wrap{
         margin: auto;
         width: 100%;
@@ -109,7 +105,7 @@ export default {
         }
         .count{
           font-size: 15px;
-          color: #a8a8a8;
+          color: var(--body-font-color-2--);
           &-num{
           }
           &-clear{

@@ -28,7 +28,7 @@ export default {
 <style lang="less">
 .music-find-music{
   height: 100%;
-  padding: 0 20px;
+  padding: 0;
   background: var(--body-bg-color--);
   overflow-y: auto;
   overflow-x: hidden;

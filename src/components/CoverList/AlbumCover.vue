@@ -1,21 +1,23 @@
 <template>
-  <ul class="cover-list">
-    <li class="cover-item" v-for="(cover,index) in coverList" :key="index">
-      <div class="cover" @click="onClickCover(cover)">
-        <div class="cover-main">
-          <div class="cover-img">
-            <div class="album-cover-cd" ></div>
-            <img alt="封面" :src=cover.album.picUrl />
+  <div>
+    <ul class="cover-list">
+      <li class="cover-item cover-item-album" v-for="(cover,index) in coverList" :key="index">
+        <div class="cover" @click="onClickCover(cover)">
+          <div class="cover-main">
+            <div class="cover-img">
+              <!--<div class="album-cover-cd" ></div>-->
+              <img alt="封面" :src=cover.album.picUrl />
+            </div>
+          </div>
+          <div class="album-text">
+            <div class="album-name">{{cover.album.name}}</div>
+            <div class="album-publish" v-if="display">{{cover.album.publishTime}}</div>
+            <div class="album-artist" v-if="!display">{{cover.album.artist.name}}</div>
           </div>
         </div>
-        <div class="album-text">
-          <div class="album-name">{{cover.album.name}}{{cover.album.name}}{{cover.album.name}}{{cover.album.name}}{{cover.album.name}}</div>
-          <div class="album-publish" v-if="display">{{cover.album.publishTime}}</div>
-          <div class="album-artist" v-if="!display">{{cover.album.artist.name}}</div>
-        </div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -41,6 +43,9 @@ export default {
 
 <style lang="less">
 @import "./common";
+  .cover-item-album{
+    width: 17% !important;
+   }
   .cover-main{
     .cover-img{
       .album-cover-cd{
@@ -48,7 +53,8 @@ export default {
         background-image: url("../../assets/album.png");
         height: 100%;
         position: absolute;
-        right: -50px;
+        right: -55px;
+        z-index: 200;
       }
     }
   }

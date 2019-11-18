@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
+import VueLazyload from 'vue-lazyload'
 import {
   Avatar,
   Button,
@@ -17,7 +18,9 @@ import {
   Tabs,
   Drawer,
   Base,
-  Modal
+  Modal,
+  Col,
+  Row
 } from 'ant-design-vue'
 Vue.component('VueSlider', VueSlider)
 Vue.prototype.$message = message
@@ -27,7 +30,6 @@ Vue.prototype.$success = Modal.success
 Vue.prototype.$error = Modal.error
 Vue.prototype.$warning = Modal.warning
 Vue.prototype.$confirm = Modal.confirm
-
 Vue.use(Base)
 Vue.use(Button)
 Vue.use(Avatar)
@@ -42,3 +44,8 @@ Vue.use(Slider)
 Vue.use(Table)
 Vue.use(Tabs)
 Vue.use(Modal)
+Vue.use(Col)
+Vue.use(Row)
+Vue.use(VueLazyload, {
+  loading: require('./assets/cd-img.png')
+})

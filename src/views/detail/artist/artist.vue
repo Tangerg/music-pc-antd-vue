@@ -1,11 +1,11 @@
 <template>
   <div class="artist-detail">
-    <artist-header :content="artistInfo" :mvSize="this.mvList.length"></artist-header>
+    <artist-header v-if="artistInfo" :content="artistInfo"></artist-header>
     <info-tab :tabList="tabList" @onChangeTab="handleChangeTab"></info-tab>
-    <div v-show="activeKey === tabList[0].key" class="playlist-song-table">
+    <div v-show="activeKey === tabList[0].key" class="artist-song-table">
       <song-table :dataSource="topList" @onClickSong="clickSong"></song-table>
     </div>
-    <div v-show="activeKey === tabList[1].key" class="playlist-song-table">
+    <div v-show="activeKey === tabList[1].key" class="artist-album">
       <album-cover :coverList="AlbumList"></album-cover>
     </div>
     <div v-show="activeKey === tabList[2].key" class="playlist-song-table">
@@ -21,10 +21,11 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import config from '@/config/config'
 
-import { createSong } from '@/class/song'
+import { createSongByPlaylist } from '@/class/song'
+import { createArtist } from '@/class/artist'
 import { createCoverByAlbum } from '@/class/cover'
 
 import SongTable from '@c/SongTable'
@@ -32,7 +33,7 @@ import InfoTab from '@c/InfoTab'
 import { ArtistHeader } from '@c/InfoHeader'
 import { AlbumCover } from '@c/CoverList'
 
-import { getArtistMv, getArtistTop50, getArtistAlbum } from 'api/artist'
+import { getArtistDetail, getArtistMv, getArtistTop50, getArtistAlbum } from 'api/artist'
 
 const TABLIST = [
   {
@@ -60,6 +61,7 @@ export default {
   name: 'artist',
   data () {
     return {
+      artistInfo: {},
       mvList: [],
       topList: [],
       AlbumList: [],
@@ -67,21 +69,36 @@ export default {
       activeKey: 'top'
     }
   },
-  mounted () {
-    this.initArtistMv()
-    this.initArtistTop50()
-    this.initArtistAlbum()
+  watch: {
+    id () {
+      this.initArtist()
+    }
   },
   computed: {
-    ...mapGetters([
-      'artistInfo'
-    ])
+    id () {
+      return Number(this.$route.params.id)
+    }
+  },
+  mounted () {
+    this.initArtist()
   },
   methods: {
     ...mapActions([
       'sequencePlay',
       'selectPlay'
     ]),
+    async initArtist () {
+      await this.initArtistInfo()
+      await this.initArtistMv()
+      await this.initArtistTop50()
+      await this.initArtistAlbum()
+    },
+    async initArtistInfo () {
+      const { code, artist } = await getArtistDetail(this.$route.params.id)
+      if (code === config.ERR_OK) {
+        this.artistInfo = createArtist(artist)
+      }
+    },
     handleChangeTab (key) {
       this.activeKey = key
     },
@@ -91,30 +108,27 @@ export default {
         index: index
       })
     },
-    initArtistMv () {
-      getArtistMv(this.$route.params.id).then((res) => {
-        if (res.code === config.ERR_OK) {
-          this.mvList = res.mvs
-        }
-      })
+    async initArtistMv () {
+      const { code, mvs } = await getArtistMv(this.$route.params.id)
+      if (code === config.ERR_OK) {
+        this.mvList = mvs
+      }
     },
-    initArtistTop50 () {
-      getArtistTop50(this.$route.params.id).then((res) => {
-        if (res.code === config.ERR_OK) {
-          this.topList = res.songs.map((song) => {
-            return createSong(song)
-          })
-        }
-      })
+    async initArtistTop50 () {
+      const { code, songs } = await getArtistTop50(this.$route.params.id)
+      if (code === config.ERR_OK) {
+        this.topList = songs.map((song) => {
+          return createSongByPlaylist(song)
+        })
+      }
     },
-    initArtistAlbum () {
-      getArtistAlbum(this.$route.params.id).then((res) => {
-        if (res.code === config.ERR_OK) {
-          this.AlbumList = res.hotAlbums.map((album) => {
-            return createCoverByAlbum(album)
-          })
-        }
-      })
+    async initArtistAlbum () {
+      const { code, hotAlbums } = await getArtistAlbum(this.$route.params.id)
+      if (code === config.ERR_OK) {
+        this.AlbumList = hotAlbums.map((album) => {
+          return createCoverByAlbum(album)
+        })
+      }
     }
   },
   components: {
@@ -131,6 +145,14 @@ export default {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    background-color: white;
+    background: var(--body-bg-color--);
+    color: var(--body-font-color-1--);
+    .artist-song-table{
+      width: 100%;
+    }
+    .artist-album{
+      width: 100%;
+      padding: 0 30px;
+    }
   }
 </style>

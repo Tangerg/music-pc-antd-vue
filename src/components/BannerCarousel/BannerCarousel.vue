@@ -1,20 +1,21 @@
 <template>
-  <!-- Make a div wrapped slider,set height and width -->
-  <div style="width:100%;margin:20px auto;height:400px">
-    <!-- Using the slider component -->
-    <slider ref="slider" :options="options">
-      <!-- slideritem wrapped package with the components you need -->
-      <template slot-scope="coverflow">
-        <slideritem v-for="(banner,index) in banners" :pageLength="banners.length" :index="index" :key="index" style="width: 333%">
-          <img :src="banner.imageUrl" alt="" style="height: 300px">
-        </slideritem>
-      </template>
-    </slider>
-  </div>
+    <carousel class="banner-carousel" :interval="4000" type="card">
+      <carousel-item v-for="(banner,index) in banners" :key="index">
+        <div class="banner-item">
+          <img :src="banner.imageUrl" alt="轮播图" class="banner-img">
+          <div class="banner-tag" :style="addColor(banner.titleColor)">{{banner.typeTitle}}</div>
+        </div>
+      </carousel-item>
+    </carousel>
 </template>
 <script>
-// import slider components
-import { slider, slideritem } from 'vue-concise-slider'
+import {
+  Carousel,
+  CarouselItem
+} from 'element-ui'
+import 'element-ui/lib/theme-chalk/carousel.css'
+import './icon.css'
+import 'element-ui/lib/theme-chalk/carousel-item.css'
 export default {
   name: 'Banner',
   props: {
@@ -23,25 +24,40 @@ export default {
       default: () => []
     }
   },
+  mounted () {
+    console.log(this.banners)
+  },
   data () {
     return {
-      // Slider configuration [obj]
-      options: {
-        effect: 'coverflow',
-        currentPage: 0,
-        thresholdDistance: 100,
-        thresholdTime: 300,
-        deviation: 200,
-        widthScalingRatio: 0.8,
-        heightScalingRatio: 0.8,
-        slidesToScroll: 1,
-        loop: true
-      }
+    }
+  },
+  methods: {
+    addColor (color) {
+      return `background: ${color}`
     }
   },
   components: {
-    slider,
-    slideritem
+    Carousel,
+    CarouselItem
   }
 }
 </script>
+<style lang="less" scoped>
+  .banner-carousel {
+    margin-top: 10px;
+    .banner-item{
+      position: relative;
+      .banner-img {
+        width: 100%;
+      }
+      .banner-tag {
+        color: #fff;
+        position: absolute;
+        right: 0;
+        bottom: 10px;
+        padding: 1px 7px;
+        border-radius: 999px 0 0 999px;
+      }
+    }
+  }
+</style>

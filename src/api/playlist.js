@@ -24,3 +24,27 @@ export const getSimilarPlaylist = (id) => {
     method: 'get'
   })
 }
+
+export const getPlaylistHotTags = () => {
+  return axios.request({
+    /* http://localhost:3000/playlist/hot */
+    url: `/playlist/hot`,
+    method: 'get'
+  })
+}
+
+export const getPlaylistAllTags = () => {
+  return axios.request({
+    /* http://localhost:3000/playlist/catlist */
+    url: `/playlist/catlist`,
+    method: 'get'
+  })
+}
+
+export const getPlaylistByCat = (cat, limit) => {
+  return axios.request({
+    /* /top/playlist?keywords=华语 */
+    url: `/top/playlist?cat=${cat}&limit=${limit || 30}`,
+    method: 'get'
+  })
+}

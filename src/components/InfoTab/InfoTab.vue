@@ -39,9 +39,10 @@ export default {
 </script>
 
 <style lang="less">
+@import "~styles/var";
 .tab-warp{
   margin: 0;
-  border-bottom: 1px solid #1890ff;
+  border-bottom: @base--border;
   .tab-container{
     display: flex;
     justify-content: space-between;

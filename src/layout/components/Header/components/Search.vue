@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import { getHotSearch, getSearch } from 'api/search'
 import { SearchCard, ResultCard } from '@c/PopoverCard'
 import config from '@/config/config'
@@ -32,6 +33,9 @@ export default {
     this.initHotSearch()
   },
   methods: {
+    ...mapMutations({
+      setAppSearch: 'SET_APP_SEARCH'
+    }),
     onChange (e) {
       const { value } = e.target
       this.value = value
@@ -40,7 +44,8 @@ export default {
       if (value.trim() === '') {
         return
       }
-      console.log(value)
+      this.setAppSearch(value)
+      this.$router.push('/search')
     },
     onClickSearchItem (item) {
       this.value = item.first

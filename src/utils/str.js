@@ -3,5 +3,8 @@ export function handleNewLine (str) {
 }
 
 export function handlePicUrlSize (str, size) {
+  if (!str) {
+    return
+  }
   return `${str}?param=${size}y${size}`
 }

@@ -16,7 +16,7 @@
           <div class="info-text-group">
             <div class="text-item singer-count-item"><a-icon type="customer-service" /> 单曲数：{{content.musicSize}}</div>
             <div class="text-item singer-count-item"><a-icon type="table" /> 专辑数：{{content.albumSize}}</div>
-            <div class="text-item singer-count-item"><a-icon type="youtube" /> MV数：{{mvSize}}</div>
+            <div class="text-item singer-count-item"><a-icon type="youtube" /> MV数：{{content.mvSize}}</div>
           </div>
         </div>
       </div>
@@ -39,10 +39,6 @@ export default {
       type: Object,
       default: () => {
       }
-    },
-    mvSize: {
-      type: Number,
-      default: 0
     }
   },
   data () {
