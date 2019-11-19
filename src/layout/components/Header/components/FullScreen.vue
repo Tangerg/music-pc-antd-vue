@@ -21,36 +21,30 @@ export default {
       setFullScreen: 'SET_FULL_SCREEN'
     }),
     handleFullScreen () {
-      const main = document.body
+      const element = document.documentElement
       if (this.fullScreen) {
         this.exitFullScreen()
       } else {
-        this.requestFullScreen(main)
+        this.requestFullScreen(element)
       }
       this.setFullScreen(!this.fullScreen)
     },
     requestFullScreen (element) {
-      const docElm = element
-      if (docElm.requestFullscreen) {
-        docElm.requestFullscreen()
-      } else if (docElm.msRequestFullscreen) {
-        docElm.msRequestFullscreen()
-      } else if (docElm.mozRequestFullScreen) {
-        docElm.mozRequestFullScreen()
-      } else if (docElm.webkitRequestFullScreen) {
-        docElm.webkitRequestFullScreen()
+      const requestMethod = element.requestFullScreen || // W3C
+        element.webkitRequestFullScreen || // Chrome等
+        element.mozRequestFullScreen || // FireFox
+        element.msRequestFullScreen
+      if (requestMethod) {
+        requestMethod.call(element)
       }
     },
     exitFullScreen () {
-      const de = window.parent.document
-      if (de.exitFullscreen) {
-        de.exitFullscreen()
-      } else if (de.mozCancelFullScreen) {
-        de.mozCancelFullScreen()
-      } else if (de.webkitCancelFullScreen) {
-        de.webkitCancelFullScreen()
-      } else if (de.msExitFullscreen) {
-        de.msExitFullscreen()
+      const exitMethod = document.exitFullscreen || // W3C
+        document.mozCancelFullScreen || // Chrome等
+        document.webkitExitFullscreen || // FireFox
+        document.webkitExitFullscreen // IE11
+      if (exitMethod) {
+        exitMethod.call(document)
       }
     }
   }

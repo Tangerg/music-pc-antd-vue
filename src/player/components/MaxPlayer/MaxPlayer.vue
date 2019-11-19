@@ -1,12 +1,13 @@
 <template>
-<div class="player-max">
+<transition name="player-max-transition">
+  <div class="player-max">
   <div class="player-max-content">
     <a-button icon="fullscreen-exit" class="fullscreen-exit" @click="onChangePlayerDisplay(false)"></a-button>
     <div class="player-max-container">
       <div class="song-info">
         <div class="song-info-left">
-          <img class="play-bar-support" src="../../../assets/play-bar-support.png" alt="">
-          <img class="play-bar" :class="isPlaying" src="../../../assets/play-bar.png" alt="">
+          <img class="play-bar-support" src="@/assets/play-bar-support.png" alt="">
+          <img class="play-bar" :class="isPlaying" src="@/assets/play-bar.png" alt="">
           <div class="cd-wrapper" >
             <div class="cd-img" :class="isPlaying">
               <div class="img-wrapper">
@@ -29,8 +30,8 @@
             <div class="desc-item">
               <div class="desc-text" >
                 <span class="label">歌手：</span>
-                <span class="desc-text" v-for="(artist,index) in currentSong.artist">
-                  <span class="desc-text value">{{artist.name}}</span>
+                <span class="desc-text-artist" v-for="(artist,index) in currentSong.artist">
+                  <span class="value" @click="onClickArtist(artist)">{{artist.name}}</span>
                   <span v-if="index < currentSong.artist.length - 1">&nbsp;/&nbsp;</span>
                 </span>
               </div>
@@ -47,24 +48,22 @@
               ref="lyricList"
               :data="lyric && lyric.lyricArr"
             >
-            <div>
               <div class="lyric-wrapper">
                 <div ref="lyricLine" class="lyric-text" :class="activeLyric(index)" v-for="(line,index) in lyric.lyricArr" :key="index">
-                  <p class="lyric-text" >{{line.text}}</p>
-                  <p class="lyric-text" v-if="line.txt">{{line.txt}}</p>
+                  <p>{{line.text}}</p>
+                  <p class="lyric-text-other" v-if="line.txt">{{line.txt}}</p>
                 </div>
               </div>
-            </div>
           </Scroller>
         </div>
       </div>
       <div class="song-comment">
         <div class="song-comment-left">
-          <div class="playlist-comment">
+          <div class="playlist-comment" v-if="hotComments.length">
             <column-header :column=commentsColumn.hotComments></column-header>
             <comment-list :commentList="hotComments"></comment-list>
           </div>
-          <div class="playlist-comment">
+          <div class="playlist-comment" v-if="comments.length">
             <column-header :column=commentsColumn.comments></column-header>
             <comment-list :commentList="comments"></comment-list>
           </div>
@@ -97,10 +96,12 @@
         </div>
         <div class="song-text">
           <div class="song-text-common song-text-name cursor" @click="onChangePlayerDisplay(true)">{{currentSong.name}}</div>
-          <span class="song-text-common song-text-artist" v-for="(artist,index) in currentSong.artist" :key="index">
-            <span class="cursor" @click="onClickArtist(artist)">{{artist.name}}</span>
-            <span v-if="index < currentSong.artist.length-1"> / </span>
-          </span>
+          <div class="song-text-common song-text-artist">
+            <span v-for="(artist,index) in currentSong.artist" :key="index">
+              <span class="cursor" @click="onClickArtist(artist)">{{artist.name}}</span>
+              <span v-if="index < currentSong.artist.length-1"> / </span>
+            </span>
+          </div>
         </div>
       </div>
       <div class="control-center">
@@ -137,10 +138,10 @@
     </div>
   </div>
 </div>
+</transition>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import Scroller from '@c/Scroller'
 import ColumnHeader from '@c/ColumnHeader'
 import CommentList from '@c/CommentList'
@@ -148,25 +149,16 @@ import { SimilarPlaylistCardList, SimilarSongCardList } from '@c/HorizontalList'
 import ProgressBar from '../ProgressBar'
 import config from '@/config/config'
 import { COMMENT_COLUMN, SIMILAR_COLUMN } from '@/config/filler'
-const WHEEL_TYPE = 'wheel'
-const SCROLL_TYPE = 'scroll'
-// 恢复自动滚动的定时器时间
 export default {
   name: 'MaxPlayer',
-  created () {
-    this.lyricScrolling = {
-      [WHEEL_TYPE]: false,
-      [SCROLL_TYPE]: false
-    }
-    this.lyricTimer = {
-      [WHEEL_TYPE]: null,
-      [SCROLL_TYPE]: null
-    }
-  },
   props: {
     lyric: {
       type: Object,
-      default: () => {}
+      default: null
+    },
+    disPlay: {
+      type: Boolean,
+      default: false
     },
     playState: {
       type: Boolean,
@@ -227,16 +219,20 @@ export default {
         this.scrollToActiveLyric()
       }
     },
-    fullScreen (val) {
-      console.log(val)
+    disPlay (val) {
+      if (val) {
+        this.$nextTick(() => {
+          this.scrollerRefash()
+          this.scrollToActiveLyric()
+        })
+      }
     }
   },
   computed: {
-    ...mapGetters([
-      'fullScreen'
-    ]),
     activeLyricIndex () {
-      return this.lyric.currentIndex
+      if (this.lyric && this.lyric.currentIndex) {
+        return this.lyric.currentIndex
+      }
     },
     isPlaying () {
       return this.playState ? 'playing' : 'paused'
@@ -254,16 +250,15 @@ export default {
     }
   },
   methods: {
-    clearTimer (type) {
-      this.lyricTimer[type] && clearTimeout(this.lyricTimer[type])
+    scrollerRefash () {
+      const { lyricList } = this.$refs
+      lyricList.refresh()
     },
     scrollToActiveLyric () {
       if (this.activeLyricIndex > 4) {
         const { lyricList, lyricLine } = this.$refs
         if (lyricLine && lyricLine[this.activeLyricIndex]) {
-          lyricList
-            .getScroller()
-            .scrollToElement(lyricLine[this.activeLyricIndex], 200, 0, true)
+          lyricList.scrollToElement(lyricLine[this.activeLyricIndex], 1000, 0, true)
         } else {
           lyricList.scrollTo(0, 0, 1000)
         }
@@ -317,24 +312,38 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @keyframes rotate {
-    0% {
-      transform: rotate(0);
-    }
-
-    100% {
-      transform: rotate(1turn);
-    }
+@import "~styles/mixin";
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
   }
-  @import "~styles/mixin";
-  .player-max{
+
+  100% {
+    transform: rotate(1turn);
+  }
+}
+.player-max{
+  &.player-max-transition-enter-active, &.player-max-transition-leave-active {
+    transform: scale(1,1);
+    transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32) 0.2s;
+  }
+  .player-max-content, .player-max-control{
+    transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32)
+  }
+  &.player-max-transition-enter, &.player-max-transition-leave-to {
+    transform: scale(0.1,0.1);
+    transition: all 0.2s cubic-bezier(0.86, 0.18, 0.82, 1.32) 0s;
+    opacity:0;
+  }
+}
+.player-max{
   z-index: 200;
   width: 100%;
   position: absolute;
   top:0;
   left: 0;
   bottom: 0;
-  background-color: #fff;
+  background: var(--body-bg-color--);
   overflow: hidden;
   .fullscreen-exit{
     position: fixed;
@@ -461,18 +470,19 @@ export default {
             margin-bottom: 30px;
 
             .desc-item {
-              .one-line
+              .no-wrap();
               .desc-text{
                 display: flex;
                 align-items: center;
-                margin-right: 32px;
+                margin-right: 15px;
               }
               .label {
                 display: inline-block;
                 margin-right: 4px;
               }
               .value {
-                color: blue;
+                color: var(--header-bg-color--);
+                cursor: pointer;
               }
             }
           }
@@ -490,11 +500,12 @@ export default {
             );
             .lyric-wrapper{
               .lyric-text{
-                font-size: 16px;
+                font-size: 15px;
                 margin: 25px 0;
               }
               .active{
-                font-weight: 700
+                font-weight: 800;
+                font-size: 18px;
               }
             }
           }

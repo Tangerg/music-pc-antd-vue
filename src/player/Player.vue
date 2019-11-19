@@ -12,6 +12,7 @@
     </list-drawer>
     <max-player
       v-show="fullScreen"
+      :disPlay="fullScreen"
       :playState="playState"
       :likeState="true"
       :playMode="playMode"
@@ -127,11 +128,7 @@ export default {
       if (newSong.id === oldSong.id) {
         return
       }
-      this.getPlaySongUrl(newSong.id)
-      this.initMusicComment(newSong.id)
-      this.initSimilarSong(newSong.id)
-      this.initSimilarPlayList(newSong.id)
-      this.initPlaySongLyric(newSong.id)
+      this.initAllSongInfo(newSong.id)
     },
     musicUrl (url) {
       const audio = this.$refs.audio
@@ -176,6 +173,7 @@ export default {
     // 点击歌手
     clickArtist (artist) {
       this.drawerState = false
+      this.fullScreen = false
       this.$router.push(`/artist/${artist.id}`)
     },
     // 喜欢不喜欢
@@ -210,6 +208,9 @@ export default {
     },
     // 更改播放器显示方式
     changePlayerDisplay (flag) {
+      if (!this.currentSong.id) {
+        return
+      }
       this.fullScreen = flag
     },
     // 更改播放状态
@@ -217,20 +218,10 @@ export default {
       this.setPlayState(!this.playState)
       this.lyric.togglePlay()
     },
+    // 更改播放时间
     changeSliderValue (value) {
       const audio = this.$refs.audio
       audio.currentTime = value * this.currentSong.durationNum
-    },
-    // 更改播放源
-    getPlaySongUrl (id) {
-      getPlaySongSource(id).then((res) => {
-        if (res.code === config.ERR_OK) {
-          this.musicUrl = res.data[0].url
-          if (this.musicUrl === null) {
-            this.setPlayState(false)
-          }
-        }
-      })
     },
     // 单曲播放结束
     audioPlayEnd () {
@@ -263,46 +254,63 @@ export default {
       this.setCurrentIndex(index)
     },
 
-    initMusicComment (id) {
-      getMusicComment(id).then((res) => {
-        if (res.code === config.ERR_OK) {
-          this.hotComments = res.hotComments.map((comment) => {
-            return createComment(comment)
-          })
-          this.comments = res.comments.map((comment) => {
-            return createComment(comment)
-          })
-        }
-      })
+    async initAllSongInfo (id) {
+      await this.initPlaySongUrl(id)
+      await this.initMusicComment(id)
+      await this.initPlaySongLyric(id)
+      await this.initSimilarPlayList(id)
+      await this.initSimilarSong(id)
     },
-    initSimilarSong (id) {
-      getSimilarSong(id).then((res) => {
-        if (res.code === config.ERR_OK) {
-          this.similarSongList = res.songs.map((song) => {
-            return createSong(song)
-          })
-        }
-      })
+    // 获取当前歌曲评论
+    async initMusicComment (id) {
+      const { code, hotComments, comments } = await getMusicComment(id)
+      if (code === config.ERR_OK) {
+        this.hotComments = hotComments.map((comment) => {
+          return createComment(comment)
+        })
+        this.comments = comments.map((comment) => {
+          return createComment(comment)
+        })
+      }
     },
-    initSimilarPlayList (id) {
-      getSimilarPlaylist(id).then((res) => {
-        if (res.code === config.ERR_OK) {
-          this.similarPlayList = res.playlists.map((playlist) => {
-            return createPlaylistBySimilar(playlist)
-          })
-        }
-      })
+    // 获取相似歌曲
+    async initSimilarSong (id) {
+      const { code, songs } = await getSimilarSong(id)
+      if (code === config.ERR_OK) {
+        this.similarSongList = songs.map((song) => {
+          return createSong(song)
+        })
+      }
     },
-    initPlaySongLyric (id) {
+    // 获取相似歌单
+    async initSimilarPlayList (id) {
+      const { code, playlists } = await getSimilarPlaylist(id)
+      if (code === config.ERR_OK) {
+        this.similarPlayList = playlists.map((playlist) => {
+          return createPlaylistBySimilar(playlist)
+        })
+      }
+    },
+    // 获取歌词
+    async initPlaySongLyric (id) {
       if (this.lyric.lyricArr && this.lyric.lyricArr.length) {
         this.lyric.stop()
       }
-      getPlaySongLyric(id).then((res) => {
-        if (res.code === config.ERR_OK) {
-          this.lyric = formatLyric(res)
-          this.lyric.play()
+      const res = await getPlaySongLyric(id)
+      if (res.code === config.ERR_OK) {
+        this.lyric = formatLyric(res)
+        this.lyric.play()
+      }
+    },
+    // 获取播放源
+    async initPlaySongUrl (id) {
+      const { code, data } = await getPlaySongSource(id)
+      if (code === config.ERR_OK) {
+        this.musicUrl = data[0].url
+        if (this.musicUrl === null) {
+          this.setPlayState(false)
         }
-      })
+      }
     }
   },
   components: {
@@ -315,5 +323,6 @@ export default {
 
 <style lang="less">
   .music-player{
+    background: var(--body-bg-color--);
   }
 </style>

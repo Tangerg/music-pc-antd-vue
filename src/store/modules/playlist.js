@@ -3,7 +3,6 @@ import {
   SET_SEQUENCE_LIST,
   SET_CURRENT_INDEX,
   SET_PLAY_MODE,
-  SET_FULL_SCREEN,
   SET_PLAY_STATE
 } from '../mutation-types'
 import config from '@/config/config'

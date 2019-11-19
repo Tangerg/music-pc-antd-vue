@@ -69,7 +69,7 @@ export default {
       }
       .comment-reply{
         padding: 5px;
-        background: rgba(0,0,0,0.2);
+        background: #ddd;
         border-radius: 3px;
       }
       .comment-action{

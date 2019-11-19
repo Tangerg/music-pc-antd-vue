@@ -45,5 +45,6 @@ export default {
 @import "styles/index.less";
 #app {
   height: 100%;
+  background: var(--body-bg-color--);
 }
 </style>

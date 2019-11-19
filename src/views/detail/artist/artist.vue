@@ -3,7 +3,7 @@
     <artist-header v-if="artistInfo" :content="artistInfo"></artist-header>
     <info-tab :tabList="tabList" @onChangeTab="handleChangeTab"></info-tab>
     <div v-show="activeKey === tabList[0].key" class="artist-song-table">
-      <song-table :dataSource="topList" @onClickSong="clickSong"></song-table>
+      <song-table :dataSource="topList" @onClickSong="clickSong" @onClickArtist="clickArtist" @onClickAlbum="clickAlbum"></song-table>
     </div>
     <div v-show="activeKey === tabList[1].key" class="artist-album">
       <album-cover :coverList="AlbumList"></album-cover>
@@ -35,6 +35,7 @@ import { AlbumCover } from '@c/CoverList'
 
 import { getArtistDetail, getArtistMv, getArtistTop50, getArtistAlbum } from 'api/artist'
 
+import { backTop } from 'utils/dom'
 const TABLIST = [
   {
     title: '热门50首',
@@ -101,6 +102,12 @@ export default {
     },
     handleChangeTab (key) {
       this.activeKey = key
+    },
+    clickAlbum (album) {
+      console.log(album)
+    },
+    clickArtist (artist) {
+      this.$router.push(`/artist/${artist.id}`)
     },
     clickSong (record, index) {
       this.selectPlay({

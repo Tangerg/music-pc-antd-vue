@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="scroller"
-    ref="scroller"
-  >
+  <div class="bscroller" ref="wrapper">
     <slot></slot>
   </div>
 </template>
@@ -18,18 +15,19 @@ const defaultOptions = {
   mouseWheel: true,
   scrollY: true,
   scrollbar: true,
-  probeType: 3,
-  refreshDelay: 20
+  probeType: 3
 }
 export default {
-  name: 'Scroller',
+  name: 'Scroll',
   props: {
     data: {
-      default: () => []
+      type: Array,
+      default: null
+    },
+    refreshDelay: {
+      type: Number,
+      default: 20
     }
-  },
-  data () {
-    return {}
   },
   mounted () {
     setTimeout(() => {
@@ -38,36 +36,44 @@ export default {
   },
   methods: {
     _initScroll () {
-      if (!this.$refs.scroller) {
+      if (!this.$refs.wrapper) {
         return
       }
-      this.scroller = new BScroll(this.$refs.scroller, defaultOptions)
+      this.scroll = new BScroll(this.$refs.wrapper, defaultOptions)
     },
-    getScroller () {
-      return this.scroller
+    scrollTo () {
+      console.log('scrollTo')
+      this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
+    },
+    scrollToElement () {
+      console.log('scrollToElement')
+      this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
     },
     refresh () {
-      this.scroller.refresh()
+      this.scroll && this.scroll.refresh()
     }
   },
   watch: {
-    data () {
-      setTimeout(() => {
+    data (val) {
+      this.$nextTick(() => {
         this.refresh()
-      }, this.refreshDelay)
+      })
+      /*setTimeout(() => {
+        this.refresh()
+      }, this.refreshDelay)*/
     }
   }
 }
 </script>
 
 <style lang="less" >
-  .scroller {
+  .bscroller {
     position: relative;
     overflow: hidden;
     height: 100%;
     .bscroll-indicator {
       border: none !important;
-      background: gray !important;
+      background: #ddd !important;
     }
   }
 </style>

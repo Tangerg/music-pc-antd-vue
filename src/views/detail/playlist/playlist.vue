@@ -8,11 +8,11 @@
       <SongTable :dataSource="songList" @onClickSong="clickSong" @onClickArtist="clickArtist" @onClickAlbum="clickAlbum"></SongTable>
     </div>
     <div v-show="activeKey === tabList[1].key" class="playlist-comment">
-      <div class="playlist-comment-item">
+      <div class="playlist-comment-item" v-if="hotComments.length">
         <column-header :column="{title:'精彩评论'}"></column-header>
         <comment-list :commentList="hotComments"></comment-list>
       </div>
-      <div class="playlist-comment-item">
+      <div class="playlist-comment-item" v-if="comments.length">
         <column-header :column="{title:'最新评论'}"></column-header>
         <comment-list :commentList="comments"></comment-list>
       </div>

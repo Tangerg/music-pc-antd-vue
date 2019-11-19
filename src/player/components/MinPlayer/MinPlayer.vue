@@ -1,4 +1,5 @@
 <template>
+<transition name="player-min-transition">
   <div class="player-min">
     <div class="player-min-slider">
       <progress-bar :percent="percent" @onValueChange="onChangeSliderValue"></progress-bar>
@@ -10,16 +11,18 @@
         </div>
         <div class="song-text">
           <div class="song-text-common song-text-name cursor" @click="onChangePlayerDisplay(true)">{{currentSong.name}}</div>
-          <span class="song-text-common song-text-artist" v-for="(artist,index) in currentSong.artist" :key="index">
-            <span class="cursor" @click="onClickArtist(artist)">{{artist.name}}</span>
-            <span v-if="index < currentSong.artist.length-1"> / </span>
-          </span>
+          <div class="song-text-common song-text-artist">
+            <span v-for="(artist,index) in currentSong.artist" :key="index">
+              <span class="cursor" @click="onClickArtist(artist)">{{artist.name}}</span>
+              <span v-if="index < currentSong.artist.length-1"> / </span>
+            </span>
+          </div>
         </div>
       </div>
       <div class="control-center">
         <div class="btn-group">
           <span class="control control-other ">
-            <a-icon class="cursor" type="heart" :theme="likeStateIcon" style="color: rgba(16,137,255,0.84)" @click="onClickLike"/>
+            <a-icon class="cursor" type="heart" :theme="likeStateIcon" style="color: var(--header-bg-color--)" @click="onClickLike"/>
           </span>
           <span class="control control-play cursor" >
             <a-icon type="left-circle" @click="onClickPrev"/>
@@ -49,6 +52,7 @@
       </div>
     </div>
   </div>
+</transition>
 </template>
 
 <script>
@@ -141,8 +145,18 @@ export default {
 
 <style lang="less">
   @import "~styles/mixin";
+  .player-min{
+    &.player-min-transition-enter-active, &.player-min-transition-leave-active {
+      transform: translateY(0);
+      transition: all 0.2s cubic-bezier(0.86, 0.18, 0.82, 1.32);
+    }
+    &.player-min-transition-enter, &.player-min-transition-leave-to {
+      transform: translateY(100%);
+      transition: all 0.2s cubic-bezier(0.86, 0.18, 0.82, 1.32);
+      // opacity:0;
+    }
+  }
   .player-min {
-    width: 100%;
     position: relative;
     .player-min-slider {
       width: 100%;
@@ -225,7 +239,7 @@ export default {
         margin: auto 10px;
         &-play{
           margin: auto 10px;
-          color: #1089ff;
+          color: var(--header-bg-color--);
           font-size: 30px;
           &-center{
             font-size: 40px;
@@ -234,7 +248,7 @@ export default {
         &-other{
           font-size: 20px;
           &:hover {
-            color: #1089ff;
+            color: var(--header-bg-color--);
           }
           .song-count{
             font-size: 17px;
@@ -242,7 +256,7 @@ export default {
           }
         }
         &-time{
-          color: #b6b6b6;
+          color: var(--body-font-color-2--);
           font-weight: 400;
         }
       }
