@@ -158,6 +158,7 @@ export default {
   }
   .player-min {
     position: relative;
+    background: var(--body-bg-color--);
     .player-min-slider {
       width: 100%;
       position: absolute;

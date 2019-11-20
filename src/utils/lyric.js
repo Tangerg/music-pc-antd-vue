@@ -13,7 +13,7 @@ export function parseLyric (lrc) {
     const timeRegExpArr = lyric.match(timeReg)
 
     if (!timeRegExpArr) continue
-    const text = lyric.replace(timeReg, '')
+    const line = lyric.replace(timeReg, '')
     // 转换时间
     for (let k = 0, h = timeRegExpArr.length; k < h; k++) {
       const t = timeRegExpArr[k]
@@ -21,8 +21,8 @@ export function parseLyric (lrc) {
       const min = Number(String(t.match(/\[\d*/i)).slice(1))
       const sec = Number(String(t.match(/:\d*.\d*/i)).slice(1))
       const time = min * 60 + sec
-      if (text !== '') {
-        lrcObj.push({ time: time, text })
+      if (line !== '') {
+        lrcObj.push({ time: time, line })
       }
     }
   }

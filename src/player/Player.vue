@@ -35,6 +35,7 @@
       @onChangePlayerDisplay="changePlayerDisplay"
       @onChangePlayMode="changePlayMode"
       @onChangeSliderValue="changeSliderValue"
+      @onClickPlaylist="clickPlaylist"
       >
     </max-player>
     <min-player
@@ -176,6 +177,12 @@ export default {
       this.fullScreen = false
       this.$router.push(`/artist/${artist.id}`)
     },
+    // 点击歌单
+    clickPlaylist (playlist) {
+      this.drawerState = false
+      this.fullScreen = false
+      this.$router.push(`/song-list/${playlist.id}`)
+    },
     // 喜欢不喜欢
     clickLike () {
 
@@ -216,12 +223,14 @@ export default {
     // 更改播放状态
     changePlayState () {
       this.setPlayState(!this.playState)
-      this.lyric.togglePlay()
+      this.lyric.togglePlay(this.currentTimeNum)
     },
     // 更改播放时间
     changeSliderValue (value) {
       const audio = this.$refs.audio
-      audio.currentTime = value * this.currentSong.durationNum
+      let changeTime = value * this.currentSong.durationNum
+      audio.currentTime = changeTime
+      this.lyric.seek(changeTime)
     },
     // 单曲播放结束
     audioPlayEnd () {
@@ -293,7 +302,7 @@ export default {
     },
     // 获取歌词
     async initPlaySongLyric (id) {
-      if (this.lyric.lyricArr && this.lyric.lyricArr.length) {
+      if (this.lyric.lyricArr && this.lyric.lyricArr.length) { // 如果切歌了，先停掉之前的歌词
         this.lyric.stop()
       }
       const res = await getPlaySongLyric(id)

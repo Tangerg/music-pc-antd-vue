@@ -50,6 +50,7 @@
 <script>
 import { getUserDetail } from 'api/user'
 import { createUser } from '@/class/user'
+import { createUser } from '@/class/user'
 import { UserTop, UserBottom } from '@c/PopoverCard'
 import config from '@/config/config'
 export default {

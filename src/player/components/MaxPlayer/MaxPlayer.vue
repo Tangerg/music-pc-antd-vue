@@ -48,12 +48,14 @@
               ref="lyricList"
               :data="lyric && lyric.lyricArr"
             >
+            <div class="scroller-container">
               <div class="lyric-wrapper">
                 <div ref="lyricLine" class="lyric-text" :class="activeLyric(index)" v-for="(line,index) in lyric.lyricArr" :key="index">
-                  <p>{{line.text}}</p>
-                  <p class="lyric-text-other" v-if="line.txt">{{line.txt}}</p>
+                  <p>{{line.line}}</p>
+                  <p class="lyric-text-other" v-if="line.tline">{{line.tline}}</p>
                 </div>
               </div>
+            </div>
           </Scroller>
         </div>
       </div>
@@ -72,7 +74,7 @@
           <div>
             <column-header :column=similarColumn.similarPlaylist></column-header>
             <div class="song-similar">
-              <similar-playlist-card-list :playlistArr="similarPlayList"></similar-playlist-card-list>
+              <similar-playlist-card-list :playlistArr="similarPlayList" @onClickPlaylist="clickPlaylist"></similar-playlist-card-list>
             </div>
           </div>
           <div>
@@ -214,10 +216,8 @@ export default {
     }
   },
   watch: {
-    activeLyricIndex (newIndex, oldIndex) {
-      if (newIndex !== oldIndex) {
-        this.scrollToActiveLyric()
-      }
+    activeLyricIndex () {
+      this.scrollToActiveLyric()
     },
     disPlay (val) {
       if (val) {
@@ -255,19 +255,22 @@ export default {
       lyricList.refresh()
     },
     scrollToActiveLyric () {
-      if (this.activeLyricIndex > 4) {
-        const { lyricList, lyricLine } = this.$refs
+      const { lyricList, lyricLine } = this.$refs
+      if (this.activeLyricIndex > 3) {
         if (lyricLine && lyricLine[this.activeLyricIndex]) {
           lyricList.scrollToElement(lyricLine[this.activeLyricIndex], 1000, 0, true)
-        } else {
-          lyricList.scrollTo(0, 0, 1000)
         }
+      } else {
+        lyricList.scrollTo(0, 0, 1000)
       }
     },
     activeLyric (index) {
-      if (index === this.lyric.currentIndex) {
+      if (index === this.activeLyricIndex) {
         return 'active'
       }
+    },
+    clickPlaylist (item) {
+      this.$emit('onClickPlaylist', item)
     },
     onClickDrawer () {
       this.$emit('onClickDrawer', true)
@@ -487,8 +490,9 @@ export default {
             }
           }
           .lyric-scroller{
-            width: 380px;
+            width: 400px;
             height: 350px;
+            box-sizing: border-box;
             mask-image: linear-gradient(
               180deg,
               hsla(0, 0%, 100%, 0) 0,
@@ -498,14 +502,23 @@ export default {
               hsla(0, 0%, 100%, 0.6) 85%,
               hsla(0, 0%, 100%, 0)
             );
-            .lyric-wrapper{
-              .lyric-text{
-                font-size: 15px;
-                margin: 25px 0;
-              }
-              .active{
-                font-weight: 800;
-                font-size: 18px;
+            .scroller-container{
+              padding: 20px 0;
+              .lyric-wrapper{
+                box-sizing: border-box;
+                padding: 0 10px 0 0;
+                p{
+                  display: block;
+                  margin: 2px;
+                }
+                .lyric-text{
+                  font-size: 15px;
+                  margin-top: 20px;
+                }
+                .active{
+                  font-weight: 800;
+                  font-size: 18px;
+                }
               }
             }
           }

@@ -42,11 +42,9 @@ export default {
       this.scroll = new BScroll(this.$refs.wrapper, defaultOptions)
     },
     scrollTo () {
-      console.log('scrollTo')
       this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
     },
     scrollToElement () {
-      console.log('scrollToElement')
       this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
     },
     refresh () {
@@ -54,13 +52,10 @@ export default {
     }
   },
   watch: {
-    data (val) {
+    data () {
       this.$nextTick(() => {
         this.refresh()
       })
-      /*setTimeout(() => {
-        this.refresh()
-      }, this.refreshDelay)*/
     }
   }
 }

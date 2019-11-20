@@ -26,7 +26,6 @@ export default class Lyric {
     let delay = this.lyricArr[curNum].time * 1000 - (new Date() - this.startStamp)
     this.timer = setTimeout(() => {
       this.currentIndex = curNum
-      this.currentLine = this.lyricArr[curNum]
       if (curNum < this.lyricArr.length && this.state === STATE_PLAYING) {
         curNum++
         this._keepPlay(curNum)
@@ -39,24 +38,19 @@ export default class Lyric {
       return
     }
     this.state = STATE_PLAYING
-
     let curNum = this._findCurNum(startTime)
-    this.startStamp = new Date() - startTime
+    this.startStamp = new Date() - startTime * 1000 // *1000将秒转成毫秒！！！
     if (curNum < this.lyricArr.length) {
       clearTimeout(this.timer)
       this._keepPlay(curNum)
     }
   }
 
-  togglePlay () {
-    var now = +new Date()
+  togglePlay (pauseTime = 0) {
     if (this.state === STATE_PLAYING) {
       this.stop()
-      this.pauseStamp = now
     } else {
-      this.state = STATE_PLAYING
-      this.play((this.pauseStamp || now) - (this.startStamp || now), true)
-      this.pauseStamp = 0
+      this.play(pauseTime)
     }
   }
 
@@ -69,14 +63,14 @@ export default class Lyric {
     this.play(offset)
   }
 }
-function insertLyric (long, short) {
-  short.forEach((temp) => {
-    let index = long.findIndex((item) => {
+function insertLyric (lyric, tLyric) {
+  tLyric.forEach((temp) => {
+    let index = lyric.findIndex((item) => {
       return item.time === temp.time
     })
-    long[index].txt = temp.text
+    lyric[index].tline = temp.line
   })
-  return long
+  return lyric
 }
 function mergeLyric (lyric, tLyric) {
   if (!lyric.length) {
@@ -85,10 +79,18 @@ function mergeLyric (lyric, tLyric) {
   if (!tLyric.length) {
     return lyric
   }
-  if (lyric.length > tLyric.length) {
-    return insertLyric(lyric, tLyric)
+  let tempArr = []
+  const diff = lyric.length - tLyric.length
+  if (diff < 0) {
+    for (let i = 0; i < -diff; i++) {
+      tempArr[i].tline = tLyric[i].line
+      tempArr[i].time = tLyric[i].time
+    }
+    tempArr.concat(lyric)
+    return insertLyric(tempArr, tLyric)
   } else {
-    return insertLyric(tLyric, lyric)
+    tempArr = lyric
+    return insertLyric(tempArr, tLyric)
   }
 }
 

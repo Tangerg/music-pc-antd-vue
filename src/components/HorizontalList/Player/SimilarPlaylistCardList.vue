@@ -19,8 +19,8 @@ export default {
     }
   },
   methods: {
-    clickSong (item) {
-      this.$emit('onClickSong', item)
+    clickPlaylist (item) {
+      this.$emit('onClickPlaylist', item)
     }
   },
   components: {

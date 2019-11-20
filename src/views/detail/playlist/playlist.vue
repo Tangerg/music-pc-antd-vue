@@ -69,10 +69,18 @@ export default {
       tracks: []
     }
   },
-  mounted () {
-    this.initPlaylistDetail()
+  watch: {
+    id () {
+      this.initPlaylistDetail()
+    }
   },
   computed: {
+    id () {
+      return Number(this.$route.params.id)
+    }
+  },
+  mounted () {
+    this.initPlaylistDetail()
   },
   methods: {
     ...mapActions([
@@ -93,6 +101,7 @@ export default {
       }
     },
     async initPlaylistSong (tracks) {
+      this.songList = []
       this.songList = tracks.map((track) => {
         return Object.freeze(createSongByPlaylist(track))
       })
