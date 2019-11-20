@@ -1,4 +1,7 @@
 export function handleNewLine (str) {
+  if (!str) {
+    return
+  }
   return str.replace(/\n/gi, '<br/>')
 }
 

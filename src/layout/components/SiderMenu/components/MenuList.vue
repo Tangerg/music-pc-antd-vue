@@ -9,29 +9,29 @@
     <a-menu-item-group>
       <div slot="title"><span>推荐</span></div>
       <a-menu-item :key="menu.route" v-for="menu in RecommendMusicMenu">
-        <a-icon :type="menu.icon" />
+        <a-icon :type="menu.icon"/>
         <span>{{menu.title}}</span>
       </a-menu-item>
     </a-menu-item-group>
     <a-menu-item-group>
       <div slot="title"><span>我的音乐</span></div>
       <a-menu-item :key="menu.route" v-for="menu in MyMusicMenu">
-        <a-icon :type="menu.icon" />
+        <a-icon :type="menu.icon"/>
         <span>{{menu.title}}</span>
       </a-menu-item>
     </a-menu-item-group>
     <a-sub-menu key="sub1">
-      <span slot="title"><a-icon type="folder" /><span>创建的歌单</span></span>
-      <a-menu-item :key="index" v-for="(menu,index) in RecommendMusicMenu">
-      <a-icon :type="menu.icon" />
-      <span>{{menu.title}}</span>
-    </a-menu-item>
+      <span slot="title"><a-icon type="folder"/><span>创建的歌单</span></span>
+      <a-menu-item @click="clickPlaylist(playlist)" :key="index" v-for="(playlist,index) in myPlaylist.create">
+        <a-icon type="star"/>
+        <span>{{playlist.name}}</span>
+      </a-menu-item>
     </a-sub-menu>
     <a-sub-menu key="sub2">
-      <span slot="title"><a-icon type="folder" /><span>收藏的歌单</span></span>
-      <a-menu-item :key="index" v-for="(menu,index) in RecommendMusicMenu">
-        <a-icon :type="menu.icon" />
-        <span>{{menu.title}}</span>
+      <span slot="title"><a-icon type="folder"/><span>收藏的歌单</span></span>
+      <a-menu-item @click="clickPlaylist(playlist)" :key="index" v-for="(playlist,index) in myPlaylist.collect">
+        <a-icon type="star"/>
+        <span>{{playlist.name}}</span>
       </a-menu-item>
     </a-sub-menu>
   </a-menu>
@@ -44,7 +44,8 @@ export default {
   name: 'MenuList',
   computed: {
     ...mapGetters([
-      'appTheme'
+      'appTheme',
+      'myPlaylist'
     ]),
     activeKey () {
       return this.$route.path
@@ -59,6 +60,9 @@ export default {
   methods: {
     clickMenu (item) {
       this.$router.push(item.key)
+    },
+    clickPlaylist (playlist) {
+      this.$router.push(`/song-list/${playlist.id}`)
     }
   }
 }

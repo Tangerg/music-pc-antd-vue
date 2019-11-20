@@ -1,4 +1,3 @@
-import { handlePlayCount } from 'utils/count'
 import { createPlaylistCover } from './playlist'
 import { createArtistCover } from './artist'
 import { createAlbumCover } from './album'

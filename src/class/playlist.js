@@ -38,7 +38,14 @@ export function createPlaylistCover (playlist) {
     coverImgUrl: handlePicUrlSize(playlist.picUrl || playlist.coverImgUrl, 300),
     name: playlist.name,
     playCount: handlePlayCount(playlist.playCount),
-    copywriter: playlist.copywriter
+    copywriter: playlist.copywriter || null
+  })
+}
+export function createPlaylistSimple (playlist) {
+  return new Playlist({
+    id: playlist.id,
+    name: playlist.name,
+    creator: createCreator(playlist.creator)
   })
 }
 export function createPlaylistDesc (playlist) {

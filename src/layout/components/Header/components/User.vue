@@ -14,14 +14,12 @@
              :value="userId"
       @change="onChange"
     />
-    <div style="margin-top: 20px">1、请
-    <a
-      href="http://music.163.com"
-      target="_blank"
-    >点我(http://music.163.com)</a> 打开网易云音乐官网</div>
-    <div>2、点击页面右上角的“登录”</div>
-    <div>3、点击您的头像，进入我的主页</div>
-    <div>4、复制浏览器地址栏 /user/home?id= 后面的数字（网易云 UID）</div>
+    <div style="margin-top: 20px">1、可以直接登录我的账号(329508409)</div>
+    <div>2、请<a href="http://music.163.com" target="_blank">点我(http://music.163.com)</a> 打开网易云音乐官网</div>
+    <div>3、点击页面右上角的“登录”</div>
+    <div>4、点击您的头像，进入我的主页</div>
+    <div>5、复制浏览器地址栏 /user/home?id= 后面的数字（网易云 UID）</div>
+    <div>6、登录成功后，菜单底部的创建的歌单及收藏的歌单均可使用</div>
   </a-modal>
   <div class="user-base" @click="login" v-if="!user.nickname">
     <a-avatar :src=user.avatarUrl />
@@ -48,9 +46,10 @@
 </template>
 
 <script>
-import { getUserDetail } from 'api/user'
+import { mapMutations } from 'vuex'
+import { getUserDetail, getUserPlaylist } from 'api/user'
 import { createUser } from '@/class/user'
-import { createUser } from '@/class/user'
+import { createPlaylistSimple } from '@/class/playlist'
 import { UserTop, UserBottom } from '@c/PopoverCard'
 import config from '@/config/config'
 export default {
@@ -59,10 +58,14 @@ export default {
     return {
       userId: '',
       user: {},
-      visible: false
+      visible: false,
+      playlist: {}
     }
   },
   methods: {
+    ...mapMutations({
+      setMyPlaylist: 'SET_MY_PLAYLIST'
+    }),
     onChange (e) {
       const { value } = e.target
       this.userId = value
@@ -84,6 +87,29 @@ export default {
         this.userId = ''
       }
     },
+    async getUserPlaylist (uid) {
+      const { playlist, code } = await getUserPlaylist(uid)
+      if (code === config.ERR_OK) {
+        const OriginalPlaylist = playlist.map((item) => {
+          return createPlaylistSimple(item)
+        })
+        this.handlePlaylist(OriginalPlaylist)
+        this.setMyPlaylist(this.playlist)
+      }
+    },
+    handlePlaylist (playlist) {
+      let create = []
+      let collect = []
+      for (let i = 0; i < playlist.length; i++) {
+        if (playlist[i].creator.userId === this.user.userId) {
+          create.push(playlist[i])
+        } else {
+          collect.push(playlist[i])
+        }
+      }
+      this.playlist.create = create
+      this.playlist.collect = collect
+    },
     handleChance () {
       this.userId = ''
       this.visible = false
@@ -96,6 +122,7 @@ export default {
     },
     handleOk () {
       this.getUser(this.userId)
+      this.getUserPlaylist(this.userId)
     }
   },
   components: {

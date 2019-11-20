@@ -1,7 +1,7 @@
 export const COLUMN_LIST = {
   recommendList: {
     title: '推荐歌单',
-    route: 'recommendList',
+    route: '/playlist',
     show: true
   },
   exclusiveDistribution: {
