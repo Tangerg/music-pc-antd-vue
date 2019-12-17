@@ -52,7 +52,7 @@ export default {
       }
     },
     clickSong (item, index) {
-      this.$emit('onClickSong', item , index)
+      this.$emit('onClickSong', item, index)
     },
     clickArtist (art) {
       this.$emit('onClickArtist', art)

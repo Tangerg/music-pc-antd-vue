@@ -104,7 +104,6 @@ export default {
       this.activeKey = key
     },
     clickAlbum (album) {
-      console.log(album)
     },
     clickArtist (artist) {
       this.$router.push(`/artist/${artist.id}`)

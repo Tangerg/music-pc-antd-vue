@@ -302,6 +302,7 @@ export default {
     },
     // 获取歌词
     async initPlaySongLyric (id) {
+      console.log(id)
       if (this.lyric.lyricArr && this.lyric.lyricArr.length) { // 如果切歌了，先停掉之前的歌词
         this.lyric.stop()
       }

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
 import VueLazyload from 'vue-lazyload'
+import Storage from 'vue-ls'
 import {
   Avatar,
   Button,
@@ -49,3 +50,9 @@ Vue.use(Row)
 Vue.use(VueLazyload, {
   loading: require('./assets/cd-img.png')
 })
+const options = {
+  namespace: 'music__', // key prefix
+  name: 'ls', // name variable Vue.[ls] or this.[$ls],
+  storage: 'local' // storage name session, local, memory
+}
+Vue.use(Storage, options)

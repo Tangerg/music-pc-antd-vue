@@ -127,7 +127,6 @@ export default {
       this.$router.push(`/artist/${artist.id}`)
     },
     clickAlbum (album) {
-      console.log(album)
     },
     handleChangeTab (key) {
       this.activeKey = key

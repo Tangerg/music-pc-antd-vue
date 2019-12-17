@@ -23,9 +23,9 @@ export default class Lyric {
       clearTimeout(this.timer)
       return
     }
+    this.currentIndex = curNum - 1
     let delay = this.lyricArr[curNum].time * 1000 - (new Date() - this.startStamp)
     this.timer = setTimeout(() => {
-      this.currentIndex = curNum
       if (curNum < this.lyricArr.length && this.state === STATE_PLAYING) {
         curNum++
         this._keepPlay(curNum)

@@ -1,5 +1,6 @@
 // 歌词解析
 export function parseLyric (lrc) {
+  console.log(lrc)
   if (!lrc) {
     return []
   }
@@ -26,5 +27,6 @@ export function parseLyric (lrc) {
       }
     }
   }
+  console.log(lrcObj)
   return lrcObj
 }
